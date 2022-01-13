@@ -1,7 +1,7 @@
 FROM node:16.11.1-alpine3.11
 WORKDIR /code
 
-COPY degvabank /code
+COPY . /code
 
 RUN yarn install
 

@@ -1,13 +1,22 @@
-import React from "react";
-
-interface Button{
-  text:String;
-  handleClick:()=>void;
-  disable:boolean;
+interface ButtonProps {
+  className?: string;
+  [key: string]: any;
+  children?: JSX.Element[] | JSX.Element;
 }
 
-const Button = ({text,handleClick}:Button) => {
-  return <button disabled onClick={handleClick} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{text}</button>;
+const Button = ({ className, children, ...props }: ButtonProps) => {
+  
+  return (
+    <button
+      className={
+        className ??
+        "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      }
+      {...props}
+    >
+      {children}
+    </button>
+  );
 };
 
 export default Button;

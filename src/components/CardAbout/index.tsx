@@ -12,9 +12,9 @@ const CardAbout = ({title,content,children}: CardAboutProps) => {
       <div>
           {children}      
       </div>
-      <div className="font-montserrat items-center w-1/2">
+      <div className="font-montserrat items-center w-[65%] p-2">
           <p className="text-center uppercase font-bold text-xl tracking-wider">{title}</p>
-          <p className="text-center text-sm">
+          <p className="text-center text-sm mt-4">
             {content}
           </p>
       </div>

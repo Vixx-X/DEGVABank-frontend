@@ -1,5 +1,6 @@
 import Header from "@components/Header";
 import Footer from "@components/Footer";
+import CardAbout from "@components/CardAbout";
 import type { NextPage } from "next";
 import Logotype from "@components/Logotype";
 
@@ -13,20 +14,8 @@ const Home: NextPage = () => {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <circle
-          cx="110"
-          cy="110.5"
-          r="108"
-          fill="#048C7E"
-          fillOpacity="0.55"
-        />
-        <circle
-          cx="110"
-          cy="110.5"
-          r="108"
-          fill="#048C7E"
-          fillOpacity="0.55"
-        />
+        <circle cx="110" cy="110.5" r="108" fill="#048C7E" fillOpacity="0.55" />
+        <circle cx="110" cy="110.5" r="108" fill="#048C7E" fillOpacity="0.55" />
         <circle
           cx="110"
           cy="110.5"
@@ -52,6 +41,14 @@ const Home: NextPage = () => {
                 sizeSubTitle="text-4xl"
                 mode="light"
               />
+              <div className="flex justify-center">
+                <CardAbout
+                  content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis corrupti sapiente illo quibusdam quas qui inventore quasi aliquam exercitationem, deleniti fugit quis dolores, iste nostrum nulla, possimus itaque! Molestias, a?"
+                  title="Sobre Nosotros"
+                >
+                  <Svg />
+                </CardAbout>
+              </div>
             </div>
           </div>
         </div>

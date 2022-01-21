@@ -1,4 +1,3 @@
-import React from "react";
 import Logotype from "../Logotype";
 import Link from "next/link";
 
@@ -13,7 +12,7 @@ const Header = ({ mode = "light", classname }: HeaderProps) => {
       <div className="xl:w-[70rem] max-w-[90%] mx-auto py-2 flex justify-between items-center">
         <Link href="/">
           <a>
-            <Logotype sizeTitle={4}/>
+            <Logotype sizeTitle="text-4xl"/>
           </a>
         </Link>
         <div className="flex gap-x-2">

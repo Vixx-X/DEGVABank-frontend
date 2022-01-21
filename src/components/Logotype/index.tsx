@@ -1,18 +1,17 @@
-import React from "react";
 
 interface LogotypeProps {
   mode?: string;
   classnameText?: string;
   classnameBox?: string;
-  sizeTitle?: number;
-  sizeSubTitle?: number;
+  sizeTitle?: string;
+  sizeSubTitle?: string;
 }
 
 const Logotype = ({
   mode = "dark",
   classnameBox = "h-16",
-  sizeTitle = 4,
-  sizeSubTitle,
+  sizeTitle = "text-4xl",
+  sizeSubTitle = "text-xl",
 }: LogotypeProps) => {
   return (
     <div className={`flex ${classnameBox}`}>
@@ -61,12 +60,12 @@ const Logotype = ({
       </svg>
       <div>
         <p
-          className={`font-montserrat text-${sizeTitle}xl uppercase text-${mode}`}
+          className={`font-montserrat ${sizeTitle} uppercase text-${mode}`}
         >
           Degva
         </p>
         <p
-          className={`font-montserrat text-${sizeSubTitle}xl uppercase font-extralight italic tracking-[.3em] text-center text-${mode}`}
+          className={`font-montserrat ${sizeSubTitle} uppercase font-extralight italic tracking-[.3em] text-center text-${mode}`}
         >
           Bank
         </p>

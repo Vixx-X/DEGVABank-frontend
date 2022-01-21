@@ -1,7 +1,7 @@
 import Header from "@components/Header";
 import Footer from "@components/Footer";
-import CardAbout from "@components/CardAbout";
 import type { NextPage } from "next";
+import Logotype from "@components/Logotype";
 
 const Home: NextPage = () => {
   const Svg = () => {
@@ -44,13 +44,15 @@ const Home: NextPage = () => {
       <div className="flex flex-col md:h-[40rem] xl:h-screen sm:h-96 h-80">
         <Header />
         <div className="bg-[url('../public/backgroundPage.png')] bg-cover bg-center grow relative">
-          <div className="absolute grow bg-black/60 w-full h-full flex justify-center">
-            <CardAbout
-              title="Prueba"
-              content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, nihil at omnis iusto quisquam, repudiandae eveniet doloribus aspernatur nobis sint eligendi excepturi facilis ullam architecto libero odio eum? Recusandae, tenetur."
-            >
-              <Svg />
-            </CardAbout>
+          <div className="absolute grow bg-black/60 w-full h-full">
+            <div>
+              <Logotype
+                classnameBox="h-28 justify-center my-16"
+                sizeTitle="text-7xl"
+                sizeSubTitle="text-4xl"
+                mode="light"
+              />
+            </div>
           </div>
         </div>
         <Footer />

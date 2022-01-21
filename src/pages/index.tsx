@@ -2,6 +2,7 @@ import Header from "@components/Header";
 import Footer from "@components/Footer";
 import type { NextPage } from "next";
 import Logotype from "@components/Logotype";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -18,10 +19,56 @@ const Home: NextPage = () => {
                 mode="light"
               />
             </div>
+            <section className="flex xl:w-[70rem] max-w-[90%] mx-auto justify-between mt-32">
+              <div className="basis-2/5 flex flex-col text-center gap-y-4 transition-opacity">
+              {/* opacity-0 hover:opacity-100 */}
+                <h4 className="text-light text-3xl text-shadow">
+                  Persona Natural
+                </h4>
+                <p className="text-light text-center">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam quasi fugiat et reiciendis est.
+                </p>
+                <div className="flex flex-col gap-y-4">
+                  <Link href="/">
+                    <a className="bg-primary hover:bg-blue-700 text-light font-bold py-2 px-4 cursor-pointer rounded-full w-full uppercase text-center transition">
+                      Iniciar Sesión
+                    </a>
+                  </Link>
+                  <Link href="/">
+                    <a className="bg-light hover:bg-slate-50  text-dark font-bold rounded-full py-2 px-4 cursor-pointer uppercase text-center transition">
+                      Regístrate
+                    </a>
+                  </Link>
+                </div>
+              </div>
+              <div className="basis-2/5 flex flex-col text-center gap-y-4 transition-opacity">
+              {/* opacity-0 hover:opacity-100 */}
+                <h4 className="text-light text-3xl text-shadow">
+                  Persona Natural
+                </h4>
+                <p className="text-light text-center">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam quasi fugiat et reiciendis est.
+                </p>
+                <div className="flex flex-col gap-y-4">
+                  <Link href="/">
+                    <a className="bg-primary hover:bg-blue-700 text-light font-bold py-2 px-4 cursor-pointer rounded-full w-full uppercase text-center transition">
+                      Iniciar Sesión
+                    </a>
+                  </Link>
+                  <Link href="/">
+                    <a className="bg-light hover:bg-slate-50  text-dark font-bold rounded-full py-2 px-4 cursor-pointer uppercase text-center transition">
+                      Regístrate
+                    </a>
+                  </Link>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };

@@ -4,31 +4,9 @@ import CardAbout from "@components/CardAbout";
 import type { NextPage } from "next";
 import Logotype from "@components/Logotype";
 import Link from "next/link";
+import { GroupSvg, LockSvg, SpeedSvg } from "@public/assets/imagesSvg";
 
 const Home: NextPage = () => {
-  const Svg = () => {
-    return (
-      <svg
-        width="150"
-        height="150"
-        viewBox="0 0 220 221"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <circle cx="110" cy="110.5" r="108" fill="#048C7E" fillOpacity="0.55" />
-        <circle cx="110" cy="110.5" r="108" fill="#048C7E" fillOpacity="0.55" />
-        <circle
-          cx="110"
-          cy="110.5"
-          r="108"
-          stroke="#048C7E"
-          strokeWidth="4"
-          strokeLinejoin="round"
-        />
-      </svg>
-    );
-  };
-
   return (
     <>
       <div className="flex flex-col md:h-[40rem] xl:h-screen sm:h-96 h-80">
@@ -42,18 +20,10 @@ const Home: NextPage = () => {
                 sizeSubTitle="text-4xl"
                 mode="light"
               />
-              <div className="flex justify-center">
-                <CardAbout
-                  content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis corrupti sapiente illo quibusdam quas qui inventore quasi aliquam exercitationem, deleniti fugit quis dolores, iste nostrum nulla, possimus itaque! Molestias, a?"
-                  title="Sobre Nosotros"
-                >
-                  <Svg />
-                </CardAbout>
-              </div>
             </div>
             <section className="flex xl:w-[70rem] max-w-[90%] mx-auto justify-between mt-32">
               <div className="basis-2/5 flex flex-col text-center gap-y-4 transition-opacity">
-              {/* opacity-0 hover:opacity-100 */}
+                {/* opacity-0 hover:opacity-100 */}
                 <h4 className="text-light text-3xl text-shadow">
                   Persona Natural
                 </h4>
@@ -75,7 +45,7 @@ const Home: NextPage = () => {
                 </div>
               </div>
               <div className="basis-2/5 flex flex-col text-center gap-y-4 transition-opacity">
-              {/* opacity-0 hover:opacity-100 */}
+                {/* opacity-0 hover:opacity-100 */}
                 <h4 className="text-light text-3xl text-shadow">
                   Persona Natural
                 </h4>
@@ -97,6 +67,69 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </section>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col gap-y-16 justify-center my-16">
+        <CardAbout
+          image={<GroupSvg />}
+          title="Sobre Nosotros"
+          imageFirst={true}
+          color="secundary"
+        >
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore,
+            quas. Saepe, cumque ad quis explicabo unde adipisci. Optio vitae
+            aspernatur in, velit corrupti a, officia accusantium reiciendis eum
+            quaerat libero!
+          </p>
+        </CardAbout>
+        <CardAbout
+          image={<LockSvg />}
+          title="Mayor Seguridad"
+          imageFirst={false}
+          color="third"
+        >
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore,
+            quas. Saepe, cumque ad quis explicabo unde adipisci. Optio vitae
+            aspernatur in, velit corrupti a, officia accusantium reiciendis eum
+            quaerat libero!
+          </p>
+        </CardAbout>
+        <CardAbout
+          image={<SpeedSvg />}
+          title="Mayor Rapidez"
+          imageFirst={true}
+          color="primary"
+        >
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore,
+            quas. Saepe, cumque ad quis explicabo unde adipisci. Optio vitae
+            aspernatur in, velit corrupti a, officia accusantium reiciendis eum
+            quaerat libero!
+          </p>
+        </CardAbout>
+      </div>
+      <div className="bg-[url('../public/backgroundPage2.png')] bg-cover bg-center h-[30rem] relative">
+        <div className="absolute grow bg-black/60 w-full h-[25rem] top-10 flex grow flex-col items-center justify-center gap-y-6">
+          <h4 className="text-light text-3xl text-shadow">
+            ¿Quieres hacer tus compras de manera segura?
+          </h4>
+          <p className="text-light text-2xl">
+            Hacemos de tu experiencia de compra la mejor
+          </p>
+          <div className="flex gap-x-4 w-2/5 max-w-[40rem]">
+            <Link href="/">
+              <a className="bg-secundary text-white font-bold py-1 px-4 rounded text-center basis-2/4 py-2">
+                Iniciar Sesión
+              </a>
+            </Link>
+            <Link href="/">
+              <a className="bg-secundary text-white font-bold py-1 px-4 rounded text-center basis-2/4 py-2">
+                Regístrate
+              </a>
+            </Link>
           </div>
         </div>
       </div>

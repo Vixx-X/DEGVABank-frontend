@@ -1,5 +1,3 @@
-import React from "react";
-
 interface FooterProps {
   mode?: string;
   classname?: string;

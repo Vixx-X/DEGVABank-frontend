@@ -7,6 +7,9 @@ module.exports = {
         light: "#EEEEEE",
         primary: "#2F80ED",
         secundary: "#048C7E",
+        darksecundary: "#034e47",
+        third: "#FFD43E",
+        darkthird: "#9b7e16",
       },
       fontFamily: {
         'montserrat' : ['Montserrat'],

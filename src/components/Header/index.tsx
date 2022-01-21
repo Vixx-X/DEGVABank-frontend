@@ -12,7 +12,7 @@ const Header = ({ mode = "light", classname }: HeaderProps) => {
       <div className="xl:w-[70rem] max-w-[90%] mx-auto py-2 flex justify-between items-center">
         <Link href="/">
           <a>
-            <Logotype sizeTitle="text-4xl"/>
+            <Logotype sizeTitle="text-4xl" classnameText="hidden md:block" classnameBox="h-12 md:h-16" />
           </a>
         </Link>
         <div className="flex gap-x-2">

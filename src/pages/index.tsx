@@ -1,10 +1,34 @@
 import Header from "@components/Header";
 import Footer from "@components/Footer";
+import CardAbout from "@components/CardAbout";
 import type { NextPage } from "next";
 import Logotype from "@components/Logotype";
 import Link from "next/link";
 
 const Home: NextPage = () => {
+  const Svg = () => {
+    return (
+      <svg
+        width="150"
+        height="150"
+        viewBox="0 0 220 221"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx="110" cy="110.5" r="108" fill="#048C7E" fillOpacity="0.55" />
+        <circle cx="110" cy="110.5" r="108" fill="#048C7E" fillOpacity="0.55" />
+        <circle
+          cx="110"
+          cy="110.5"
+          r="108"
+          stroke="#048C7E"
+          strokeWidth="4"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  };
+
   return (
     <>
       <div className="flex flex-col md:h-[40rem] xl:h-screen sm:h-96 h-80">
@@ -18,6 +42,14 @@ const Home: NextPage = () => {
                 sizeSubTitle="text-4xl"
                 mode="light"
               />
+              <div className="flex justify-center">
+                <CardAbout
+                  content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis corrupti sapiente illo quibusdam quas qui inventore quasi aliquam exercitationem, deleniti fugit quis dolores, iste nostrum nulla, possimus itaque! Molestias, a?"
+                  title="Sobre Nosotros"
+                >
+                  <Svg />
+                </CardAbout>
+              </div>
             </div>
             <section className="flex xl:w-[70rem] max-w-[90%] mx-auto justify-between mt-32">
               <div className="basis-2/5 flex flex-col text-center gap-y-4 transition-opacity">

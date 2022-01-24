@@ -8,11 +8,15 @@ interface HeaderProps {
 
 const Header = ({ mode = "light", classname }: HeaderProps) => {
   return (
-    <header className={`bg-light w-full ${classname}`}>
+    <header className={`bg-${mode} w-full ${classname}`}>
       <div className="xl:w-[70rem] max-w-[90%] mx-auto py-2 flex justify-between items-center">
         <Link href="/">
           <a>
-            <Logotype sizeTitle="text-4xl" classnameText="hidden md:block" classnameBox="h-12 md:h-16" />
+            <Logotype
+              sizeTitle="text-4xl"
+              classnameText="hidden md:block"
+              classnameBox="h-12 md:h-16"
+            />
           </a>
         </Link>
         <div className="flex gap-x-2">

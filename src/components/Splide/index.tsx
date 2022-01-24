@@ -1,18 +1,17 @@
-import { Splide, SplideSlide } from "splide-nextjs/react-splide";
-import "splide-nextjs/splide/dist/css/themes/splide-default.min.css";
+import { Splide } from "@splidejs/react-splide";
+import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 
 interface SplideProps {
-  options: any;
-  Item: JSX.Element;
-  itemProps: any;
+  options?: any;
+  children: JSX.Element;
 }
 
-const options = {
+const defaultOptions = {
   rewind: true,
   perPage: 3,
   perMove: 1,
   classes: {
-    pagination: `splide__pagination ${classes.bottomSplide}`,
+    pagination: "splide__pagination",
   },
   breakpoints: {
     960: {
@@ -39,16 +38,14 @@ const options = {
   width: "100%",
 };
 
-export default function SplideComponent({ options, Item, itemProps } : SplideProps) {
+export default function SplideComponent({ options, children }: SplideProps) {
+  const mergedOptions = {
+    ...defaultOptions,
+    ...options,
+  };
   return (
-    <Splide options={options} className="mb-8">
-      {itemProps.map(({ id }, index: number) => {
-        return (
-          <SplideSlide className="p-4" key={index}>
-            <Item {...itemProps[index]} />
-          </SplideSlide>
-        );
-      })}
+    <Splide options={mergedOptions} className="mb-8">
+      {children}
     </Splide>
   );
 }

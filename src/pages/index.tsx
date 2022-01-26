@@ -136,7 +136,7 @@ const Home: NextPage = () => {
           </div>
         </div>
       </section>
-      <Footer mode="dark" />
+      <Footer />
     </>
   );
 };

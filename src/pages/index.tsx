@@ -77,12 +77,12 @@ const Home: NextPage = () => {
           imageFirst={true}
           color="secundary"
         >
-          <p>
+          <>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore,
             quas. Saepe, cumque ad quis explicabo unde adipisci. Optio vitae
             aspernatur in, velit corrupti a, officia accusantium reiciendis eum
             quaerat libero!
-          </p>
+          </>
         </CardAbout>
         <CardAbout
           image={<LockSvg />}
@@ -90,12 +90,12 @@ const Home: NextPage = () => {
           imageFirst={false}
           color="third"
         >
-          <p>
+          <>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore,
             quas. Saepe, cumque ad quis explicabo unde adipisci. Optio vitae
             aspernatur in, velit corrupti a, officia accusantium reiciendis eum
             quaerat libero!
-          </p>
+          </>
         </CardAbout>
         <CardAbout
           image={<SpeedSvg />}
@@ -103,12 +103,12 @@ const Home: NextPage = () => {
           imageFirst={true}
           color="primary"
         >
-          <p>
+          <>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore,
             quas. Saepe, cumque ad quis explicabo unde adipisci. Optio vitae
             aspernatur in, velit corrupti a, officia accusantium reiciendis eum
             quaerat libero!
-          </p>
+          </>
         </CardAbout>
       </section>
       <section className="bg-[url('../public/backgroundPage2.png')] bg-cover bg-center h-[30rem] relative">

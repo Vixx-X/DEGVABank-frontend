@@ -5,7 +5,6 @@ import type { NextPage } from "next";
 import Logotype from "@components/Logotype";
 import Link from "next/link";
 import { GroupSvg, LockSvg, SpeedSvg } from "@public/assets/imagesSvg";
-import backgroundPage from "@public/backgroundPage.png";
 
 const Home: NextPage = () => {
   return (

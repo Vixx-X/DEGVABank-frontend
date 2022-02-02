@@ -4,7 +4,6 @@ import Header from "@components/Header";
 import Footer from "@components/Footer";
 import { Formik, Form, Field, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import Link from "next/link";
 
 enum typePesron {
   Natural = "Natural",

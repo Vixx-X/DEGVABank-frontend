@@ -1,4 +1,4 @@
-import Logotype from "../Logotype";
+import Logotype from "../../Logotype";
 import Link from "next/link";
 
 interface HeaderProps {

@@ -20,12 +20,12 @@ const Header = ({ mode = "light", classname }: HeaderProps) => {
           </a>
         </Link>
         <div className="flex gap-x-2">
-          <Link href="/">
+          <Link href="/LogIn">
             <a className="bg-secundary text-white font-bold py-1 px-4 rounded-full cursor-pointer">
               Ingresar
             </a>
           </Link>
-          <Link href="/">
+          <Link href="/Register">
             <a className="bg-secundary text-white font-bold py-1 px-4 rounded-full cursor-pointer">
               Registrate
             </a>

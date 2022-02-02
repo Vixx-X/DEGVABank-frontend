@@ -1,4 +1,4 @@
-import Header from "@components/Header";
+import Header from "@components/Header/Basic";
 import Footer from "@components/Footer";
 import CardAbout from "@components/CardAbout";
 import type { NextPage } from "next";

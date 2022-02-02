@@ -5,7 +5,6 @@ import type { NextPage } from "next";
 import Logotype from "@components/Logotype";
 import Link from "next/link";
 import { GroupSvg, LockSvg, SpeedSvg } from "@public/assets/imagesSvg";
-import backgroundPage from "@public/backgroundPage.png";
 
 const Home: NextPage = () => {
   return (
@@ -22,7 +21,7 @@ const Home: NextPage = () => {
                 mode="light"
               />
             </div>
-            <section className="flex xl:w-[70rem] max-w-[90%] mx-auto justify-between mt-32">
+            <section className="hidden md:flex xl:w-[70rem] max-w-[90%] mx-auto justify-between mt-32">
               <div className="basis-2/5 flex flex-col text-center gap-y-4 transition-opacity">
                 {/* opacity-0 hover:opacity-100 */}
                 <h4 className="text-light text-3xl text-shadow">
@@ -48,7 +47,7 @@ const Home: NextPage = () => {
               <div className="basis-2/5 flex flex-col text-center gap-y-4 transition-opacity">
                 {/* opacity-0 hover:opacity-100 */}
                 <h4 className="text-light text-3xl text-shadow">
-                  Persona Natural
+                  Persona Jurídica
                 </h4>
                 <p className="text-light text-center">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -76,7 +75,7 @@ const Home: NextPage = () => {
           image={<GroupSvg />}
           title="Sobre Nosotros"
           imageFirst={true}
-          color="secundary"
+          color="primary"
         >
           <>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore,
@@ -89,7 +88,7 @@ const Home: NextPage = () => {
           image={<LockSvg />}
           title="Mayor Seguridad"
           imageFirst={false}
-          color="third"
+          color="secundary"
         >
           <>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore,

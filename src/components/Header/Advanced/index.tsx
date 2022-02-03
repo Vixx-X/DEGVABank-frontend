@@ -2,12 +2,7 @@ import Logotype from "../../Logotype";
 import Link from "next/link";
 import NavBar from "@components/NavBar";
 
-interface HeaderProps {
-  mode?: string;
-  classname?: string;
-}
-
-const Header = ({ mode = "light", classname }: HeaderProps) => {
+const Header = () => {
   return (
     <header
       className={`bg-[url('../public/backgroundPage2.png')] bg-cover bg-center relative h-[11rem]`}

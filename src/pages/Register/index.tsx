@@ -3,7 +3,7 @@ import Button from "@components/Button/Button";
 import Header from "@components/Header/Basic";
 import Footer from "@components/Footer";
 import { Formik, Form, Field, FormikHelpers } from "formik";
-import * as Yup from "yup";
+//import * as Yup from "yup";
 
 enum typePesron {
   Natural = "Natural",
@@ -28,13 +28,13 @@ const initialValue: SignupForm = {
   typePerson: typePesron.Natural,
 };
 
-const SignupSchema = Yup.object().shape({
-  userName: Yup.string()
-    .min(2, "Too Short!")
-    .max(70, "Too Long!")
-    .required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
-});
+// const SignupSchema = Yup.object().shape({
+//   userName: Yup.string()
+//     .min(2, "Too Short!")
+//     .max(70, "Too Long!")
+//     .required("Required"),
+//   email: Yup.string().email("Invalid email").required("Required"),
+// });
 
 const Registro: NextPage = () => {
   return (

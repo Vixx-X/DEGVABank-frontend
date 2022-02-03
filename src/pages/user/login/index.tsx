@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 
-const { URL_HOME } = SERVER_URLS;
+const { URL_HOME, URL_REGISTER, URL_PASSWORD_RESET } = SERVER_URLS;
 
 interface SigninForm {
   password: string;
@@ -61,7 +61,7 @@ const LogIn: NextPage = () => {
                     <div className="divide-y">
                       <div>
                         <p className="font-light text-3xl xl:text-4xl mb-3 text-light">
-                          Login
+                          Inicio de Sesión
                         </p>
                       </div>
                       <div className="pt-4">
@@ -120,12 +120,12 @@ const LogIn: NextPage = () => {
                   </Form>
                 </Formik>
 
-                <Link href="/">
+                <Link href={URL_PASSWORD_RESET}>
                   <a className="inline-block w-full align-baseline font-bold text-sm xl:text-lg  mt-4 text-light hover:text-primary text-right">
                     ¿Olvido su contraseña?
                   </a>
                 </Link>
-                <Link href="/Register">
+                <Link href={URL_REGISTER}>
                   <a className="inline-block w-full align-baseline font-bold text-sm xl:text-lg text-light hover:text-primary text-right">
                     ¿No tiene aun una cuenta?
                   </a>

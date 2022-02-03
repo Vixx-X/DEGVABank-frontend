@@ -1,10 +1,15 @@
+import ElementNavBar from "./element";
+import { SERVER_URLS } from "@config";
+import { API_URLS } from "@config";
 import {
   faHome,
   faUserCircle,
   faPeopleArrows,
   faCogs,
 } from "@fortawesome/free-solid-svg-icons";
-import ElementNavBar from "./element";
+
+const { URL_LANDING, URL_HOME } = SERVER_URLS;
+const { URL_USER_PROFILE, URL_USER_CONFIG } = API_URLS;
 
 interface HeaderProps {
   activate?: string;
@@ -15,25 +20,25 @@ const NavBar = ({ activate = "home" }: HeaderProps) => {
     <nav className="xl:w-[70rem] max-w-[90%] mx-auto flex items-center justify-around gap-x-6">
       <ElementNavBar
         icon={faHome}
-        link="/Home"
+        link={URL_HOME}
         text="home"
         activate={activate == "home"}
       />
       <ElementNavBar
-        icon={ faUserCircle}
-        link="/"
+        icon={faUserCircle}
+        link={URL_USER_PROFILE}
         text="Usuario"
         activate={activate == "user"}
       />
       <ElementNavBar
         icon={faPeopleArrows}
-        link="/"
+        link={URL_LANDING}
         text="Movimientos"
         activate={activate == "movements"}
       />
       <ElementNavBar
         icon={faCogs}
-        link="/"
+        link={URL_USER_CONFIG}
         text="Ajustes"
         activate={activate == "settings"}
       />

@@ -1,10 +1,13 @@
-import Header from "@components/Header/Basic";
-import Footer from "@components/Footer";
 import CardAbout from "@components/CardAbout";
-import type { NextPage } from "next";
+import Footer from "@components/Footer";
+import Header from "@components/Header/Basic";
 import Logotype from "@components/Logotype";
-import Link from "next/link";
+import { SERVER_URLS } from "@config";
 import { GroupSvg, LockSvg, SpeedSvg } from "@public/assets/imagesSvg";
+import type { NextPage } from "next";
+import Link from "next/link";
+
+const { URL_LOGIN, URL_REGISTER } = SERVER_URLS;
 
 const Home: NextPage = () => {
   return (
@@ -32,12 +35,12 @@ const Home: NextPage = () => {
                   Quisquam quasi fugiat et reiciendis est.
                 </p>
                 <div className="flex flex-col gap-y-4">
-                  <Link href="/">
+                  <Link href={URL_LOGIN}>
                     <a className="bg-primary hover:bg-blue-700 text-light font-bold py-2 px-4 cursor-pointer rounded-full w-full uppercase text-center transition">
                       Iniciar Sesión
                     </a>
                   </Link>
-                  <Link href="/">
+                  <Link href={URL_REGISTER}>
                     <a className="bg-light hover:bg-slate-50  text-dark font-bold rounded-full py-2 px-4 cursor-pointer uppercase text-center transition">
                       Regístrate
                     </a>
@@ -54,12 +57,12 @@ const Home: NextPage = () => {
                   Quisquam quasi fugiat et reiciendis est.
                 </p>
                 <div className="flex flex-col gap-y-4">
-                  <Link href="/">
+                  <Link href={URL_LOGIN}>
                     <a className="bg-primary hover:bg-blue-700 text-light font-bold py-2 px-4 cursor-pointer rounded-full w-full uppercase text-center transition">
                       Iniciar Sesión
                     </a>
                   </Link>
-                  <Link href="/">
+                  <Link href={URL_REGISTER}>
                     <a className="bg-light hover:bg-slate-50  text-dark font-bold rounded-full py-2 px-4 cursor-pointer uppercase text-center transition">
                       Regístrate
                     </a>
@@ -121,12 +124,12 @@ const Home: NextPage = () => {
               Hacemos de tu experiencia de compra la mejor
             </p>
             <div className="flex flex-col w-[60%] md:w-auto gap-y-4 md:flex-row md:gap-x-4 md:min-w-[35rem]">
-              <Link href="/">
+              <Link href={URL_LOGIN}>
                 <a className="bg-secundary text-white font-bold py-1 px-4 rounded text-center basis-2/4 py-2">
                   Iniciar Sesión
                 </a>
               </Link>
-              <Link href="/">
+              <Link href={URL_REGISTER}>
                 <a className="bg-secundary text-white font-bold py-1 px-4 rounded text-center basis-2/4 py-2">
                   Regístrate
                 </a>

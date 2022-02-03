@@ -4,12 +4,16 @@ import Header from "@components/Header/Advanced";
 import Footer from "@components/Footer";
 import CardBill from "./Card/Bill";
 import CreditCard from "./Card/CreditCard";
+import { useContext } from "react";
+import { UserContext } from "@contexts/UserContext";
 
 const Home: NextPage = () => {
+  const { user } = useContext(UserContext);
+  console.log(user);
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        <Header />
+        <Header username="gaby" />
         <div className="grow relative">
           <div className=" xl:w-[70rem] max-w-[90%] flex flex-wrap mx-auto my-20 justify-between">
             <main className="basis-full md:basis-9/12 divide-y flex flex-col gap-y-12">
@@ -17,7 +21,6 @@ const Home: NextPage = () => {
               <CreditCard />
             </main>
             <aside className="hidden md:block md:basis-[22%] bg-primary">
-
             </aside>
           </div>
         </div>

@@ -20,6 +20,7 @@ export const API_URLS = {
   // User
   URL_USER_REGISTER: `${API_URL}/user/register/`,
   URL_USER_PROFILE: `${API_URL}/user/profile/`,
+  URL_USER_CONFIG: `${API_URL}/user/config/`,
   URL_USER_ADDRESSES: `${API_URL}/user/addresses/`,
   URL_PASSWORD_RESET: `${API_URL}/user/password-reset/`,
   URL_PASSWORD_RESET_CONFIRM: `${API_URL}/user/password-reset/confirm/[uidb64]/[token]/`,
@@ -38,5 +39,6 @@ export const SERVER_URLS = {
   URL_USER_CHANGE_PASSWORD: "/user/change-password",
 
   // dashboard
-  URL_HOME: "/Home",
+  URL_HOME: "/home",
+  URL_LANDING: "/",
 };

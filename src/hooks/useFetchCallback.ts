@@ -1,6 +1,5 @@
-import { AuthContext } from '@context/AuthContext';
-
-import { useCallback, useContext } from 'react';
+import { AuthContext } from "@contexts/AuthContext";
+import { useCallback, useContext } from "react";
 
 export const useFetchCallback = () => {
   const { auth } = useContext(AuthContext);
@@ -11,12 +10,12 @@ export const useFetchCallback = () => {
 
       const isAuth = (requiredAuth && !!auth.access) as boolean;
       const completeOptions = {
-        method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        credentials: 'include', // include, *same-origin, omit
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors", // no-cors, *cors, same-origin
+        credentials: "include", // include, *same-origin, omit
         ...options,
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
       };
@@ -27,7 +26,7 @@ export const useFetchCallback = () => {
         };
 
       // merging headers option explicitly, for partial updates
-      if ('headers' in options) {
+      if ("headers" in options) {
         completeOptions.headers = {
           ...completeOptions.headers,
           ...options.headers,
@@ -38,7 +37,7 @@ export const useFetchCallback = () => {
         const response = await fetch(url, completeOptions);
         const result = await response.json();
         return [result, response.ok || response.status === undefined];
-      } catch (err) {
+      } catch (err: any) {
         return [err.message, false];
       }
     },

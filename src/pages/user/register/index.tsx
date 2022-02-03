@@ -18,6 +18,13 @@ enum typePesron {
   Juridical = "Jurídico",
 }
 
+interface Account {
+  id: number;
+  type: string;
+  date: Date;
+  balance: number;
+}
+
 interface SignupForm {
   password: string;
   passwordConfirm: string;
@@ -25,6 +32,7 @@ interface SignupForm {
   email: string;
   tel: number;
   typePerson: typePesron;
+  account: Account;
 }
 
 const initialValue: SignupForm = {
@@ -34,6 +42,7 @@ const initialValue: SignupForm = {
   email: "",
   tel: 0,
   typePerson: typePesron.Natural,
+  account: { id: 0, type: "", date: new Date(), balance: 0 },
 };
 
 const Registro: NextPage = () => {
@@ -65,7 +74,7 @@ const Registro: NextPage = () => {
           <div className="absolute grow bg-black/60 w-full h-full"></div>
           <div className="z-1 absolute grid place-items-center mx-auto w-full h-full">
             {/* <form className="max-w-[90%] rounded mb-4 divide-y w-full sm:max-w-[40rem]"> */}
-            <div className="rounded mb-4 w-full max-w-[40rem] ">
+            <div className="rounded mb-4 w-[90%] max-w-[60rem] ">
               <Formik
                 initialValues={initialValue}
                 //validationSchema={SignupSchema}
@@ -161,9 +170,44 @@ const Registro: NextPage = () => {
                           placeholder="Teléfono"
                         />
                       </div>
-                      <div>
+                      <div className="grid grid-cols-2 gap-x-4">
+                        <div className="mb-4">
+                          <label
+                            className="block text-sm xl:text-lg font-bold mb-2 text-light"
+                            htmlFor="idType"
+                          >
+                            Tipo de identificación
+                          </label>
+                          <select
+                            id="idType"
+                            className="form-select appearance-none block w-full px-3 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                          >
+                            <option selected disabled>
+                              --Seleccionar--
+                            </option>
+                            <option value="1">V-</option>
+                            <option value="2">E-</option>
+                            <option value="3">J-</option>
+                          </select>
+                        </div>
+                        <div className="mb-4">
+                          <label
+                            className="block text-sm xl:text-lg font-bold mb-2 text-light"
+                            htmlFor="idNumber"
+                          >
+                            Número de identificación
+                          </label>
+                          <input
+                            className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="idNumber"
+                            type="number"
+                            placeholder="Ej: 5555555"
+                          />
+                        </div>
+                      </div>
+                      <div className="mb-4">
                         <p className="block text-sm xl:text-lg font-bold mb-2 text-light flex items-center">
-                          Tipo se usuario
+                          Tipo de usuario
                         </p>
                         <label className="block text-sm xl:text-lg mb-2 text-light flex items-center">
                           <Field
@@ -182,6 +226,29 @@ const Registro: NextPage = () => {
                             className="mr-2"
                           />
                           <p>{typePesron.Juridical}</p>
+                        </label>
+                      </div>
+                      <div className="mb-4">
+                        <p className="block text-sm xl:text-lg font-bold mb-2 text-light flex items-center">
+                          Tipo de cuenta
+                        </p>
+                        <label className="block text-sm xl:text-lg mb-2 text-light flex items-center">
+                          <Field
+                            type="radio"
+                            name="account.type"
+                            value="Ahorro"
+                            className="mr-2"
+                          />
+                          Ahorro
+                        </label>
+                        <label className="block text-sm xl:text-lg mb-2 text-light flex items-center">
+                          <Field
+                            type="radio"
+                            name="account.type"
+                            value="Corriente"
+                            className="mr-2"
+                          />
+                          Corriente
                         </label>
                       </div>
                     </div>

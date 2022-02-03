@@ -3,7 +3,6 @@ import CreditCard from "./card/credit-card";
 import Footer from "@components/Footer";
 //import Button from "@components/Button/Button";
 import Header from "@components/Header/Advanced";
-import { UserContext } from "@contexts/UserContext";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {

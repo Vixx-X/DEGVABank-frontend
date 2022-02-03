@@ -31,7 +31,7 @@ const Header = ({ activate = "home" }: headerProps) => {
           </Link>
           <div className="flex gap-x-10 items-center">
             <p className="hidden sm:block text-light">
-              Buenos dias, {user.username}
+              Buenos dias, {user?.username}
             </p>
             <Link href={URL_LANDING}>
               <a className="bg-light/20 text-white font-bold py-1 px-4 rounded-full cursor-pointer">

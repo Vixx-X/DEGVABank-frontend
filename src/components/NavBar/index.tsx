@@ -16,7 +16,7 @@ interface HeaderProps {
 
 const NavBar = ({ activate }: HeaderProps) => {
   return (
-    <nav className="xl:w-[70rem] max-w-[90%] mx-auto flex items-center justify-around gap-x-6">
+    <nav className="max-w-[70rem] w-[90%] mx-auto flex items-center justify-between md:justify-around gap-x-6">
       <ElementNavBar
         icon={faHome}
         link={URL_HOME}

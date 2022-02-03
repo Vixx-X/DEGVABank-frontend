@@ -101,6 +101,38 @@ const Registro: NextPage = () => {
                 <div className="mb-4">
                   <label
                     className="block text-sm xl:text-lg font-bold mb-2 text-light"
+                    htmlFor="name"
+                  >
+                    Nombre
+                  </label>
+                  <Field
+                    type="text"
+                    label="Nombre"
+                    name="name"
+                    id="name"
+                    className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="Nombre"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    className="block text-sm xl:text-lg font-bold mb-2 text-light"
+                    htmlFor="lastname"
+                  >
+                    Apellido
+                  </label>
+                  <Field
+                    type="text"
+                    label="Apellido"
+                    name="lastname"
+                    id="lastname"
+                    className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="Apellido"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    className="block text-sm xl:text-lg font-bold mb-2 text-light"
                     htmlFor="username"
                   >
                     Nombre de usuario

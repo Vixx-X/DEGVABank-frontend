@@ -9,6 +9,7 @@ const {
   URL_TOKEN_VERIFY,
   URL_TOKEN_REVOKE,
   URL_USER_PROFILE,
+  URL_USER_REGISTER,
 } = API_URLS;
 
 export async function getProfileDataWithURL(auth: string, url: string) {
@@ -34,26 +35,12 @@ export async function getToken(username: string, password: string) {
   return data;
 }
 
-enum typePesron {
-  Natural = "Natural",
-  Juridical = "Jurídico",
-}
-
-interface SignupForm {
-  password: string;
-  passwordConfirm: string;
-  userName: string;
-  email: string;
-  tel: number;
-  typePerson: typePesron;
-}
-
-export async function getRegisterToken(dataUser: SignupForm) {
+export async function postRegisterUser(userData: any) {
   const resp = await fetch(
-    URL_TOKEN_AUTH,
+    URL_USER_REGISTER,
     makeFetchOption({
       method: "POST",
-      body: stringify(dataUser),
+      body: stringify(userData),
     })
   );
   await assertApiError(resp);

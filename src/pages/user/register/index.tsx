@@ -1,51 +1,58 @@
 import Button from "@components/Button/Button";
 import MainLayout from "@components/Layout";
 import { SERVER_URLS } from "@config";
-import { AuthContext } from "@contexts/AuthContext";
-import { filterOpenRedirect } from "@utils/filterOpenRedirect";
+import { postRegisterUser } from "@fetches/users";
 import { Formik, Form, Field } from "formik";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
-const { URL_HOME } = SERVER_URLS;
+const { URL_LOGIN } = SERVER_URLS;
 
 //import * as Yup from "yup";
 
-enum typePesron {
-  Natural = "Natural",
-  Juridical = "Jurídico",
+enum PersonType {
+  NATURAL = "NATURAL",
+  JURIDIC = "JURIDIC",
 }
 
-interface Account {
-  id: number;
-  type: string;
-  date: Date;
-  balance: number;
+enum AccountType {
+  CHECKING = "CHECKING",
+  SAVING = "SAVING",
 }
+
+// interface Account {
+//   id: number;
+//   type: string;
+//   date: Date;
+//   balance: number;
+// }
 
 interface SignupForm {
-  password: string;
-  passwordConfirm: string;
-  userName: string;
   email: string;
-  tel: number;
-  typePerson: typePesron;
-  account: Account;
+  username: string;
+  password1: string;
+  password2: string;
+  tel: "";
+  type: PersonType;
+  account_type: AccountType;
+  number: number;
+  typeOfDocumentID: string;
 }
 
 const initialValue: SignupForm = {
-  password: "",
-  passwordConfirm: "",
-  userName: "",
   email: "",
-  tel: 0,
-  typePerson: typePesron.Natural,
-  account: { id: 0, type: "", date: new Date(), balance: 0 },
+  username: "",
+  password1: "",
+  password2: "",
+  tel: "",
+  type: PersonType.NATURAL,
+  account_type: AccountType.CHECKING,
+  number: 0,
+  typeOfDocumentID: "v",
 };
 
 const Registro: NextPage = () => {
-  const { getToken } = useContext(AuthContext);
   const router = useRouter();
   const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState("");
@@ -53,11 +60,19 @@ const Registro: NextPage = () => {
 
   const handleSubmit = async (data: SignupForm) => {
     setLoading(true);
+    const userData = {
+      email: data.email,
+      username: data.username,
+      password1: data.password1,
+      password2: data.password2,
+      tel: data.tel,
+      type: data.type,
+      account_type: data.account_type,
+      document_id: data.typeOfDocumentID + data.number,
+    };
     try {
-      // actual get token (it return the response in case of error)
-      await getToken(data);
-      const next = router.query?.next as string;
-      router.push(next ? filterOpenRedirect(next) : URL_HOME);
+      await postRegisterUser(userData);
+      router.push(URL_LOGIN);
     } catch (error) {
       setError(true);
       setMessageError("Hay un error con la página");
@@ -93,7 +108,7 @@ const Registro: NextPage = () => {
                   <Field
                     type="text"
                     label="Nombre de usuario"
-                    name="userName"
+                    name="username"
                     id="username"
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Username"
@@ -126,7 +141,7 @@ const Registro: NextPage = () => {
                     type="password"
                     label="Contraseña"
                     id="password"
-                    name="password"
+                    name="password1"
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Password"
                   />
@@ -142,7 +157,7 @@ const Registro: NextPage = () => {
                     type="password"
                     label="Confirmar contraseña"
                     id="passwordConfirm"
-                    name="passwordConfirm"
+                    name="password2"
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Confirmar contraseña"
                   />
@@ -167,21 +182,23 @@ const Registro: NextPage = () => {
                   <div className="mb-4">
                     <label
                       className="block text-sm xl:text-lg font-bold mb-2 text-light"
-                      htmlFor="idType"
+                      htmlFor="type"
                     >
                       Tipo de identificación
                     </label>
-                    <select
-                      id="idType"
+                    <Field
+                      as="select"
+                      id="typeOfDocumentID"
                       className="form-select appearance-none block w-full px-3 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                      name="typeOfDocumentID"
                     >
                       <option selected disabled>
                         --Seleccionar--
                       </option>
-                      <option value="1">V-</option>
-                      <option value="2">E-</option>
-                      <option value="3">J-</option>
-                    </select>
+                      <option value="V">V-</option>
+                      <option value="E">E-</option>
+                      <option value="J">J-</option>
+                    </Field>
                   </div>
                   <div className="mb-4">
                     <label
@@ -190,10 +207,11 @@ const Registro: NextPage = () => {
                     >
                       Número de identificación
                     </label>
-                    <input
+                    <Field
                       className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="idNumber"
                       type="number"
+                      name="number"
                       placeholder="Ej: 5555555"
                     />
                   </div>
@@ -206,20 +224,20 @@ const Registro: NextPage = () => {
                     <label className="block text-sm xl:text-lg mb-2 text-light flex items-center">
                       <Field
                         type="radio"
-                        name="typePerson"
-                        value={typePesron.Natural}
+                        name="type"
+                        value={PersonType.NATURAL}
                         className="mr-2"
                       />
-                      {typePesron.Natural}
+                      {PersonType.NATURAL}
                     </label>
                     <label className="block text-sm xl:text-lg mb-2 text-light flex items-center">
                       <Field
                         type="radio"
-                        name="typePerson"
-                        value={typePesron.Juridical}
+                        name="type"
+                        value={PersonType.JURIDIC}
                         className="mr-2"
                       />
-                      <p>{typePesron.Juridical}</p>
+                      <p>{PersonType.JURIDIC}</p>
                     </label>
                   </div>
                   <div className="mb-4">
@@ -229,8 +247,8 @@ const Registro: NextPage = () => {
                     <label className="block text-sm xl:text-lg mb-2 text-light flex items-center">
                       <Field
                         type="radio"
-                        name="account.type"
-                        value="Ahorro"
+                        name="account_type"
+                        value={AccountType.SAVING}
                         className="mr-2"
                       />
                       Ahorro
@@ -238,8 +256,8 @@ const Registro: NextPage = () => {
                     <label className="block text-sm xl:text-lg mb-2 text-light flex items-center">
                       <Field
                         type="radio"
-                        name="account.type"
-                        value="Corriente"
+                        name="account_type"
+                        value={AccountType.CHECKING}
                         className="mr-2"
                       />
                       Corriente

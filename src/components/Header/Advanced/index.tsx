@@ -1,17 +1,16 @@
 import Logotype from "../../Logotype";
-import Link from "next/link";
 import NavBar from "@components/NavBar";
 import { SERVER_URLS } from "@config";
+import Link from "next/link";
 
-
-const { URL_HOME, URL_LANDING } = SERVER_URLS
+const { URL_HOME, URL_LANDING } = SERVER_URLS;
 
 interface headerProps {
   username: string;
+  activate?: string;
 }
 
-const Header = ({username} : headerProps) => {
-  
+const Header = ({ username, activate = "home" }: headerProps) => {
   return (
     <header
       className={`bg-[url('../public/backgroundPage2.png')] bg-cover bg-center relative h-[11rem]`}
@@ -38,7 +37,7 @@ const Header = ({username} : headerProps) => {
           </div>
         </div>
         <div className="absolute bg-black/20 w-full h-20 top-24 flex">
-          <NavBar />
+          <NavBar activate={activate} />
         </div>
       </div>
     </header>

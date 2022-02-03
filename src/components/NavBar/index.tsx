@@ -1,6 +1,5 @@
 import ElementNavBar from "./element";
 import { SERVER_URLS } from "@config";
-import { API_URLS } from "@config";
 import {
   faHome,
   faUserCircle,
@@ -8,14 +7,14 @@ import {
   faCogs,
 } from "@fortawesome/free-solid-svg-icons";
 
-const { URL_LANDING, URL_HOME } = SERVER_URLS;
-const { URL_USER_PROFILE, URL_USER_CONFIG } = API_URLS;
+const { URL_LANDING, URL_HOME, URL_USER_PROFILE, URL_USER_CONFIG } =
+  SERVER_URLS;
 
 interface HeaderProps {
   activate?: string;
 }
 
-const NavBar = ({ activate = "home" }: HeaderProps) => {
+const NavBar = ({ activate }: HeaderProps) => {
   return (
     <nav className="xl:w-[70rem] max-w-[90%] mx-auto flex items-center justify-around gap-x-6">
       <ElementNavBar

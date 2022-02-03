@@ -1,0 +1,201 @@
+import Layout from '@components/Layout';
+import Loader from '@components/common/Loader';
+import Button from '@components/common/button/Button';
+import CharField from '@components/common/form/CharField';
+import EmailField from '@components/common/form/EmailField';
+import HeaderTitle from '@components/header/HeaderTitle';
+
+import { API_URLS, SERVER_URLS } from '@config';
+
+import { useFetchCallback } from '@hooks/useFetchCallback';
+import useSendAlert from '@hooks/useSendAlert';
+import useToggle from '@hooks/useToggle';
+
+import Router from 'next/router';
+import { FormEvent, useState } from 'react';
+
+const { URL_CHANGE_EMAIL, URL_OTP_REQUEST } = API_URLS;
+const { URL_ACCOUNT } = SERVER_URLS;
+
+interface ChangeEmailFormData {
+  email: string;
+  token: string;
+  device: string;
+}
+
+const ChangeEmail = () => {
+  const [formError, setFormError] = useState<ChangeEmailFormData>({
+    email: '',
+    token: '',
+    device: '',
+  });
+  const [form, setForm] = useState<ChangeEmailFormData>({
+    email: '',
+    token: '',
+    device: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [messageError, setMessageError] = useState('');
+  const Fetch = useFetchCallback();
+
+  const sendAlert = useSendAlert();
+  const handleChange = (e: FormEvent<HTMLInputElement>) => {
+    const el = e.target as HTMLInputElement;
+    setForm({
+      ...form,
+      [el.name]: el.value,
+    });
+  };
+
+  const [openOTP, toggleOTP] = useToggle(false);
+  const [expiredTime, setExpiredTime] = useState(null);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(form),
+    };
+
+    try {
+      const [dataJson, ok] = await Fetch(URL_CHANGE_EMAIL, options);
+      if (ok) {
+        sendAlert(
+          'success',
+          'Cambio de Correo',
+          'Se registro correctamente el cambio de correo.'
+        );
+        Router.push(URL_ACCOUNT);
+      } else {
+        setMessageError(dataJson?.non_field_errors?.join(', '));
+        if (!dataJson.token) toggleOTP(false);
+        setFormError(dataJson);
+        setError(true);
+      }
+    } catch (error) {
+      setError(true);
+      setMessageError('Hay un error con la página');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClick = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(form),
+    };
+
+    try {
+      const [dataJson, ok] = await Fetch(URL_OTP_REQUEST, options);
+      if (ok) {
+        setForm({
+          ...form,
+          device: dataJson.device,
+        });
+        const expire = Math.round(new Date(dataJson.expire).getTime() / 1000);
+        const i = setInterval(() => {
+          const diff = expire - Math.round(Date.now() / 1000);
+          if (diff < 0) {
+            clearInterval(i);
+            setExpiredTime(0);
+          } else {
+            setExpiredTime(diff);
+          }
+        }, 1000);
+
+        toggleOTP(true);
+      } else {
+        setMessageError(dataJson);
+        setError(true);
+      }
+    } catch (error) {
+      setError(true);
+      setMessageError('Hay un error con la página');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) return <Loader />;
+
+  return (
+    <Layout title="Cambio tu Correo" description="Cambia tu correo electrónico">
+      <section className="my-12 ">
+        <div className="container mx-auto animate__animated animate__fadeIn animate__delay-3s">
+          {openOTP ? (
+            <>
+              <HeaderTitle title="Revisa tu Correo" />
+              <div className="flex flex-col items-center justify-center mb-20">
+                <p>
+                  Te mandamos un codigo de confirmación a tu nuevo correo, el
+                  cual expira en {expiredTime} segundos.
+                </p>
+              </div>
+            </>
+          ) : (
+            <HeaderTitle title="Cambia tu Correo" />
+          )}
+
+          <form method="POST" onSubmit={(e) => handleSubmit(e)}>
+            {openOTP ? (
+              <div className="flex flex-col items-center justify-center mb-20">
+                <CharField
+                  placeholder="Token"
+                  name="token"
+                  onChange={handleChange}
+                  value={form.token}
+                />
+                <span className="text-red-500 text-sm">{formError.token}</span>
+
+                <Button
+                  type="submit"
+                  className="bg-primary-new rounded-md py-3 text-white font-extrabold w-full lg:w-96 primary"
+                >
+                  Enviar
+                </Button>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center mb-20">
+                <EmailField
+                  placeholder="Correo electrónico"
+                  name="email"
+                  onChange={handleChange}
+                  value={form.email}
+                />
+                <span className="text-red-500 text-sm">{formError.email}</span>
+
+                <Button
+                  onClick={handleClick}
+                  className="bg-primary-new rounded-md py-3 text-white font-extrabold w-full lg:w-96 primary"
+                >
+                  Cambiar Correo
+                </Button>
+
+                {error ? (
+                  <div className="bg-red-400 border  border-red-700 w-96 p-3 my-3 py-3 rounded-lg text-sm font-normal">
+                    <strong>Error: </strong> {JSON.stringify(messageError)}
+                  </div>
+                ) : null}
+              </div>
+            )}
+          </form>
+        </div>
+      </section>
+    </Layout>
+  );
+};
+
+export default ChangeEmail;
+
+export async function getStaticProps() {
+  return {
+    props: {
+      pageNeedAuth: true,
+    },
+  };
+}

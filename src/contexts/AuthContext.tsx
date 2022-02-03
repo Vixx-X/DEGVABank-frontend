@@ -21,7 +21,7 @@ import useSWR from "swr";
 
 const { URL_LOGIN } = SERVER_URLS;
 
-export const AuthContext = createContext(null);
+export const AuthContext = createContext<any>(null);
 
 interface AuthTokens {
   access: string;

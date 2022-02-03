@@ -1,13 +1,13 @@
 export const REFRESH_MAX_AGE = 86400000; // 1 day in ms
 
-const API_URL = "https://stage.workshop-garage.tech/api";
+const API_URL = "https://api.bank.vittorioadesso.com";
 
 // Server side auth urls
 export const AUTH_URLS = {
-  URL_TOKEN_AUTH: `${API_URL}/auth/token/`,
-  URL_TOKEN_REFRESH: `${API_URL}/auth/token/refresh/`,
+  URL_TOKEN_AUTH: `${API_URL}/token/`,
+  URL_TOKEN_REFRESH: `${API_URL}/token/refresh/`,
   URL_TOKEN_VERIFY: `${API_URL}/auth/token/verify/`,
-  URL_TOKEN_REVOKE: `${API_URL}/auth/token/revoke/`,
+  URL_TOKEN_REVOKE: `${API_URL}/token/revoke/`,
 };
 
 // Api urls for client
@@ -36,7 +36,10 @@ export const SERVER_URLS = {
   URL_PASSWORD_RESET_CONFIRM: "/user/password-reset/confirm/[uidb64]/[token]",
   URL_USER_CHANGE_EMAIL: "/user/change-email",
   URL_USER_CHANGE_PASSWORD: "/user/change-password",
+  URL_USER_PROFILE: "/user/profile",
+  URL_USER_CONFIG: "/user/config/",
 
   // dashboard
-  URL_HOME: "/dashboard",
+  URL_HOME: "/home",
+  URL_LANDING: "/",
 };

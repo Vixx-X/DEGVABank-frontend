@@ -7,7 +7,7 @@ import HeaderTitle from '@components/header/HeaderTitle';
 
 import { SERVER_URLS } from '@config';
 
-import { AuthContext } from '@context/AuthContext';
+import { AuthContext } from '@contexts/AuthContext';
 
 import { filterOpenRedirect } from '@utils/filterOpenRedirect';
 

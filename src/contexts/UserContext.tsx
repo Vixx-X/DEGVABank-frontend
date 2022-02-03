@@ -8,7 +8,7 @@ import React, { createContext, useCallback, useEffect, useState } from "react";
 
 const { URL_USER_PROFILE } = API_URLS;
 
-export const UserContext = createContext(null);
+export const UserContext = createContext<any>(null);
 
 interface User {
   email: string;

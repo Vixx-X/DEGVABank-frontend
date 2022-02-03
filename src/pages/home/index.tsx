@@ -5,14 +5,12 @@ import Footer from "@components/Footer";
 import Header from "@components/Header/Advanced";
 import { UserContext } from "@contexts/UserContext";
 import type { NextPage } from "next";
-import { useContext } from "react";
 
 const Home: NextPage = () => {
-  const { user } = useContext(UserContext);
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        <Header username={user.username} />
+        <Header />
         <div className="grow relative">
           <div className=" xl:w-[70rem] max-w-[90%] flex flex-wrap mx-auto my-20 justify-between">
             <main className="basis-full md:basis-9/12 divide-y flex flex-col gap-y-12">

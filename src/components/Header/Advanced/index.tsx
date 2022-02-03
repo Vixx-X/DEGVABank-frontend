@@ -1,16 +1,18 @@
 import Logotype from "../../Logotype";
 import NavBar from "@components/NavBar";
 import { SERVER_URLS } from "@config";
+import { UserContext } from "@contexts/UserContext";
 import Link from "next/link";
+import { useContext } from "react";
 
 const { URL_HOME, URL_LANDING } = SERVER_URLS;
 
 interface headerProps {
-  username: string;
   activate?: string;
 }
 
-const Header = ({ username, activate = "home" }: headerProps) => {
+const Header = ({ activate = "home" }: headerProps) => {
+  const { user } = useContext(UserContext);
   return (
     <header
       className={`bg-[url('../public/backgroundPage2.png')] bg-cover bg-center relative h-[11rem]`}
@@ -28,7 +30,9 @@ const Header = ({ username, activate = "home" }: headerProps) => {
             </a>
           </Link>
           <div className="flex gap-x-10 items-center">
-            <p className="hidden sm:block text-light">Buenos dias, {username}</p>
+            <p className="hidden sm:block text-light">
+              Buenos dias, {user.username}
+            </p>
             <Link href={URL_LANDING}>
               <a className="bg-light/20 text-white font-bold py-1 px-4 rounded-full cursor-pointer">
                 Cerrar sesión

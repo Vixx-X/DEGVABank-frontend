@@ -22,7 +22,7 @@ import Footer from "@components/Footer";
 const Home: NextPage = () => {
   return (
     <>
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col min-h-screen">
         <Header />
         <div className="grow relative">
         </div>

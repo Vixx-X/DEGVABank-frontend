@@ -1,5 +1,6 @@
 import Logotype from "../../Logotype";
 import Link from "next/link";
+import NavBar from "@components/NavBar";
 
 interface HeaderProps {
   mode?: string;
@@ -8,15 +9,10 @@ interface HeaderProps {
 
 const Header = ({ mode = "light", classname }: HeaderProps) => {
   return (
-    // <div className="bg-[url('../public/backgroundPage2.png')] bg-cover bg-center grow relative">
-    // <div className="absolute grow bg-black/60 w-full h-full"></div>
-    // <div className="z-1 absolute grid place-items-center mx-auto w-full h-full">
-
     <header
-      className={`bg-[url('../public/backgroundPage2.png')] bg-cover bg-center relative h-[10rem]`}
+      className={`bg-[url('../public/backgroundPage2.png')] bg-cover bg-center relative h-[11rem]`}
     >
       <div className="absolute grow bg-black/60 w-full h-full">
-        <div className="absolute bg-black/20 w-full h-20 top-20"></div>
         <div className="xl:w-[70rem] max-w-[90%] mx-auto py-2 flex justify-between items-center">
           <Link href="/">
             <a>
@@ -36,6 +32,9 @@ const Header = ({ mode = "light", classname }: HeaderProps) => {
               </a>
             </Link>
           </div>
+        </div>
+        <div className="absolute bg-black/20 w-full h-20 top-24 flex">
+          <NavBar />
         </div>
       </div>
     </header>

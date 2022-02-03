@@ -1,4 +1,4 @@
-import { interpolateAs } from "next/dist/shared/lib/router/router";
+import { interpolateAs } from 'next/dist/shared/lib/router/router';
 
 export const makeUrl = (
   baseUrl: string,
@@ -16,11 +16,11 @@ export const makeUrl = (
     .reduce((carry: string[], key: string) => {
       if (!params.includes(key))
         carry.push(
-          encodeURIComponent(key) + "=" + encodeURIComponent(query[key])
+          encodeURIComponent(key) + '=' + encodeURIComponent(query[key])
         );
       return carry;
     }, [])
-    .join("&");
+    .join('&');
 
   return !queryString ? result : `${result}?${queryString}`;
 };

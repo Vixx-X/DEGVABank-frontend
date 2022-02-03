@@ -52,7 +52,7 @@ const Profile: NextPage = () => {
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        <Header username={initialValue.userName} activate="user" />
+        <Header activate="user" />
         <div className="flex grow relative justify-between">
           <div className="w-[70rem] max-w-[90%] mx-auto my-20">
             <Formik

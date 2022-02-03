@@ -1,6 +1,5 @@
-import { AuthContext } from '@contexts/AuthContext';
-
-import { useContext } from 'react';
+import { AuthContext } from "@contexts/AuthContext";
+import { useContext } from "react";
 
 // This is a SWR middleware for conditionally triggering auth request.
 export function auth(useSWRNext: any) {

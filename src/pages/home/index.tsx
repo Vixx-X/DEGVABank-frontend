@@ -1,11 +1,11 @@
-import type { NextPage } from "next";
+import CardBill from "./card/bill";
+import CreditCard from "./card/credit-card";
+import Footer from "@components/Footer";
 //import Button from "@components/Button/Button";
 import Header from "@components/Header/Advanced";
-import Footer from "@components/Footer";
-import CardBill from "./Card/Bill";
-import CreditCard from "./Card/CreditCard";
-import { useContext } from "react";
 import { UserContext } from "@contexts/UserContext";
+import type { NextPage } from "next";
+import { useContext } from "react";
 
 const Home: NextPage = () => {
   const { user } = useContext(UserContext);
@@ -20,8 +20,7 @@ const Home: NextPage = () => {
               <CardBill />
               <CreditCard />
             </main>
-            <aside className="hidden md:block md:basis-[22%] bg-primary">
-            </aside>
+            <aside className="hidden md:block md:basis-[22%] bg-primary"></aside>
           </div>
         </div>
         <Footer />
@@ -31,3 +30,4 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+

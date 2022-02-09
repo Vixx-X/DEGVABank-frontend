@@ -1,5 +1,5 @@
-import Button from "@components/Button/Button";
-import MainLayout from "@components/Layout";
+import Button from "@components/Globals/Button/Button";
+import MainLayout from "@components/Globals/Layout/MainLayout/Advanced";
 import { SERVER_URLS } from "@config";
 import { Formik, Form, Field } from "formik";
 import type { NextPage } from "next";

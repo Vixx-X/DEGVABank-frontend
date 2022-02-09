@@ -1,4 +1,4 @@
-import Logotype from "../../Logotype";
+import Logotype from "@components/Globals/Logotype";
 import { SERVER_URLS } from "@config";
 import Link from "next/link";
 

@@ -1,33 +1,37 @@
 import { useState } from "react";
 
-const arrayCards = [
+const ITEMS_BILLS = [
   {
     id: "013400000000002091933",
-    securityCode: 564,
+    tipo: "Ahorro",
+    saldo: 32.7,
+    fecha: new Date(),
+  },
+  {
+    id: "013400000000002091934",
+    tipo: "Ahorro",
+    saldo: 0.0,
     fecha: new Date(),
   },
   {
     id: "013400000000002091933",
-    securityCode: 564,
+    tipo: "Ahorro",
+    saldo: 32.7,
     fecha: new Date(),
   },
   {
-    id: "013400000000002091933",
-    securityCode: 564,
-    fecha: new Date(),
-  },
-  {
-    id: "013400000000002091933",
-    securityCode: 564,
+    id: "013400005500002091933",
+    tipo: "Corriente",
+    saldo: 17.7,
     fecha: new Date(),
   },
 ];
 
-const CreditCard = () => {
-  const [bill, setbill] = useState(arrayCards[0]);
+const CardBill = () => {
+  const [bill, setbill] = useState(ITEMS_BILLS[0]);
 
   const handleCurrentBill = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const findBill = arrayCards.find(({ id }) => e.target.value == id);
+    const findBill = ITEMS_BILLS.find(({ id }) => e.target.value == id);
     if (findBill) {
       setbill(findBill);
     }
@@ -39,7 +43,7 @@ const CreditCard = () => {
           className="text-darkprimary font-bold uppercase"
           htmlFor="idBill"
         >
-          Tarjetas de Crédito
+          Cuentas
         </label>
         <select
           id="idBill"
@@ -47,18 +51,22 @@ const CreditCard = () => {
           onChange={handleCurrentBill}
           value={bill.id}
         >
-          <option selected disabled>
+          <option disabled>
             --Seleccionar--
           </option>
-          {arrayCards.map(({ id }) => (
-            <option key={id} value={id}>
-              {`Tarjeta : ${id}`}
+          {ITEMS_BILLS.map(({ id, tipo }, index) => (
+            <option key={index} value={id}>
+              {`Cuenta de ${tipo} : ${id}`}
             </option>
           ))}
         </select>
+        <p className="text-darkprimary mt-6">
+          Saldo disponible: <span className="text-gray-500">{bill.id}</span>
+        </p>
+        <p className="text-4xl mt-2">{`$${bill.saldo}`}</p>
       </div>
     </>
   );
 };
 
-export default CreditCard;
+export default CardBill;

@@ -1,10 +1,9 @@
-import DataTable from "@components/DataTable";
-import Footer from "@components/Footer";
-import Header from "@components/Header/Basic";
-import { SERVER_URLS } from "@config";
+import DataTable from "@components/Transaction/DataTable";
+import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
+// import { SERVER_URLS } from "@config";
 import type { NextPage } from "next";
 
-const { URL_LOGIN, URL_REGISTER } = SERVER_URLS;
+// const { URL_LOGIN, URL_REGISTER } = SERVER_URLS;
 
 const HEADERS = [
   { name: "Id Trasaccion", value: "idTransaction" },
@@ -39,17 +38,11 @@ const ITEMS_DATA_TABLE = [
 
 const Transaction: NextPage = () => {
   return (
-    <>
-      <div className="flex flex-col h-[40rem] xl:h-screen">
-        <Header />
-        <div className="grow relative">
-          <div className="flex justify-center">
-            <DataTable headers={HEADERS} items={ITEMS_DATA_TABLE} />
-          </div>
-        </div>
+    <MainLayout activate="movements">
+      <div className="flex justify-center">
+        <DataTable headers={HEADERS} items={ITEMS_DATA_TABLE} />
       </div>
-      <Footer />
-    </>
+    </MainLayout>
   );
 };
 

@@ -9,7 +9,6 @@ interface elementProps {
 }
 
 const ElementNavBar = ({ icon, link, text, activate }: elementProps) => {
-  console.log(text, activate);
   const className = activate ? "bg-white/20" : " hover:bg-white/20";
   return (
     <Link href={link}>

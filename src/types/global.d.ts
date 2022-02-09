@@ -6,3 +6,7 @@ declare interface Props {
 declare interface ApiError {
   error: string;
 }
+
+declare interface Trasaction {
+  [key: string | number]: any;
+}

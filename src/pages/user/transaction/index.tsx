@@ -78,7 +78,7 @@ const Transaction: NextPage = () => {
         <SearchBar onsubmit={handleSubmitSearchBar} />
       </div>
       <div className="flex justify-center">
-        {data && data.results.lenght > 0 ? (
+        {data?.results && data.results.length > 0 ? (
           <DataTable headers={HEADERS} items={data.results} />
         ) : (
           <p> No hay movimientos.</p>

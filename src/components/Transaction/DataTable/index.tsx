@@ -9,9 +9,9 @@ const DataTable = ({ headers, items }: DataTableProps) => {
   const [itemList, setItemList] = useState(items);
   const [headerList, setHeaderList] = useState(headers);
 
-  const handleOrderClick = (attr:String) =>{
-    console.log("Atributo",attr)
-  }
+  const handleOrderClick = (attr: String) => {
+    console.log("Atributo", attr);
+  };
 
   return (
     <>
@@ -22,12 +22,12 @@ const DataTable = ({ headers, items }: DataTableProps) => {
               <table className="min-w-full border shadow-xl p-1">
                 <thead className="border-b border-gray-600">
                   <tr>
-                    {headerList.map((element: any) => (
+                    {headerList?.map((element: any) => (
                       <th
                         key={element.value}
                         scope="col"
                         className="cursor-pointer py-2 px-2 sm:py-3 sm:px-6 text-xs font-medium tracking-wider text-left uppercase"
-                        onClick = {()=>{
+                        onClick={() => {
                           handleOrderClick(element.value);
                         }}
                       >
@@ -37,12 +37,12 @@ const DataTable = ({ headers, items }: DataTableProps) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {itemList.map((element: any) => (
+                  {itemList?.map((element: any) => (
                     <tr
                       key={element.idTransaction}
                       className="border-b border-gray-600"
                     >
-                      {headerList.map((item: any) => (
+                      {headerList?.map((item: any) => (
                         <td
                           key={`${element}${item.value}`}
                           className="py-2 px-2 sm:py-4 sm:px-6 text-xs sm:text-sm font-medium whitespace-nowrap"

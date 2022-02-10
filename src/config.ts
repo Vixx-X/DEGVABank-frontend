@@ -29,6 +29,7 @@ export const API_URLS = {
   //Account
   URL_USER_ACCOUNTS: `${API_URL}/user/accounts/`,
   URL_USER_CREDIT_CARDS: `${API_URL}/user/credit-cards/`,
+  URL_USER_TRANSACTIONS: `${API_URL}/user/transactions/`,
 };
 
 // Server routes paths
@@ -49,4 +50,3 @@ export const SERVER_URLS = {
   URL_HOME: "/home",
   URL_LANDING: "/",
 };
-

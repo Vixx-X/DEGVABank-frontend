@@ -129,3 +129,9 @@ export async function getCreditCardWithURL(auth: string, url: string) {
   return data;
 }
 
+export async function getTransactionWithURL(auth: string, url: string) {
+  const resp = await fetch(url, makeFetchOption({}, auth));
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}

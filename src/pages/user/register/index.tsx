@@ -113,7 +113,7 @@ const Registro: NextPage = () => {
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Nombre"
                   />
-                  <ErrorMessage name="name" error={messageError} />
+                  <ErrorMessage name="first_name" error={messageError} />
                 </div>
                 <div className="mb-4">
                   <label
@@ -130,7 +130,7 @@ const Registro: NextPage = () => {
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Apellido"
                   />
-                  <ErrorMessage name="lastname" error={messageError} />
+                  <ErrorMessage name="last_name" error={messageError} />
                 </div>
                 <div className="mb-4">
                   <label

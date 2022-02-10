@@ -4,8 +4,13 @@ import { useState } from "react";
 
 const SideBar = () => {
   const [open, setOpen] = useState(true);
-  const { URL_USER_PROFILE, URL_USER_CONFIG, URL_USER_TRANSACTION, URL_USER_TRANSFER} =
-    SERVER_URLS;
+  const {
+    URL_USER_PROFILE,
+    URL_USER_CONFIG,
+    URL_USER_TRANSACTION,
+    URL_USER_TRANSFER,
+    URL_USER_REQUEST,
+  } = SERVER_URLS;
 
   const handleOpen = () => {
     setOpen(!open);
@@ -68,6 +73,7 @@ const SideBar = () => {
         />
         <SideBarOption
           text="Solicitar Producto"
+          link={URL_USER_REQUEST}
           className="border-l-4 border-darkprimary py-4 px-8"
         />
         <SideBarOption

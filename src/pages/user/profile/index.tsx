@@ -39,6 +39,8 @@ const Profile: NextPage = () => {
   });
 
   useEffect(() => {
+    user.direction="Caracas, Baruta";
+    user.tel="0412-123-123-123"
     setInitialValue(user);
   }, [user]);
 

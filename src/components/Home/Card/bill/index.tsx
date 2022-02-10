@@ -1,37 +1,22 @@
 import { useState } from "react";
 
-const ITEMS_BILLS = [
-  {
-    id: "013400000000002091933",
-    tipo: "Ahorro",
-    saldo: 32.7,
-    fecha: new Date(),
-  },
-  {
-    id: "013400000000002091934",
-    tipo: "Ahorro",
-    saldo: 0.0,
-    fecha: new Date(),
-  },
-  {
-    id: "013400000000002091933",
-    tipo: "Ahorro",
-    saldo: 32.7,
-    fecha: new Date(),
-  },
-  {
-    id: "013400005500002091933",
-    tipo: "Corriente",
-    saldo: 17.7,
-    fecha: new Date(),
-  },
-];
+interface Bill{
+  id:number,
+  status:string,
+  type:string,
+  balance:string,
+  creation_date:string,
+  user:number
+}
+interface CardBillProps{
+  ITEMS_BILLS: Bill[]
+}
 
-const CardBill = () => {
+const CardBill = ({ITEMS_BILLS}:CardBillProps) => {
   const [bill, setbill] = useState(ITEMS_BILLS[0]);
 
   const handleCurrentBill = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const findBill = ITEMS_BILLS.find(({ id }) => e.target.value == id);
+    const findBill = ITEMS_BILLS.find(({ id }) => e.target.value == id.toString());
     if (findBill) {
       setbill(findBill);
     }
@@ -54,16 +39,16 @@ const CardBill = () => {
           <option disabled>
             --Seleccionar--
           </option>
-          {ITEMS_BILLS.map(({ id, tipo }, index) => (
+          {ITEMS_BILLS.map(({ id, type }, index) => (
             <option key={index} value={id}>
-              {`Cuenta de ${tipo} : ${id}`}
+              {`Cuenta de ${type} : ${id}`}
             </option>
           ))}
         </select>
         <p className="text-darkprimary mt-6">
           Saldo disponible: <span className="text-gray-500">{bill.id}</span>
         </p>
-        <p className="text-4xl mt-2">{`$${bill.saldo}`}</p>
+        <p className="text-4xl mt-2">{`$${bill.balance}`}</p>
       </div>
     </>
   );

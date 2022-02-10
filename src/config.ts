@@ -26,6 +26,9 @@ export const API_URLS = {
   URL_CHANGE_EMAIL: `${API_URL}/user/change-email/`,
   URL_CHANGE_PASSWORD: `${API_URL}/user/change-password/`,
   URL_OTP_REQUEST: `${API_URL}/user/generate-otp/`,
+  //Account
+  URL_GET_ACCOUNT: `${API_URL}/accounts/`,
+  URL_GET_CREDIT_CARDS:`${API_URL}/credit-cards/`
 };
 
 // Server routes paths

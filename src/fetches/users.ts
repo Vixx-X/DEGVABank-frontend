@@ -18,6 +18,7 @@ export async function getProfileDataWithURL(auth: string, url: string) {
   const data = await resp.json();
   return data;
 }
+
 export async function getProfileData(auth: string) {
   return await getProfileDataWithURL(auth, URL_USER_PROFILE);
 }
@@ -79,4 +80,17 @@ export async function revokeToken() {
     })
   );
   return resp.ok;
+}
+
+export async function getAccountDataWithURL(auth: string, url: string) {
+  const resp = await fetch(url, makeFetchOption({}, auth));
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+export async function getCreditCardWithURL(auth: string, url: string) {
+  const resp = await fetch(url, makeFetchOption({}, auth));
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
 }

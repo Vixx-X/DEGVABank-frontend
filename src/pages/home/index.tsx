@@ -9,11 +9,11 @@ import { useSWRAuth } from "@hooks/useSWRAuth";
 //import Button from "@components/Button/Button";
 import type { NextPage } from "next";
 
-const { URL_GET_ACCOUNT, URL_GET_CREDIT_CARDS } = API_URLS;
+const { URL_USER_ACCOUNTS, URL_USER_CREDIT_CARDS } = API_URLS;
 
 const Home: NextPage = () => {
-  const dataAccounts = useSWRAuth(URL_GET_ACCOUNT, getAccountDataWithURL);
-  const dataCards = useSWRAuth(URL_GET_CREDIT_CARDS, getAccountDataWithURL);
+  const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
+  const dataCards = useSWRAuth(URL_USER_CREDIT_CARDS, getAccountDataWithURL);
   console.log("Tengo data de accounts", dataAccounts);
   console.log("Tengo tarjeta de credito", dataCards);
   return (

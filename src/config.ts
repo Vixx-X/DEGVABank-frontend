@@ -27,8 +27,8 @@ export const API_URLS = {
   URL_CHANGE_PASSWORD: `${API_URL}/user/change-password/`,
   URL_OTP_REQUEST: `${API_URL}/user/generate-otp/`,
   //Account
-  URL_GET_ACCOUNT: `${API_URL}/accounts/`,
-  URL_GET_CREDIT_CARDS:`${API_URL}/credit-cards/`
+  URL_USER_ACCOUNTS: `${API_URL}/user/accounts/`,
+  URL_USER_CREDIT_CARDS: `${API_URL}/user/credit-cards/`,
 };
 
 // Server routes paths
@@ -48,3 +48,4 @@ export const SERVER_URLS = {
   URL_HOME: "/home",
   URL_LANDING: "/",
 };
+

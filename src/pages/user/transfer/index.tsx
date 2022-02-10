@@ -10,7 +10,7 @@ import { Field, Form, Formik } from "formik";
 import type { NextPage } from "next";
 import { Key, useEffect, useState } from "react";
 
-const { URL_GET_ACCOUNT } = API_URLS;
+const { URL_USER_ACCOUNTS } = API_URLS;
 
 interface SignupForm {
   name: string;
@@ -39,7 +39,7 @@ const initialValue: SignupForm = {
 };
 
 const Transfer: NextPage = () => {
-  const dataAccounts = useSWRAuth(URL_GET_ACCOUNT, getAccountDataWithURL);
+  const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
   const [ITEMS_BILLS, setItems] = useState();
   const [bill, setbill] = useState();
   const [loading, setLoading] = useState(true);

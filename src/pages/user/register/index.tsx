@@ -55,7 +55,6 @@ const initialValue: SignupForm = {
 
 const Registro: NextPage = () => {
   const router = useRouter();
-  const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState<any>();
   const [loading, setLoading] = useState(false);
 
@@ -75,7 +74,6 @@ const Registro: NextPage = () => {
       await postRegisterUser(userData);
       router.push(URL_LOGIN);
     } catch (e) {
-      setError(true);
       // messageError = e;
       console.log(e, "holaaa");
       setMessageError(e);

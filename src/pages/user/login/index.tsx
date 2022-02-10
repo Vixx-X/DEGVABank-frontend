@@ -1,4 +1,5 @@
 import Button from "@components/Globals/Button/Button";
+import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Advanced";
 import { SERVER_URLS } from "@config";
 import { AuthContext } from "@contexts/AuthContext";
@@ -20,8 +21,7 @@ interface SigninForm {
 const LogIn: NextPage = () => {
   const { getToken } = useContext(AuthContext);
   const router = useRouter();
-  const [error, setError] = useState(false);
-  const [messageError, setMessageError] = useState("");
+  const [messageError, setMessageError] = useState<any>();
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async ({ password, username }: SigninForm) => {
@@ -32,9 +32,8 @@ const LogIn: NextPage = () => {
       const next = router.query?.next as string;
       router.push(next ? filterOpenRedirect(next) : URL_HOME);
     } catch (error) {
-      setError(true);
       console.log(error);
-      setMessageError("Hay un error con la página");
+      setMessageError(error);
     } finally {
       setLoading(false);
     }
@@ -94,6 +93,7 @@ const LogIn: NextPage = () => {
                 </div>
               </div>
             </div>
+            <ErrorMessage name="detail" error={messageError} />
             <div className="flex justify-center">
               <Button
                 type="submit"
@@ -107,11 +107,6 @@ const LogIn: NextPage = () => {
                 <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>
               </div>
             )}
-            {error ? (
-              <div className="bg-red-400 border border-red-700 w-96 p-3 my-3 py-3 rounded-lg text-sm font-normal">
-                <strong>Error: </strong> {messageError}
-              </div>
-            ) : null}
           </Form>
         </Formik>
 

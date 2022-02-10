@@ -19,14 +19,14 @@ const DataTable = ({ headers, items }: DataTableProps) => {
         <div className="overflow-x-auto">
           <div className="min-w-full">
             <div className="overflow-hidden shadow-md sm:rounded-lg">
-              <table className="min-w-full">
-                <thead className="bg-gray-50 dark:bg-gray-700">
+              <table className="min-w-full border shadow-xl p-1">
+                <thead className="border-b border-gray-600">
                   <tr>
                     {headerList.map((element: any) => (
                       <th
                         key={element.value}
                         scope="col"
-                        className="cursor-pointer py-2 px-2 sm:py-3 sm:px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400"
+                        className="cursor-pointer py-2 px-2 sm:py-3 sm:px-6 text-xs font-medium tracking-wider text-left uppercase"
                         onClick = {()=>{
                           handleOrderClick(element.value);
                         }}
@@ -40,12 +40,12 @@ const DataTable = ({ headers, items }: DataTableProps) => {
                   {itemList.map((element: any) => (
                     <tr
                       key={element.idTransaction}
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                      className="border-b border-gray-600"
                     >
                       {headerList.map((item: any) => (
                         <td
                           key={`${element}${item.value}`}
-                          className="py-2 px-2 sm:py-4 sm:px-6 text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                          className="py-2 px-2 sm:py-4 sm:px-6 text-xs sm:text-sm font-medium whitespace-nowrap"
                         >
                           {element[item.value]}
                         </td>

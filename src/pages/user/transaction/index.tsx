@@ -62,7 +62,7 @@ const Transaction: NextPage = () => {
 
   return (
     <MainLayout activate="movements">
-      <div className="flex justify-around">
+      <div className="flex justify-between">
         <div className="flex">
           <div className="mx-2">
             <CalendarButton 

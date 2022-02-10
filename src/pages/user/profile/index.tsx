@@ -22,11 +22,12 @@ interface ProfileForm {
 
 const Profile: NextPage = () => {
   const { user } = useContext(UserContext);
+  console.log("User desde context",user)
   const [displayInputUserName, setdisplayInputUserName] = useState(false);
   const [displayInputDirection, setdisplayInputDirection] = useState(false);
   const [displayInputEmail, setdisplayInputEmail] = useState(false);
   const [displayInputTel, setdisplayInputTel] = useState(false);
-  const [initialValue, setInitialValue] = useState({
+  const [initialValue, setInitialValue] = useState(user ?? {
     username: "",
     first_name: "",
     last_name: "",
@@ -38,11 +39,8 @@ const Profile: NextPage = () => {
   });
 
   useEffect(() => {
-    console.log("Nuevos valores",user)
     setInitialValue(user);
   }, [user]);
-
-  console.log("Valores iniciales", initialValue);
 
   const handleChangeDirection = () => {
     setdisplayInputDirection(!displayInputDirection);
@@ -62,7 +60,7 @@ const Profile: NextPage = () => {
 
   return (
     <MainLayout activate="user">
-      {user ? (
+      {user.username !== "" ? (
         <Formik
           initialValues={initialValue}
           onSubmit={(
@@ -90,7 +88,7 @@ const Profile: NextPage = () => {
                     <div className="w-[60%] block">
                       {!displayInputUserName ? (
                         <p className="text-lg tracking-tight">
-                          {values.first_name}
+                          {values.first_name + " " + values.last_name}
                         </p>
                       ) : (
                         <Field

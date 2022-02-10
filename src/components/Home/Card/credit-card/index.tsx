@@ -1,33 +1,21 @@
 import { useState } from "react";
+import Button from "@components/Globals/Button/Button"
+interface CreditCard {
+  id: number,
+  number: string,
+  security_code: string,
+  expiration_date: string,
+  user: number
+}
+interface CreditCardProps {
+  ITEMS_CARDS: CreditCard[];
+}
 
-const ITEMS_CARDS = [
-  {
-    id: "013400000000002091933",
-    securityCode: 564,
-    fecha: new Date(),
-  },
-  {
-    id: "013400000000002091933",
-    securityCode: 564,
-    fecha: new Date(),
-  },
-  {
-    id: "013400000000002091933",
-    securityCode: 564,
-    fecha: new Date(),
-  },
-  {
-    id: "013400000000002091933",
-    securityCode: 564,
-    fecha: new Date(),
-  },
-];
-
-const CreditCard = () => {
+const CreditCard = ({ITEMS_CARDS}:CreditCardProps) => {
+  console.log("Credit Card",ITEMS_CARDS)
   const [bill, setbill] = useState(ITEMS_CARDS[0]);
-
   const handleCurrentBill = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const findBill = ITEMS_CARDS.find(({ id }) => e.target.value == id);
+    const findBill = ITEMS_CARDS.find(({ id }) => e.target.value == id.toString());
     if (findBill) {
       setbill(findBill);
     }
@@ -47,9 +35,7 @@ const CreditCard = () => {
           onChange={handleCurrentBill}
           value={bill.id}
         >
-          <option disabled>
-            --Seleccionar--
-          </option>
+          <option disabled>--Seleccionar--</option>
           {ITEMS_CARDS.map(({ id }, index) => (
             // Change for id when not static data
             <option key={index} value={id}>
@@ -57,6 +43,21 @@ const CreditCard = () => {
             </option>
           ))}
         </select>
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-darkprimary mt-6">
+              Numero de Tarjeta: <span className="text-gray-500">{bill.number}</span>
+            </p>
+            <p className="text-darkprimary">
+              Fecha de Expiracion: <span className="text-gray-500">{bill.expiration_date}</span>
+            </p>
+          </div>
+          <div>
+            <Button>
+              <p>Cancelar</p>
+            </Button>
+          </div>
+        </div>
       </div>
     </>
   );

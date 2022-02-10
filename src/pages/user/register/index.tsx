@@ -1,4 +1,5 @@
 import Button from "@components/Globals/Button/Button";
+import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Advanced";
 import { SERVER_URLS } from "@config";
 import { postRegisterUser } from "@fetches/users";
@@ -55,7 +56,7 @@ const initialValue: SignupForm = {
 const Registro: NextPage = () => {
   const router = useRouter();
   const [error, setError] = useState(false);
-  const [messageError, setMessageError] = useState("");
+  const [messageError, setMessageError] = useState<any>();
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (data: SignupForm) => {
@@ -73,9 +74,11 @@ const Registro: NextPage = () => {
     try {
       await postRegisterUser(userData);
       router.push(URL_LOGIN);
-    } catch (error) {
+    } catch (e) {
       setError(true);
-      setMessageError("Hay un error con la página");
+      // messageError = e;
+      console.log(e, "holaaa");
+      setMessageError(e);
     } finally {
       setLoading(false);
     }
@@ -113,6 +116,7 @@ const Registro: NextPage = () => {
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Nombre"
                   />
+                  <ErrorMessage name="name" error={messageError} />
                 </div>
                 <div className="mb-4">
                   <label
@@ -129,6 +133,7 @@ const Registro: NextPage = () => {
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Apellido"
                   />
+                  <ErrorMessage name="lastname" error={messageError} />
                 </div>
                 <div className="mb-4">
                   <label
@@ -145,6 +150,7 @@ const Registro: NextPage = () => {
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Username"
                   />
+                  <ErrorMessage name="username" error={messageError} />
                 </div>
                 <div className="mb-4">
                   <label
@@ -161,6 +167,7 @@ const Registro: NextPage = () => {
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="E-mail"
                   />
+                  <ErrorMessage name="email" error={messageError} />
                 </div>
                 <div className="mb-4">
                   <label
@@ -177,6 +184,7 @@ const Registro: NextPage = () => {
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Password"
                   />
+                  <ErrorMessage name="password1" error={messageError} />
                 </div>
                 <div className="mb-4">
                   <label
@@ -193,6 +201,7 @@ const Registro: NextPage = () => {
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Confirmar contraseña"
                   />
+                  <ErrorMessage name="password2" error={messageError} />
                 </div>
                 <div className="mb-4">
                   <label
@@ -209,6 +218,7 @@ const Registro: NextPage = () => {
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Teléfono"
                   />
+                  <ErrorMessage name="tel" error={messageError} />
                 </div>
                 <div className="grid grid-cols-2 gap-x-4">
                   <div className="mb-4">
@@ -224,9 +234,7 @@ const Registro: NextPage = () => {
                       className="form-select appearance-none block w-full px-3 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                       name="typeOfDocumentID"
                     >
-                      <option disabled>
-                        --Seleccionar--
-                      </option>
+                      <option disabled>--Seleccionar--</option>
                       <option value="V">V-</option>
                       <option value="E">E-</option>
                       <option value="J">J-</option>
@@ -246,6 +254,7 @@ const Registro: NextPage = () => {
                       name="number"
                       placeholder="Ej: 5555555"
                     />
+                    <ErrorMessage name="number" error={messageError} />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-x-4">
@@ -296,6 +305,8 @@ const Registro: NextPage = () => {
                     </label>
                   </div>
                 </div>
+                <div></div>
+                <ErrorMessage name="non_field_errors" error={messageError} />
               </div>
             </div>
             <div className="flex justify-center">
@@ -311,11 +322,6 @@ const Registro: NextPage = () => {
                 <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>
               </div>
             )}
-            {error ? (
-              <div className="bg-red-400 border border-red-700 w-96 p-3 my-3 py-3 rounded-lg text-sm font-normal">
-                <strong>Error: </strong> {messageError}
-              </div>
-            ) : null}
           </Form>
         </Formik>
       </div>

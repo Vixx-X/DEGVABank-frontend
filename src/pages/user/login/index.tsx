@@ -33,6 +33,7 @@ const LogIn: NextPage = () => {
       router.push(next ? filterOpenRedirect(next) : URL_HOME);
     } catch (error) {
       setError(true);
+      console.log(error);
       setMessageError("Hay un error con la página");
     } finally {
       setLoading(false);

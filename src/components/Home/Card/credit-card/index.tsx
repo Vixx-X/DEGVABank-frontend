@@ -17,7 +17,7 @@ const CreditCard = ({ ITEMS_CARDS }: CreditCardProps) => {
   const [bill, setbill] = useState<any>();
   const handleCurrentBill = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const findBill = ITEMS_CARDS.find(
-      ({ id }) => e.target.value == id.toString()
+      ({ number }) => e.target.value == id.toString()
     );
     if (findBill) {
       setbill(findBill);
@@ -47,10 +47,10 @@ const CreditCard = ({ ITEMS_CARDS }: CreditCardProps) => {
               value={bill.id}
             >
               <option disabled>--Seleccionar--</option>
-              {ITEMS_CARDS.map(({ id }, index) => (
+              {ITEMS_CARDS.map(({ number }, index) => (
                 // Change for id when not static data
-                <option key={index} value={id}>
-                  {`Tarjeta : ${id}`}
+                <option key={index} value={number}>
+                  {`Tarjeta : ${number}`}
                 </option>
               ))}
             </select>

@@ -1,36 +1,47 @@
 import Button from "@components/Globals/Button/Button";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
+import { postUserAccont, postUserCreditCard} from "@fetches/users";
+import { useFetchCallback } from "@hooks/useFetchCallback";
 import { Field, Form, Formik } from "formik";
 // import { SERVER_URLS } from "@config";
 import type { NextPage } from "next";
-import { useState } from "react";
 
 // const { URL_LOGIN, URL_REGISTER } = SERVER_URLS;
+enum AccountType {
+  CHECKING = "CHECKING",
+  SAVING = "SAVING",
+}
 
 const Transaction: NextPage = () => {
-  const [account, setAccount] = useState(false);
-
-  const handleAccount = (e: any) => {
-    e.preventDefault();
-    setAccount(!account);
-  };
-
   interface SignupForm {
-    type: string;
+    type: AccountType;
+    balance: number;
   }
 
   const initialValue: SignupForm = {
-    type: "ahorro",
+    type: AccountType.CHECKING,
+    balance: 300000,
   };
 
+  const pushData = useFetchCallback(postUserAccont);
+
+  const pushDataCard = useFetchCallback(postUserCreditCard);
+  //   const handleSubmit = (values: any) => {
+
+  //   }
+
   return (
+    //useFetchCallback
     <MainLayout activate="movements">
       <div className="sm:grid sm:grid-cols-2 sm:gap-x-8">
         <Formik
           initialValues={initialValue}
           //validationSchema={SignupSchema}
           onSubmit={(values: SignupForm) => {
-            // handleSubmit(values);
+            pushData({
+              type: AccountType.CHECKING,
+              balance: 300000,
+            });
           }}
         >
           <Form>
@@ -50,7 +61,7 @@ const Transaction: NextPage = () => {
                   <Field
                     type="radio"
                     name="type"
-                    value="ahorro"
+                    value={AccountType.CHECKING}
                     className="mr-2"
                   />
                   Ahorro
@@ -59,7 +70,7 @@ const Transaction: NextPage = () => {
                   <Field
                     type="radio"
                     name="type"
-                    value="corriente"
+                    value={AccountType.SAVING}
                     className="mr-2"
                   />
                   <p>Corriente</p>
@@ -74,34 +85,26 @@ const Transaction: NextPage = () => {
             </div>
           </Form>
         </Formik>
-        <Formik
-          initialValues={initialValue}
-          //validationSchema={SignupSchema}
-          onSubmit={(values: SignupForm) => {
-            // handleSubmit(values);
-          }}
-        >
-          <Form>
-            <div className="rounded-2xl w-full overflow-hidden shadow-lg p-8">
-              <div>
-                <label
-                  className="text-darkprimary font-bold uppercase"
-                  htmlFor="idBill"
-                >
-                  Solicitar Apertura de Tarjeta de Crédito
-                </label>
-              </div>
-              <div className="mt-8">
-                <Button
-                  type="submit"
-                  className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                >
-                  <p>Mandar la solicitud</p>
-                </Button>
-              </div>
-            </div>
-          </Form>
-        </Formik>
+        <div className="rounded-2xl w-full overflow-hidden shadow-lg p-8">
+          <div>
+            <label
+              className="text-darkprimary font-bold uppercase"
+              htmlFor="idBill"
+            >
+              Solicitar Apertura de Tarjeta de Crédito
+            </label>
+          </div>
+          <div className="mt-8">
+            <Button
+              type="submit"
+              className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              onClick={() => pushDataCard({ credit: 40000 })}
+              //   onClick={handleCredit}
+            >
+              <p>Mandar la solicitud</p>
+            </Button>
+          </div>
+        </div>
       </div>
     </MainLayout>
   );

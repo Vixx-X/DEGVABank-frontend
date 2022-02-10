@@ -84,11 +84,11 @@ const Transfer: NextPage = () => {
                       Cuenta a debitar
                     </p>
                   </div>
-                  <select
-                    id="idBill"
-                    className="form-select appearance-none block w-full px-3 py-3 text-base font-normal text-gray-500 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mt-2 md:w-2/4"
-                    onChange={handleCurrentBill}
-                    value={bill.id}
+                  <Field
+                    as="select"
+                    id="account_src"
+                    className="form-select appearance-none block w-full px-3 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                    name="account_src"
                   >
                     <option disabled>--Seleccionar--</option>
                     {ITEMS_BILLS &&
@@ -99,7 +99,7 @@ const Transfer: NextPage = () => {
                           </option>
                         )
                       )}
-                  </select>
+                  </Field>
                   <p className="text-darkprimary mt-2">
                     Saldo disponible en:{" "}
                     <span className="text-gray-500">{bill.id}</span>
@@ -123,8 +123,8 @@ const Transfer: NextPage = () => {
                       <Field
                         type="text"
                         label="Número de cuenta"
-                        name="account_number"
-                        id="account_number"
+                        name="account_dest"
+                        id="account_dest"
                         className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Número de cuenta"
                       />

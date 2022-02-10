@@ -60,7 +60,7 @@ const Profile: NextPage = () => {
 
   return (
     <MainLayout activate="user">
-      {user.username !== "" ? (
+      {user?.username !== "" ? (
         <Formik
           initialValues={initialValue}
           onSubmit={(

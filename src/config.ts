@@ -42,6 +42,7 @@ export const SERVER_URLS = {
   URL_USER_PROFILE: "/user/profile",
   URL_USER_CONFIG: "/user/config/",
   URL_USER_TRANSACTION: "/user/transaction/",
+  URL_USER_TRANSFER: "/user/transfer/",
 
   // dashboard
   URL_HOME: "/home",

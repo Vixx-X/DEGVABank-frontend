@@ -22,14 +22,9 @@ enum AccountType {
   SAVING = "SAVING",
 }
 
-// interface Account {
-//   id: number;
-//   type: string;
-//   date: Date;
-//   balance: number;
-// }
-
 interface SignupForm {
+  first_name: string;
+  last_name: string;
   email: string;
   username: string;
   password1: string;
@@ -42,6 +37,8 @@ interface SignupForm {
 }
 
 const initialValue: SignupForm = {
+  first_name: "",
+  last_name: "",
   email: "",
   username: "",
   password1: "",
@@ -61,6 +58,8 @@ const Registro: NextPage = () => {
   const handleSubmit = async (data: SignupForm) => {
     setLoading(true);
     const userData = {
+      first_name: data.first_name,
+      last_name: data.last_name,
       email: data.email,
       username: data.username,
       password1: data.password1,
@@ -109,7 +108,7 @@ const Registro: NextPage = () => {
                   <Field
                     type="text"
                     label="Nombre"
-                    name="name"
+                    name="first_name"
                     id="name"
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Nombre"
@@ -126,7 +125,7 @@ const Registro: NextPage = () => {
                   <Field
                     type="text"
                     label="Apellido"
-                    name="lastname"
+                    name="last_name"
                     id="lastname"
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Apellido"

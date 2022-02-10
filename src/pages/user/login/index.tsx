@@ -32,7 +32,7 @@ const LogIn: NextPage = () => {
       const next = router.query?.next as string;
       router.push(next ? filterOpenRedirect(next) : URL_HOME);
     } catch (error) {
-      console.log(error);
+      console.log("lolololo", error);
       setMessageError(error);
     } finally {
       setLoading(false);
@@ -75,6 +75,7 @@ const LogIn: NextPage = () => {
                     placeholder="username"
                   />
                 </div>
+                <ErrorMessage name="username" error={messageError} />
                 <div className="mb-6">
                   <label
                     className="block text-sm xl:text-lg font-bold mb-2 text-light"
@@ -91,9 +92,15 @@ const LogIn: NextPage = () => {
                     placeholder="Password"
                   />
                 </div>
+                <ErrorMessage name="password" error={messageError} />
               </div>
             </div>
-            <ErrorMessage name="detail" error={messageError} />
+            {messageError && messageError.info && messageError.info.detail && (
+              <div className="bg-red-400 border border-red-700 w-full p-3 my-3 py-2 rounded-lg text-sm font-normal">
+                <strong>Error: </strong>
+                <span>{messageError.info.detail}</span>
+              </div>
+            )}
             <div className="flex justify-center">
               <Button
                 type="submit"

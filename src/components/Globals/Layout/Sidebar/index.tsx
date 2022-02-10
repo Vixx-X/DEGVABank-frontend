@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const SideBar = () => {
   const [open, setOpen] = useState(true);
-  const { URL_USER_PROFILE, URL_USER_CONFIG, URL_USER_TRANSACTION } =
+  const { URL_USER_PROFILE, URL_USER_CONFIG, URL_USER_TRANSACTION, URL_USER_TRANSFER} =
     SERVER_URLS;
 
   const handleOpen = () => {
@@ -56,7 +56,7 @@ const SideBar = () => {
             />
             <SideBarOption
               text="Realizar transferencias"
-              link={URL_USER_TRANSACTION}
+              link={URL_USER_TRANSFER}
               className="py-6 pl-12 pr-6 h-6"
             />
           </ul>

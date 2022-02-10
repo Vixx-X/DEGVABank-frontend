@@ -1,4 +1,5 @@
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
+import SideBar from "@components/Globals/Layout/Sidebar";
 import CardBill from "@components/Home/Card/bill";
 import CreditCard from "@components/Home/Card/credit-card";
 //import Button from "@components/Button/Button";
@@ -12,7 +13,9 @@ const Home: NextPage = () => {
           <CardBill />
           <CreditCard />
         </main>
-        <aside className="hidden md:block md:basis-[22%] h-96 rounded-2xl border border-indigo-600"></aside>
+        <aside className="hidden md:block md:basis-[22%]">
+          <SideBar/>
+        </aside>
       </div>
     </MainLayout>
   );

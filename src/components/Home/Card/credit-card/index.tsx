@@ -1,3 +1,4 @@
+import SideBar from "@components/Globals/Layout/Sidebar";
 import { useState } from "react";
 
 const ITEMS_CARDS = [
@@ -47,15 +48,14 @@ const CreditCard = () => {
           onChange={handleCurrentBill}
           value={bill.id}
         >
-          <option disabled>
-            --Seleccionar--
-          </option>
+          <option disabled>--Seleccionar--</option>
           {ITEMS_CARDS.map(({ id }, index) => (
             // Change for id when not static data
             <option key={index} value={id}>
               {`Tarjeta : ${id}`}
             </option>
           ))}
+          <SideBar />
         </select>
       </div>
     </>

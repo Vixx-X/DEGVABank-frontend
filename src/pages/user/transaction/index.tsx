@@ -19,29 +19,6 @@ const HEADERS = [
   { name: "reason", value: "reason" },
   { name: "Fecha", value: "date" },
 ];
-// const ITEMS_DATA_TABLE = [
-//   {
-//     idTransaction: 0,
-//     sender: "User1",
-//     amount: 10,
-//     reason: "Razon 1",
-//     date: "00/00/0000",
-//   },
-//   {
-//     idTransaction: 1,
-//     sender: "User2",
-//     amount: 300,
-//     reason: "Razon 2",
-//     date: "00/00/0000",
-//   },
-//   {
-//     idTransaction: 2,
-//     sender: "User3",
-//     amount: 200,
-//     reason: "Razon 3",
-//     date: "00/00/0000",
-//   },
-// ];
 
 const Transaction: NextPage = () => {
   const [calendarButton1, setCalendarButton1] = useState("");

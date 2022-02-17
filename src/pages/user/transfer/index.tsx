@@ -7,8 +7,7 @@ import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
 import { Field, Form, Formik } from "formik";
 import type { NextPage } from "next";
-import router from "next/router";
-import { ChangeEvent, Key, useEffect, useState } from "react";
+import { Key, useEffect, useState } from "react";
 
 const { URL_USER_ACCOUNTS } = API_URLS;
 const { URL_USER_TRANSACTION } = SERVER_URLS;
@@ -27,20 +26,21 @@ interface TransferForm {
 }
 
 const initialValue: TransferForm = {
-  name: "ga",
-  lastname: "s",
+  name: "",
+  lastname: "",
   email: "",
-  account_dest: "00691337537154591381",
-  account_src: "00691337269657791951",
-  number: 26956071,
+  account_dest: "",
+  account_src: "00691337537154591381",
+  number: 0,
   typeOfDocumentID: "v",
-  reason: "pago",
+  reason: "",
   alias: "",
-  amount: 200,
+  amount: 0,
 };
 
 const Transfer: NextPage = () => {
   const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
+  const [sucessTransaction, setSucess] = useState<boolean>(false);
   const [ITEMS_BILLS, setItems] = useState<any[]>([]);
   const [bill, setbill] = useState<any>();
   const [loading, setLoading] = useState(true);
@@ -66,14 +66,14 @@ const Transfer: NextPage = () => {
     setLoading(true);
     const transfer = {
       source: "00691337537154591381",
-      target: "00691337269657791951",
-      document_id: `V26956071`,
-      amount: 200,
-      reason: "pago",
+      target: data.account_dest,
+      document_id: "V26956071",
+      amount: data.amount,
+      reason: data.reason,
     };
     try {
       await postTransfer(transfer);
-      router.push(URL_USER_TRANSACTION);
+      setSucess(true);
     } catch (e) {
       console.log(e);
     } finally {
@@ -275,6 +275,15 @@ const Transfer: NextPage = () => {
                   </div>
                 </div>
               </div>
+              {sucessTransaction && (
+                <div
+                  className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                  role="alert"
+                >
+                  <span className="font-medium">Transacción Exitosa!</span> Su
+                  transacción ha sido realizada de manera exitosa.
+                </div>
+              )}
               <div className="flex justify-center gap-x-6">
                 <Button
                   type="submit"
@@ -303,12 +312,3 @@ const Transfer: NextPage = () => {
 };
 
 export default Transfer;
-function postUserTransfer(transfer: {
-  source: string;
-  target: string;
-  document_id: string;
-  amount: number;
-  reason: string;
-}) {
-  throw new Error("Function not implemented.");
-}

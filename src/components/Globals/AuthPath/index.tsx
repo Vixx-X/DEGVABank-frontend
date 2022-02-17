@@ -11,10 +11,10 @@ interface AuthPathProps {
 }
 
 const AuthPath = ({ children }: AuthPathProps) => {
-  const { isAuthenticated, isLoading } = useContext(AuthContext);
+  const { unAuthorized, isLoading } = useContext(AuthContext);
   const router = useRouter();
   useEffect(() => {
-    if (!isAuthenticated && !isLoading) {
+    if (unAuthorized) {
       router.push(makeUrl(URL_LOGIN, { next: router.asPath }));
     }
   });

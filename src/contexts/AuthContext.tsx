@@ -42,14 +42,17 @@ export const AuthContextProvider = ({
     [data, error, isValidating]
   );
   const isAuthenticated = useMemo(() => !!auth.access, [auth]);
+  const [unAuthorized, setUnAuthorized] = useState(false);
 
   useEffect(() => {
     if (error) {
       setAuth({ access: INVALID_TOKEN });
+      if (!isValidating) setUnAuthorized(true);
     } else if (data) {
       setAuth({ access: data?.access ?? INVALID_TOKEN });
+      setUnAuthorized(false);
     }
-  }, [data, error]);
+  }, [data, error, isValidating]);
 
   const _getToken = useCallback(
     async (username: string, password: string) => {
@@ -83,6 +86,7 @@ export const AuthContextProvider = ({
         verifyToken: _verifyToken,
         revokeToken: _revokeToken,
         isAuthenticated,
+        unAuthorized,
         isLoading,
       }}
     >

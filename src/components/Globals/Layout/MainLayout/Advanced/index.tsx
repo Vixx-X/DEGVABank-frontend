@@ -1,5 +1,5 @@
-import Footer from "@components/Footer";
-import Header from "@components/Header/Basic";
+import Footer from "@components/Globals/Layout/Footer";
+import Header from "@components/Globals/Layout/Header/Basic";
 
 const MainLayout = (props: { children: any }) => {
   const { children } = props;

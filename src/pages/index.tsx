@@ -1,7 +1,7 @@
-import CardAbout from "@components/CardAbout";
-import Footer from "@components/Footer";
-import Header from "@components/Header/Basic";
-import Logotype from "@components/Logotype";
+import CardAbout from "@components/Landing/CardAbout";
+import Footer from "@components/Globals/Layout/Footer";
+import Header from "@components/Globals/Layout/Header/Basic";
+import Logotype from "@components/Globals/Logotype";
 import { SERVER_URLS } from "@config";
 import { GroupSvg, LockSvg, SpeedSvg } from "@public/assets/imagesSvg";
 import type { NextPage } from "next";

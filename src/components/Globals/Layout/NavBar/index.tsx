@@ -7,7 +7,7 @@ import {
   faCogs,
 } from "@fortawesome/free-solid-svg-icons";
 
-const { URL_LANDING, URL_HOME, URL_USER_PROFILE, URL_USER_CONFIG } =
+const { URL_HOME, URL_USER_PROFILE, URL_USER_CONFIG, URL_USER_TRANSACTION } =
   SERVER_URLS;
 
 interface HeaderProps {
@@ -31,7 +31,7 @@ const NavBar = ({ activate }: HeaderProps) => {
       />
       <ElementNavBar
         icon={faPeopleArrows}
-        link={URL_LANDING}
+        link={URL_USER_TRANSACTION}
         text="Movimientos"
         activate={activate == "movements"}
       />

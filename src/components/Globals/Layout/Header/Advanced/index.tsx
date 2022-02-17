@@ -1,5 +1,5 @@
-import Logotype from "../../Logotype";
-import NavBar from "@components/NavBar";
+import Logotype from "../../../Logotype";
+import NavBar from "@components/Globals/Layout/NavBar";
 import { SERVER_URLS } from "@config";
 import { UserContext } from "@contexts/UserContext";
 import Link from "next/link";

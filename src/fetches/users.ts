@@ -10,7 +10,41 @@ const {
   URL_TOKEN_REVOKE,
   URL_USER_PROFILE,
   URL_USER_REGISTER,
+  URL_USER_ACCOUNTS,
+  URL_USER_CREDIT_CARDS,
 } = API_URLS;
+
+export async function postUserAccont(auth: string, _data: any) {
+  const resp = await fetch(
+    URL_USER_ACCOUNTS,
+    makeFetchOption(
+      {
+        method: "POST",
+        body: stringify(_data),
+      },
+      auth
+    )
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function postUserCreditCard(auth: string, _data: any) {
+  const resp = await fetch(
+    URL_USER_CREDIT_CARDS,
+    makeFetchOption(
+      {
+        method: "POST",
+        body: stringify(_data),
+      },
+      auth
+    )
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
 
 export async function getProfileDataWithURL(auth: string, url: string) {
   const resp = await fetch(url, makeFetchOption({}, auth));
@@ -18,6 +52,7 @@ export async function getProfileDataWithURL(auth: string, url: string) {
   const data = await resp.json();
   return data;
 }
+
 export async function getProfileData(auth: string) {
   return await getProfileDataWithURL(auth, URL_USER_PROFILE);
 }
@@ -79,4 +114,24 @@ export async function revokeToken() {
     })
   );
   return resp.ok;
+}
+
+export async function getAccountDataWithURL(auth: string, url: string) {
+  const resp = await fetch(url, makeFetchOption({}, auth));
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+export async function getCreditCardWithURL(auth: string, url: string) {
+  const resp = await fetch(url, makeFetchOption({}, auth));
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function getTransactionWithURL(auth: string, url: string) {
+  const resp = await fetch(url, makeFetchOption({}, auth));
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
 }

@@ -24,7 +24,7 @@ const INPUT = {
 const PayGateway: NextPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center mx-auto w-[90%]">
-      <div className="flex justify-between divide-x w-full h-screen">
+      <div className="flex justify-between divide-x w-full">
         <div className="w-1/2 py-10">
             <FontAwesomeIcon icon={faArrowLeft} />
           <div className="py-5">

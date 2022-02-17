@@ -1,6 +1,6 @@
 import Button from "@components/Globals/Button/Button";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
-import { postUserAccont, postUserCreditCard} from "@fetches/users";
+import { postUserAccont, postUserCreditCard } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
 import { Field, Form, Formik } from "formik";
 // import { SERVER_URLS } from "@config";
@@ -20,15 +20,12 @@ const Transaction: NextPage = () => {
 
   const initialValue: SignupForm = {
     type: AccountType.CHECKING,
-    balance: 300000,
+    balance: 0,
   };
 
   const pushData = useFetchCallback(postUserAccont);
 
   const pushDataCard = useFetchCallback(postUserCreditCard);
-  //   const handleSubmit = (values: any) => {
-
-  //   }
 
   return (
     //useFetchCallback
@@ -40,7 +37,7 @@ const Transaction: NextPage = () => {
           onSubmit={(values: SignupForm) => {
             pushData({
               type: AccountType.CHECKING,
-              balance: 300000,
+              balance: 0,
             });
           }}
         >
@@ -98,8 +95,7 @@ const Transaction: NextPage = () => {
             <Button
               type="submit"
               className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-              onClick={() => pushDataCard({ credit: 40000 })}
-              //   onClick={handleCredit}
+              onClick={() => pushDataCard({ credit: 0 })}
             >
               <p>Mandar la solicitud</p>
             </Button>

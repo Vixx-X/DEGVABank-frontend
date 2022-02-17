@@ -84,13 +84,16 @@ export async function postRegisterUser(userData: any) {
   return data;
 }
 
-export async function postTransferUser(transferData: any) {
+export async function postTransferUser(auth: string, _data: any) {
   const resp = await fetch(
     URL_USER_TRANSACTIONS,
-    makeFetchOption({
-      method: "POST",
-      body: stringify(transferData),
-    })
+    makeFetchOption(
+      {
+        method: "POST",
+        body: stringify(_data),
+      },
+      auth
+    )
   );
   await assertApiError(resp);
   const data = await resp.json();

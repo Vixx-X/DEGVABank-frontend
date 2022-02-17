@@ -34,7 +34,10 @@ const Transaction: NextPage = () => {
     console.log("Voy a buscar ", data);
   };
 
-  const { data } = useSWRAuth(URL_USER_TRANSACTIONS, getTransactionWithURL);
+  const { data } = useSWRAuth(
+    URL_USER_TRANSACTIONS,
+    getTransactionWithURL
+  );
   useEffect(() => {
     if (calendarButton1 !== "" && calendarButton2 !== "") {
       console.log("Tengo 2 fechas seleccionadas");

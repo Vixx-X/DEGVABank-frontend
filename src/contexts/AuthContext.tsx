@@ -28,12 +28,19 @@ export const AuthContextProvider = ({
 }: Props & AuthTokens) => {
   const [auth, setAuth] = useState<AuthTokens>({ access }); // auth data
 
-  const { data, error, mutate } = useSWR("refresh", () => refreshToken(), {
-    refreshInterval: REVALIDATE_TOKEN_TIME,
-    shouldRetryOnError: false,
-  });
+  const { data, error, isValidating, mutate } = useSWR(
+    "refresh",
+    () => refreshToken(),
+    {
+      refreshInterval: REVALIDATE_TOKEN_TIME,
+      shouldRetryOnError: false,
+    }
+  );
 
-  const isLoading = useMemo(() => !data && !error, [data, error]);
+  const isLoading = useMemo(
+    () => (!data && !error) || isValidating,
+    [data, error, isValidating]
+  );
   const isAuthenticated = useMemo(() => !!auth.access, [auth]);
 
   useEffect(() => {

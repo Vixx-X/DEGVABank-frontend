@@ -14,11 +14,10 @@ const AuthPath = ({ children }: AuthPathProps) => {
   const { isAuthenticated, isLoading } = useContext(AuthContext);
   const router = useRouter();
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isAuthenticated && !isLoading) {
       router.push(makeUrl(URL_LOGIN, { next: router.asPath }));
     }
   });
   return <div>{isLoading ? <p>Cargando ando</p> : children}</div>;
 };
 export default AuthPath;
-

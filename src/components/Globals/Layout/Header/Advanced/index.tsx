@@ -1,6 +1,7 @@
 import Logotype from "../../../Logotype";
 import NavBar from "@components/Globals/Layout/NavBar";
 import { SERVER_URLS } from "@config";
+import { AuthContext } from "@contexts/AuthContext";
 import { UserContext } from "@contexts/UserContext";
 import Link from "next/link";
 import { useContext } from "react";
@@ -13,6 +14,7 @@ interface headerProps {
 
 const Header = ({ activate = "home" }: headerProps) => {
   const { user } = useContext(UserContext);
+  const { revokeToken } = useContext(AuthContext);
   return (
     <header
       className={`bg-[url('../public/backgroundPage2.png')] bg-cover bg-center relative h-[11rem]`}
@@ -34,7 +36,10 @@ const Header = ({ activate = "home" }: headerProps) => {
               Buenos dias, {user?.username}
             </p>
             <Link href={URL_LANDING}>
-              <a className="bg-light/20 text-white font-bold py-1 px-4 rounded-full cursor-pointer">
+              <a
+                className="bg-light/20 text-white font-bold py-1 px-4 rounded-full cursor-pointer"
+                onClick={() => revokeToken()}
+              >
                 Cerrar sesión
               </a>
             </Link>

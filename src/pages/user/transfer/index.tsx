@@ -1,18 +1,18 @@
 import Button from "@components/Globals/Button/Button";
-// import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
-import { API_URLS } from "@config";
-import { getAccountDataWithURL } from "@fetches/users";
+import { API_URLS, SERVER_URLS } from "@config";
+import { getAccountDataWithURL, postTransferUser } from "@fetches/users";
 import { useSWRAuth } from "@hooks/useSWRAuth";
 import { Field, Form, Formik } from "formik";
-//import Button from "@components/Button/Button";
 import type { NextPage } from "next";
+import router from "next/router";
 import { Key, useEffect, useState } from "react";
 
 const { URL_USER_ACCOUNTS } = API_URLS;
+const { URL_USER_TRANSACTION } = SERVER_URLS;
 
-interface SignupForm {
+interface TransferForm {
   name: string;
   lastname: string;
   email: string;
@@ -25,7 +25,7 @@ interface SignupForm {
   amount: number;
 }
 
-const initialValue: SignupForm = {
+const initialValue: TransferForm = {
   name: "",
   lastname: "",
   email: "",
@@ -40,7 +40,7 @@ const initialValue: SignupForm = {
 
 const Transfer: NextPage = () => {
   const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
-  const [ITEMS_BILLS, setItems] = useState<any[]>([])
+  const [ITEMS_BILLS, setItems] = useState<any>();
   const [bill, setbill] = useState<any>();
   const [loading, setLoading] = useState(true);
 
@@ -54,6 +54,34 @@ const Transfer: NextPage = () => {
     }
   }, [dataAccounts]);
 
+  const handleSubmit = async (data: TransferForm) => {
+    setLoading(true);
+    const transfer = {
+      source: data.account_src,
+      target: data.account_dest,
+      document_id: `${data.typeOfDocumentID}${data.number}`,
+      amount: data.amount,
+      reason: data.reason,
+    };
+    try {
+      await postTransferUser(transfer);
+      router.push(URL_USER_TRANSACTION);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // const handleCurrentBill = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const findBill = ITEMS_BILLS.find(
+  //     ({ id }: any) => e.target.value == id.toString()
+  //   );
+  //   if (findBill) {
+  //     setbill(findBill);
+  //   }
+  // };
+
   return (
     <MainLayout>
       {loading ? (
@@ -62,10 +90,8 @@ const Transfer: NextPage = () => {
         <>
           <Formik
             initialValues={initialValue}
-            //validationSchema={SignupSchema}
-            onSubmit={() => {
-              //values: SignupForm
-              //handleSubmit(values);
+            onSubmit={(values: TransferForm) => {
+              handleSubmit(values);
             }}
           >
             <Form>
@@ -96,7 +122,7 @@ const Transfer: NextPage = () => {
                     Saldo disponible en:{" "}
                     <span className="text-gray-500">{bill.id}</span>
                   </p>
-                  <p className="text-xl my-2 mb-4">{`$${bill?.balance}`}</p>
+                  <p className="text-xl my-2 mb-4">{`$${bill.balance}`}</p>
                 </div>
                 <div className="mt-4 pt-4">
                   <div>
@@ -170,7 +196,9 @@ const Transfer: NextPage = () => {
                           className="form-select appearance-none block w-full px-3 py-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-gray-300 border-solid rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none basis-1/5"
                           name="typeOfDocumentID"
                         >
-                          <option disabled>--Seleccionar--</option>
+                          <option disabled selected>
+                            --Seleccionar--
+                          </option>
                           <option value="V">V-</option>
                           <option value="E">E-</option>
                           <option value="J">J-</option>
@@ -264,3 +292,12 @@ const Transfer: NextPage = () => {
 };
 
 export default Transfer;
+function postUserTransfer(transfer: {
+  source: string;
+  target: string;
+  document_id: string;
+  amount: number;
+  reason: string;
+}) {
+  throw new Error("Function not implemented.");
+}

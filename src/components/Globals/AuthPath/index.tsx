@@ -11,13 +11,13 @@ interface AuthPathProps {
 }
 
 const AuthPath = ({ children }: AuthPathProps) => {
-  const { unAuthorized, isLoading } = useContext(AuthContext);
+  const { unAuthorized } = useContext(AuthContext);
   const router = useRouter();
   useEffect(() => {
     if (unAuthorized) {
       router.push(makeUrl(URL_LOGIN, { next: router.asPath }));
     }
   });
-  return <div>{isLoading ? <p>Cargando ando</p> : children}</div>;
+  return <div>{children}</div>;
 };
 export default AuthPath;

@@ -1,14 +1,12 @@
 import { AuthContextProvider } from "@contexts/AuthContext";
 import { UserContextProvider } from "@contexts/UserContext";
-import { AnimatePresence } from "framer-motion";
 import "@styles/globals.css";
-
 import { localStorageProvider } from "@utils/localStorageProvider";
-
+import { AnimatePresence } from "framer-motion";
 import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig
       value={{
@@ -17,8 +15,8 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     >
       <AuthContextProvider access={pageProps?.access}>
         <UserContextProvider user={pageProps?.user}>
-        <AnimatePresence>
-          <Component key={router.route} {...pageProps} />
+          <AnimatePresence>
+            <Component {...pageProps} />
           </AnimatePresence>
         </UserContextProvider>
       </AuthContextProvider>

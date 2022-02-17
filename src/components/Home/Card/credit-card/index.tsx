@@ -17,7 +17,7 @@ const CreditCard = ({ ITEMS_CARDS }: CreditCardProps) => {
   const [bill, setbill] = useState<any>();
   const handleCurrentBill = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const findBill = ITEMS_CARDS.find(
-      ({ number }) => e.target.value == id.toString()
+      ({ number }) => e.target.value == number.toString()
     );
     if (findBill) {
       setbill(findBill);

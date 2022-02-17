@@ -37,7 +37,8 @@ const Transaction: NextPage = () => {
         <Formik
           initialValues={initialValue}
           //validationSchema={SignupSchema}
-          onSubmit={(values: SignupForm) => {
+          onSubmit={() => {
+            //values: SignupForm
             pushData({
               type: AccountType.CHECKING,
               balance: 300000,

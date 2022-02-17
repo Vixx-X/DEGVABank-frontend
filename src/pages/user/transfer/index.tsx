@@ -40,8 +40,8 @@ const initialValue: SignupForm = {
 
 const Transfer: NextPage = () => {
   const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
-  const [ITEMS_BILLS, setItems] = useState();
-  const [bill, setbill] = useState();
+  const [ITEMS_BILLS, setItems] = useState<any[]>([])
+  const [bill, setbill] = useState<any>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -54,15 +54,6 @@ const Transfer: NextPage = () => {
     }
   }, [dataAccounts]);
 
-  const handleCurrentBill = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const findBill = ITEMS_BILLS.find(
-      ({ id }: any) => e.target.value == id.toString()
-    );
-    if (findBill) {
-      setbill(findBill);
-    }
-  };
-
   return (
     <MainLayout>
       {loading ? (
@@ -72,7 +63,8 @@ const Transfer: NextPage = () => {
           <Formik
             initialValues={initialValue}
             //validationSchema={SignupSchema}
-            onSubmit={(values: SignupForm) => {
+            onSubmit={() => {
+              //values: SignupForm
               //handleSubmit(values);
             }}
           >
@@ -104,7 +96,7 @@ const Transfer: NextPage = () => {
                     Saldo disponible en:{" "}
                     <span className="text-gray-500">{bill.id}</span>
                   </p>
-                  <p className="text-xl my-2 mb-4">{`$${bill.balance}`}</p>
+                  <p className="text-xl my-2 mb-4">{`$${bill?.balance}`}</p>
                 </div>
                 <div className="mt-4 pt-4">
                   <div>

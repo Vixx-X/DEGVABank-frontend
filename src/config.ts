@@ -26,6 +26,10 @@ export const API_URLS = {
   URL_CHANGE_EMAIL: `${API_URL}/user/change-email/`,
   URL_CHANGE_PASSWORD: `${API_URL}/user/change-password/`,
   URL_OTP_REQUEST: `${API_URL}/user/generate-otp/`,
+  //Account
+  URL_USER_ACCOUNTS: `${API_URL}/user/accounts/`,
+  URL_USER_CREDIT_CARDS: `${API_URL}/user/credit-cards/`,
+  URL_USER_TRANSACTIONS: `${API_URL}/user/transactions/`,
 };
 
 // Server routes paths
@@ -38,6 +42,9 @@ export const SERVER_URLS = {
   URL_USER_CHANGE_PASSWORD: "/user/change-password",
   URL_USER_PROFILE: "/user/profile",
   URL_USER_CONFIG: "/user/config/",
+  URL_USER_TRANSACTION: "/user/transaction/",
+  URL_USER_TRANSFER: "/user/transfer/",
+  URL_USER_REQUEST: "/user/request",
 
   // dashboard
   URL_HOME: "/home",

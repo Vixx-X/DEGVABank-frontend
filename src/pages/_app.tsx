@@ -1,10 +1,8 @@
 import { AuthContextProvider } from "@contexts/AuthContext";
 import { UserContextProvider } from "@contexts/UserContext";
-
 import "@styles/globals.css";
-
 import { localStorageProvider } from "@utils/localStorageProvider";
-
+import { AnimatePresence } from "framer-motion";
 import type { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 
@@ -17,7 +15,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     >
       <AuthContextProvider access={pageProps?.access}>
         <UserContextProvider user={pageProps?.user}>
-          <Component {...pageProps} />
+          <AnimatePresence>
+            <Component {...pageProps} />
+          </AnimatePresence>
         </UserContextProvider>
       </AuthContextProvider>
     </SWRConfig>

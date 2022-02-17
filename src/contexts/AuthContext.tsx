@@ -1,15 +1,9 @@
-import { SERVER_URLS } from "@config";
-
-import { makeUrl } from "@utils/makeUrl";
-
 import {
   getToken,
   refreshToken,
   revokeToken,
   verifyToken,
 } from "@fetches/users";
-
-import { useRouter } from "next/router";
 import React, {
   createContext,
   useCallback,
@@ -18,8 +12,6 @@ import React, {
   useState,
 } from "react";
 import useSWR from "swr";
-
-const { URL_LOGIN } = SERVER_URLS;
 
 export const AuthContext = createContext<any>(null);
 
@@ -32,7 +24,6 @@ const INVALID_TOKEN = ""; // leave blank
 
 export const AuthContextProvider = ({
   children,
-  pageNeedAuth = false,
   access = "",
 }: Props & AuthTokens) => {
   const [auth, setAuth] = useState<AuthTokens>({ access }); // auth data
@@ -46,20 +37,22 @@ export const AuthContextProvider = ({
     }
   );
 
-  const isLoading = useMemo(() => !data && !error, [data, error]);
+  const isLoading = useMemo(
+    () => (!data && !error) || isValidating,
+    [data, error, isValidating]
+  );
   const isAuthenticated = useMemo(() => !!auth.access, [auth]);
-
-  const router = useRouter();
+  const [unAuthorized, setUnAuthorized] = useState(false);
 
   useEffect(() => {
     if (error) {
       setAuth({ access: INVALID_TOKEN });
-      if (!isValidating && pageNeedAuth)
-        router.push(makeUrl(URL_LOGIN, { next: router.asPath }));
+      if (!isValidating) setUnAuthorized(true);
     } else if (data) {
       setAuth({ access: data?.access ?? INVALID_TOKEN });
+      setUnAuthorized(false);
     }
-  }, [data, error, router, pageNeedAuth, isValidating]);
+  }, [data, error, isValidating]);
 
   const _getToken = useCallback(
     async (username: string, password: string) => {
@@ -93,6 +86,7 @@ export const AuthContextProvider = ({
         verifyToken: _verifyToken,
         revokeToken: _revokeToken,
         isAuthenticated,
+        unAuthorized,
         isLoading,
       }}
     >

@@ -40,7 +40,7 @@ const initialValue: SignupForm = {
 
 const Transfer: NextPage = () => {
   const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
-  const [ITEMS_BILLS, setItems] = useState<any[]>([])
+  const [ITEMS_BILLS, setItems] = useState<any[]>([]);
   const [bill, setbill] = useState<any>();
   const [loading, setLoading] = useState(true);
 

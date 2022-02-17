@@ -14,8 +14,6 @@ const { URL_USER_ACCOUNTS, URL_USER_CREDIT_CARDS } = API_URLS;
 const Home: NextPage = () => {
   const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
   const dataCards = useSWRAuth(URL_USER_CREDIT_CARDS, getAccountDataWithURL);
-  console.log("Tengo data de accounts", dataAccounts);
-  console.log("Tengo tarjeta de credito", dataCards);
   return (
     <MainLayout>
       {!dataAccounts.data?.results || !dataCards.data?.results ? (

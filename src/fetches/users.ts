@@ -12,6 +12,7 @@ const {
   URL_USER_REGISTER,
   URL_USER_ACCOUNTS,
   URL_USER_CREDIT_CARDS,
+  URL_USER_TRANSACTIONS,
 } = API_URLS;
 
 export async function postUserAccont(auth: string, _data: any) {
@@ -77,6 +78,22 @@ export async function postRegisterUser(userData: any) {
       method: "POST",
       body: stringify(userData),
     })
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function postTransferUser(auth: string, _data: any) {
+  const resp = await fetch(
+    URL_USER_TRANSACTIONS,
+    makeFetchOption(
+      {
+        method: "POST",
+        body: stringify(_data),
+      },
+      auth
+    )
   );
   await assertApiError(resp);
   const data = await resp.json();

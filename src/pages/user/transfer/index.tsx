@@ -1,18 +1,18 @@
 import Button from "@components/Globals/Button/Button";
-// import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
-import { API_URLS } from "@config";
-import { getAccountDataWithURL } from "@fetches/users";
+import { API_URLS, SERVER_URLS } from "@config";
+import { getAccountDataWithURL, postTransferUser } from "@fetches/users";
+import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
 import { Field, Form, Formik } from "formik";
-//import Button from "@components/Button/Button";
 import type { NextPage } from "next";
 import { Key, useEffect, useState } from "react";
 
 const { URL_USER_ACCOUNTS } = API_URLS;
+const { URL_USER_TRANSACTION } = SERVER_URLS;
 
-interface SignupForm {
+interface TransferForm {
   name: string;
   lastname: string;
   email: string;
@@ -25,14 +25,14 @@ interface SignupForm {
   amount: number;
 }
 
-const initialValue: SignupForm = {
+const initialValue: TransferForm = {
   name: "",
   lastname: "",
   email: "",
   account_dest: "",
-  account_src: "",
+  account_src: "00691337537154591381",
   number: 0,
-  typeOfDocumentID: "",
+  typeOfDocumentID: "v",
   reason: "",
   alias: "",
   amount: 0,
@@ -40,19 +40,55 @@ const initialValue: SignupForm = {
 
 const Transfer: NextPage = () => {
   const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
+  const [sucessTransaction, setSucess] = useState<boolean>(false);
   const [ITEMS_BILLS, setItems] = useState<any[]>([]);
   const [bill, setbill] = useState<any>();
   const [loading, setLoading] = useState(true);
 
+  const postTransfer = useFetchCallback(postTransferUser);
+
   useEffect(() => {
     if (dataAccounts.data && dataAccounts.data.results) {
       setItems(dataAccounts.data.results);
-      setbill(dataAccounts.data.results[0]);
       setLoading(false);
     } else {
       setLoading(true);
     }
   }, [dataAccounts]);
+
+  useEffect(() => {
+    if (ITEMS_BILLS) {
+      setbill(ITEMS_BILLS[0]);
+    }
+  }, [ITEMS_BILLS]);
+
+  const handleSubmit = async (data: TransferForm) => {
+    setLoading(true);
+    const transfer = {
+      source: "00691337537154591381",
+      target: data.account_dest,
+      document_id: "V26956071",
+      amount: data.amount,
+      reason: data.reason,
+    };
+    try {
+      await postTransfer(transfer);
+      setSucess(true);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCurrentBill = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const findBill = ITEMS_BILLS.find(
+      ({ id }) => e.target.value == id.toString()
+    );
+    if (findBill) {
+      setbill(findBill);
+    }
+  };
 
   return (
     <MainLayout>
@@ -62,10 +98,8 @@ const Transfer: NextPage = () => {
         <>
           <Formik
             initialValues={initialValue}
-            //validationSchema={SignupSchema}
-            onSubmit={() => {
-              //values: SignupForm
-              //handleSubmit(values);
+            onSubmit={(values: TransferForm) => {
+              handleSubmit(values);
             }}
           >
             <Form>
@@ -76,11 +110,13 @@ const Transfer: NextPage = () => {
                       Cuenta a debitar
                     </p>
                   </div>
-                  <Field
-                    as="select"
+                  <select
                     id="account_src"
                     className="form-select appearance-none block w-full px-3 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     name="account_src"
+                    onChange={(e) => {
+                      handleCurrentBill(e);
+                    }}
                   >
                     <option disabled>--Seleccionar--</option>
                     {ITEMS_BILLS &&
@@ -91,10 +127,10 @@ const Transfer: NextPage = () => {
                           </option>
                         )
                       )}
-                  </Field>
+                  </select>
                   <p className="text-darkprimary mt-2">
                     Saldo disponible en:{" "}
-                    <span className="text-gray-500">{bill.id}</span>
+                    <span className="text-gray-500">{bill?.id}</span>
                   </p>
                   <p className="text-xl my-2 mb-4">{`$${bill?.balance}`}</p>
                 </div>
@@ -169,8 +205,11 @@ const Transfer: NextPage = () => {
                           id="typeOfDocumentID"
                           className="form-select appearance-none block w-full px-3 py-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-gray-300 border-solid rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none basis-1/5"
                           name="typeOfDocumentID"
+                          onClick={handleCurrentBill}
                         >
-                          <option disabled>--Seleccionar--</option>
+                          <option disabled selected>
+                            --Seleccionar--
+                          </option>
                           <option value="V">V-</option>
                           <option value="E">E-</option>
                           <option value="J">J-</option>
@@ -236,6 +275,15 @@ const Transfer: NextPage = () => {
                   </div>
                 </div>
               </div>
+              {sucessTransaction && (
+                <div
+                  className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                  role="alert"
+                >
+                  <span className="font-medium">Transacción Exitosa!</span> Su
+                  transacción ha sido realizada de manera exitosa.
+                </div>
+              )}
               <div className="flex justify-center gap-x-6">
                 <Button
                   type="submit"

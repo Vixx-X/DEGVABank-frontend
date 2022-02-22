@@ -37,9 +37,9 @@ const DataTable = ({ headers, items }: DataTableProps) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {itemList?.map((element: any) => (
+                  {itemList?.map((element: any,index:number) => (
                     <tr
-                      key={element.idTransaction}
+                      key={index}
                       className="border-b border-gray-200"
                     >
                       {headerList?.map((item: any) => (

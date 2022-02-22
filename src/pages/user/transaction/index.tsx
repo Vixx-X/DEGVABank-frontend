@@ -31,6 +31,7 @@ const Transaction: NextPage = () => {
     setCalendarButton2(date);
   };
   const handleSubmitSearchBar = (data: string) => {
+    alert(`Data a buscar: ${data}`)
     console.log("Voy a buscar ", data);
   };
 

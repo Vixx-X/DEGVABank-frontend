@@ -13,7 +13,7 @@ interface PayGateway {
 }
 
 interface CreditCardProp {
-  amount: string;
+  amount: string | string[] | undefined;
 }
 
 const CreditCard = ({ amount }: CreditCardProp) => {
@@ -29,7 +29,7 @@ const CreditCard = ({ amount }: CreditCardProp) => {
 
   return (
     <>
-      <div className="rounded-2xl w-9/12 overflow-hidden shadow-lg p-8">
+      <div className="rounded-2xl md:mx-10 overflow-hidden shadow-lg p-4 md:p-8">
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}

@@ -6,20 +6,14 @@ import DEFAULT_USER_IMAGE from "@public/defaul_user.png";
 import type { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-
-// interface PayGateway {
-//   email: "";
-//   cardInfo: {
-//     number: 0;
-//     expirationDate: "";
-//     cvc: "";
-//   };
-//   nameOnCard: "";
-// }
+import { useState } from "react";
+import Login from "@components/PayGateWay/Login";
+import Account from "@components/PayGateWay/Account";
 
 const PayGateway: NextPage = () => {
   const router = useRouter();
   const product = router.query;
+  const [component, setComponent] = useState<number>(0);
   console.log(product);
   let tot =
     typeof product.amount === "string"
@@ -55,7 +49,7 @@ const PayGateway: NextPage = () => {
                 typeof product.name !== "string" &&
                 product.name.map((element, index) => {
                   tot +=
-                    parseInt(product.amount[index]) *
+                    parseInt(product.amount[index]);
                     parseInt(product.num[index]);
                   return (
                     <Item
@@ -100,8 +94,10 @@ const PayGateway: NextPage = () => {
           </section>
           <div className="flex justify-center"></div>
         </div>
-        <div className="flex justify-center p-10">
-          <CreditCard amount={`$${tot + tax}`} />
+        <div className="flex justify-center items-center p-10">
+          {component === 0 && <CreditCard num={tot + tax} setComponent={setComponent} />}
+          {component === 1 && <Login setComponent={setComponent} />}
+          {component === 2 && <Account num={tot + tax} />}
         </div>
       </div>
     </div>

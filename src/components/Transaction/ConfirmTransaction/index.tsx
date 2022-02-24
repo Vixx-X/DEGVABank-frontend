@@ -23,11 +23,12 @@ const ConfirmTrasaction = ({
 }: ConfirmTrasactionProps) => {
   const handleSubmit = () => {
     console.log("Me hicieron click",value);
-    onSubmit(values)
+    onSubmit(value)
   };
 
   return (
     <div className="w-full">
+      <p>Confirmacion de Pago</p>
       <div className="w-full border">
         {HEADERS.map((item: any, index: number) => {
           return (
@@ -47,7 +48,7 @@ const ConfirmTrasaction = ({
           className="w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
           onClick={onCancel}
         >
-          <p>Cancelar2</p>
+          <p>Cancelar</p>
         </Button>
         <Button
           onClick={handleSubmit}

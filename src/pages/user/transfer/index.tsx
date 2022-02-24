@@ -297,11 +297,11 @@ const Transfer: NextPage = () => {
                 
                 {
                   !isDisplayConfirmTransaction && <div className="flex justify-center gap-x-6">
-                  <Button
+                  {/* <Button
                     className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                   >
-                    <p>Cancelar</p>
-                  </Button>
+                    <p>Cancelar1</p>
+                  </Button> */}
                   <Button
                     type="submit"
                     className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"

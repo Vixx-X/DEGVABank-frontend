@@ -1,15 +1,22 @@
-import { useRef } from "react";
+import { useState } from "react";
 
 interface SearchBarProps {
   onsubmit: (data: string) => void;
 }
 
 const SearchBar = ({ onsubmit }: SearchBarProps) => {
-  const inputSearch = useRef<any>(null);
+  // const inputSearch = useRef<any>(null);
+
+  const [searchWord,setSearchWord] = useState("")
+
+  const handleChangeInpurSearch = (event:any) => {
+    setSearchWord(event.target.value)
+    console.log(event.target.value)
+  }
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    onsubmit(inputSearch.current?.value);
+    onsubmit(searchWord);
   };
 
   return (
@@ -18,14 +25,12 @@ const SearchBar = ({ onsubmit }: SearchBarProps) => {
         <div className="mb-3 xl:w-96">
           <div className="input-group relative flex items-stretch w-full mb-4">
             <input
-              ref={inputSearch}
-              id="input-search"
               type="search"
               className="form-control relative flex-auto min-w-0 block w-full px-3 py-3 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
               placeholder="Search"
               aria-label="Search"
               aria-describedby="button-addon2"
-              value={inputSearch.current?.value}
+              onChange={handleChangeInpurSearch}
             />
             <button
               className="btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"

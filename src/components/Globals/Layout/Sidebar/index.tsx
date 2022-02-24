@@ -10,6 +10,7 @@ const SideBar = () => {
     URL_USER_TRANSACTION,
     URL_USER_TRANSFER,
     URL_USER_REQUEST,
+    URL_USER_PASARELA_OPTIONS,
   } = SERVER_URLS;
 
   const handleOpen = () => {
@@ -82,8 +83,13 @@ const SideBar = () => {
           className="border-r-4 border-primary py-4 px-8"
         />
         <SideBarOption
-          text="Preguntas frecuentes"
+          text="Habilitar Pasarela de Pago"
+          link={URL_USER_PASARELA_OPTIONS}
           className="border-l-4 border-darkprimary py-4 px-8"
+        />
+        <SideBarOption
+          text="Preguntas frecuentes"
+          className="border-r-4 border-primary py-4 px-8"
         />
       </ul>
       {/* <hr className="my-2"> */}

@@ -43,7 +43,7 @@ const CreditCard = ({ num, setComponent }: CreditCardProp) => {
 
   return (
     <>
-      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full">
+      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full xl:w-7/12">
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}
@@ -112,7 +112,7 @@ const CreditCard = ({ num, setComponent }: CreditCardProp) => {
                 type="submit"
                 className="bg-primary hover:bg-blue-700 text-white font-semibold py-2  rounded-full w-full max-w-[22rem]"
               >
-                <p>Pay {num}</p>
+                <p>Pay ${num}</p>
               </Button>
             </div>
             <Button
@@ -122,7 +122,7 @@ const CreditCard = ({ num, setComponent }: CreditCardProp) => {
               }}
               className="pt-2 inline-block w-full align-baseline font-bold text-sm xl:text-md text-primary hover:text-darkprimary text-right"
             >
-              <>¿No tiene aun una cuenta?</>
+              <>¿Tienes cuenta en nuestro banco?</>
             </Button>
           </Form>
         </Formik>

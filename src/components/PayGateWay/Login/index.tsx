@@ -42,7 +42,7 @@ const Login = ({ setComponent }: LoginProp) => {
 
   return (
     <>
-      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full">
+      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full xl:w-7/12">
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}

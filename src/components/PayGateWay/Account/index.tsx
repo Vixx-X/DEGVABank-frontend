@@ -49,18 +49,37 @@ const Account = ({ num }: AccountProp) => {
     }
   }, [ITEMS_BILLS]);
 
+  useEffect(() => {
+    if (dataAccounts.data && dataAccounts.data.results) {
+      setItems(dataAccounts.data.results);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  }, [dataAccounts]);
+
+  useEffect(() => {
+    if (ITEMS_BILLS) {
+      setbill(ITEMS_BILLS[0]);
+    }
+  }, [ITEMS_BILLS]);
+
   const handleSubmit = async (data: TransferForm) => {
+    console.log("Data ", data);
     setLoading(true);
     const transfer = {
       source: data.source,
+      target: "00691337710525376401",
+      document_id: "V26956071",
       amount: num,
+      reason: "no reason",
     };
     try {
       await postTransfer(transfer);
       setSucess(true);
     } catch (e) {
       setMessageError(e);
-      console.log(e);
+      console.log("errores", e);
     } finally {
       setLoading(false);
     }
@@ -76,7 +95,7 @@ const Account = ({ num }: AccountProp) => {
   };
   return (
     <>
-      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full">
+      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full xl:w-7/12">
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}
@@ -138,7 +157,7 @@ const Account = ({ num }: AccountProp) => {
                     type="submit"
                     className="bg-primary hover:bg-blue-700 text-white font-semibold py-2  rounded-full w-full max-w-[22rem]"
                   >
-                    <p>Pay {num}</p>
+                    <p>Pay ${num}</p>
                   </Button>
                 </div>
               </>

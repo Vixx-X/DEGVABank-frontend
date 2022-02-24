@@ -2,18 +2,16 @@ import Button from "@components/Globals/Button/Button";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import { API_URLS } from "@config";
 import {
-  getAccountDataWithURL,
-  getPaywayDataWithURL,
-  postPayway,
-  postPaywayKey,
+  getAccountDataWithURL, //   getPaywayDataWithURL,
+  postPayway, //   postPaywayKey,
 } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
-import { Field, Form, Formik, FormikHelpers } from "formik";
+import { Field, Form, Formik } from "formik";
 import type { NextPage } from "next";
 import { Key, useEffect, useState } from "react";
 
-const { URL_USER_ACCOUNTS, URL_USER_PAYWAY } = API_URLS;
+const { URL_USER_ACCOUNTS, URL_USER_PAYWAY, URL_USER_PAYWAY_KEYS } = API_URLS;
 
 interface PasarelaForm {
   backend: string;
@@ -31,7 +29,7 @@ const initialValue = {
 
 const PasarelaOptions: NextPage = () => {
   const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
-  const dataPayway = useSWRAuth(URL_USER_PAYWAY, getPaywayDataWithURL);
+  //   const dataPayway = useSWRAuth(URL_USER_PAYWAY, getPaywayDataWithURL);
   const [ITEMS_BILLS, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [messageError, setMessageError] = useState<any>();
@@ -40,17 +38,15 @@ const PasarelaOptions: NextPage = () => {
   const [currentkeys, setCurrentKeys] = useState(
     keys
       ? {
-          private:
-            "**********************************************************",
-          public:
-            "**********************************************************",
+          private: "**********************************************************",
+          public: "**********************************************************",
         }
       : { private: "", public: "" }
   );
 
   //
   const postPaywayOption = useFetchCallback(postPayway);
-  const postPaywayKeyOption = useFetchCallback(postPaywayKey);
+  //   const postPaywayKeyOption = useFetchCallback(postPaywayKey);
 
   useEffect(() => {
     if (dataAccounts.data && dataAccounts.data.results) {
@@ -75,8 +71,11 @@ const PasarelaOptions: NextPage = () => {
   const handleSubmitPaywayKey = async () => {
     setLoading(true);
     try {
-      const ret = await postPaywayKeyOption();
-      setCurrentKeys(ret);
+      //const ret = await postPaywayKeyOption();
+      setCurrentKeys({
+        private: "1213430sa291212uah143asa534634",
+        public: "121342312aaw12121ssq212ddx1224",
+      });
       setKeys(true);
       setWarningAlert(true);
     } catch (e) {
@@ -118,7 +117,7 @@ const PasarelaOptions: NextPage = () => {
                   id="backend"
                   type="text"
                   placeholder="Colocar Url"
-                //   value={dataPayway.backend}
+                  //   value={dataPayway.backend}
                 />
                 <label
                   className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
@@ -133,7 +132,7 @@ const PasarelaOptions: NextPage = () => {
                   id="success"
                   type="text"
                   placeholder="Colocar Url"
-                //   value={dataPayway.sucess}
+                  //   value={dataPayway.sucess}
                 />
                 <label
                   className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"

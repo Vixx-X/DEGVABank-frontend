@@ -1,5 +1,7 @@
 import CreditCard from "../../components/PayGateWay/CreditCard";
 import Item from "../../components/PayGateWay/Item";
+import Account from "@components/PayGateWay/Account";
+import Login from "@components/PayGateWay/Login";
 // import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DEFAULT_USER_IMAGE from "@public/defaul_user.png";
@@ -7,8 +9,6 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import Login from "@components/PayGateWay/Login";
-import Account from "@components/PayGateWay/Account";
 
 const PayGateway: NextPage = () => {
   const router = useRouter();
@@ -23,9 +23,6 @@ const PayGateway: NextPage = () => {
       : 0;
   const tax: number =
     product.tax && typeof product.tax === "string" ? parseInt(product.tax) : 0;
-  // ?name=producto 1&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=80&num=5&tax=5&logotype=https://upload.wikimedia.org/wikipedia/commons/9/9b/Zortrax-logotype.svg
-
-  // ?name=producto 1&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=80&num=5&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&name=producto 1&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=80&num=5&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&tax=5&logotype=https://upload.wikimedia.org/wikipedia/commons/9/9b/Zortrax-logotype.svg
 
   return (
     <div className="min-h-screen flex items-center justify-center mx-auto">
@@ -48,16 +45,18 @@ const PayGateway: NextPage = () => {
               {product.name !== undefined &&
                 typeof product.name !== "string" &&
                 product.name.map((element, index) => {
-                  tot +=
-                    parseInt(product.amount[index]);
-                    parseInt(product.num[index]);
+                  const num = product.num ? parseInt(product.num[index]) : 1;
+                  const amount = product.amount
+                    ? parseInt(product.amount[index])
+                    : 0;
+                  tot += amount * num;
                   return (
                     <Item
                       key={index}
                       name={element}
-                      image={product.image[index]}
-                      num={parseInt(product.num[index])}
-                      amount={parseInt(product.amount[index])}
+                      image={product.image && product.image[index]}
+                      num={num}
+                      amount={amount}
                     />
                   );
                 })}
@@ -95,7 +94,9 @@ const PayGateway: NextPage = () => {
           <div className="flex justify-center"></div>
         </div>
         <div className="flex justify-center items-center p-10">
-          {component === 0 && <CreditCard num={tot + tax} setComponent={setComponent} />}
+          {component === 0 && (
+            <CreditCard num={tot + tax} setComponent={setComponent} />
+          )}
           {component === 1 && <Login setComponent={setComponent} />}
           {component === 2 && <Account num={tot + tax} />}
         </div>

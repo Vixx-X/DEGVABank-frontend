@@ -5,7 +5,7 @@ import { API_URLS } from "@config";
 import { getAccountDataWithURL, postTransferUser } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import { Key, useEffect, useState } from "react";
 
 const { URL_USER_ACCOUNTS } = API_URLS;
@@ -52,8 +52,8 @@ const Account = ({ num }: AccountProp) => {
   const handleSubmit = async (data: TransferForm) => {
     setLoading(true);
     const transfer = {
-      source: "00691337537154591381",
-      amount: data.amount,
+      source: data.source,
+      amount: num,
     };
     try {
       await postTransfer(transfer);
@@ -76,69 +76,74 @@ const Account = ({ num }: AccountProp) => {
   };
   return (
     <>
-      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-9/12">
+      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full">
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}
           onSubmit={(values: TransferForm) => {
+            alert(JSON.stringify(values, null, 2));
             handleSubmit(values);
           }}
         >
-          <Form className="w-full p-4">
-            <>
-              <div>
-                <p className="text-darkprimary font-bold text-md uppercase">
-                  Cuenta a debitar
+          {({ handleChange }) => (
+            <Form className="w-full p-4">
+              <>
+                <div>
+                  <p className="text-darkprimary font-bold text-md uppercase">
+                    Cuenta a debitar
+                  </p>
+                </div>
+                <Field
+                  as="select"
+                  id="source"
+                  className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  name="source"
+                  onChange={(e: any) => {
+                    handleChange(e);
+                    handleCurrentBill(e);
+                  }}
+                >
+                  <option value="">--Seleccionar--</option>
+                  {ITEMS_BILLS &&
+                    ITEMS_BILLS.map(
+                      ({ id, type }: any, index: Key | null | undefined) => (
+                        <option key={index} value={id}>
+                          {`Cuenta de ${type} : ${id}`}
+                        </option>
+                      )
+                    )}
+                </Field>
+                <p className="text-darkprimary mt-2">
+                  Saldo disponible en:{" "}
+                  <span className="text-gray-500">{bill?.id}</span>
                 </p>
-              </div>
-              <select
-                id="account_src"
-                className="form-select appearance-none block w-full px-3 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                name="account_src"
-                onChange={(e) => {
-                  handleCurrentBill(e);
-                }}
-              >
-                <option disabled>--Seleccionar--</option>
-                {ITEMS_BILLS &&
-                  ITEMS_BILLS.map(
-                    ({ id, type }: any, index: Key | null | undefined) => (
-                      <option key={index} value={id}>
-                        {`Cuenta de ${type} : ${id}`}
-                      </option>
-                    )
-                  )}
-              </select>
-              <p className="text-darkprimary mt-2">
-                Saldo disponible en:{" "}
-                <span className="text-gray-500">{bill?.id}</span>
-              </p>
-              <ErrorMessage name="source" error={messageError} />
-              <p className="text-xl my-2 mb-4">{`$${bill?.balance}`}</p>
-              {sucessTransaction && (
-                <div
-                  className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
-                  role="alert"
-                >
-                  <span className="font-medium">Transacción Exitosa!</span> Su
-                  transacción ha sido realizada de manera exitosa.
+                <ErrorMessage name="source" error={messageError} />
+                <p className="text-xl my-2 mb-4">{`$${bill?.balance}`}</p>
+                {sucessTransaction && (
+                  <div
+                    className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                    role="alert"
+                  >
+                    <span className="font-medium">Transacción Exitosa!</span> Su
+                    transacción ha sido realizada de manera exitosa.
+                  </div>
+                )}
+                {loading && (
+                  <div className="relative w-full bg-gray-200 rounded mt-4">
+                    <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>
+                  </div>
+                )}
+                <div className="flex justify-center pt-10">
+                  <Button
+                    type="submit"
+                    className="bg-primary hover:bg-blue-700 text-white font-semibold py-2  rounded-full w-full max-w-[22rem]"
+                  >
+                    <p>Pay {num}</p>
+                  </Button>
                 </div>
-              )}
-              {loading && (
-                <div className="relative w-full bg-gray-200 rounded mt-4">
-                  <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>
-                </div>
-              )}
-              <div className="flex justify-center pt-10">
-                <Button
-                  type="submit"
-                  className="bg-primary hover:bg-blue-700 text-white font-semibold py-2  rounded-full w-full max-w-[22rem]"
-                >
-                  <p>Pay {num}</p>
-                </Button>
-              </div>
-            </>
-          </Form>
+              </>
+            </Form>
+          )}
         </Formik>
       </div>
     </>

@@ -43,7 +43,7 @@ const CreditCard = ({ num, setComponent }: CreditCardProp) => {
 
   return (
     <>
-      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-9/12">
+      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full">
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}

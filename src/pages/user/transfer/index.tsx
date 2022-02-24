@@ -120,9 +120,6 @@ const Transfer: NextPage = () => {
               setIsDisplayConfirmTransaction(true);
               // handleSubmit(values);
             }}
-            onChange={() => {
-              console.log("changing");
-            }}
           >
             {({ handleChange }) => (
               <Form>

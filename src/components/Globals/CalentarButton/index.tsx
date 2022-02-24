@@ -1,13 +1,13 @@
-interface CalentarButtonProps{
-    onchange : (date:string)=>void
+interface CalentarButtonProps {
+  onchange: (date: string) => void;
 }
 
-const CalentarButton = ({onchange}:CalentarButtonProps) => {
-
-    const handleChangeCalendar=(e : any)=>{
-        console.log(e.target.value)
-        onchange(e.target.value)
-    }
+const CalentarButton = ({ onchange }: CalentarButtonProps) => {
+  const handleChangeCalendar = (e: any) => {
+    const date = new Date(e.target.value);
+    date.setDate(date.getDate()+1);
+    onchange(date.toISOString());
+  };
 
   return (
     <input

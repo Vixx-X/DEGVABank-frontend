@@ -27,7 +27,7 @@ const Transaction: NextPage = () => {
 
   const [calendarButton1, setCalendarButton1] = useState("");
   const [calendarButton2, setCalendarButton2] = useState("");
-  const [paramsURL, setparamsURL] = useState({});
+  const [paramsURL, setparamsURL] = useState({} as any);
 
   const handleCalendarButton1 = (date: string) => {
     setCalendarButton1(date);
@@ -36,21 +36,47 @@ const Transaction: NextPage = () => {
     setCalendarButton2(date);
   };
   const handleSubmitSearchBar = (data: string) => {
-    alert(`Data a buscar: ${data}`)
+    alert(`Data a buscar: ${data}`);
     console.log("Voy a buscar ", data);
   };
-  const handleOrderClick = (attr:string) => {
+  const handleOrderClick = (attr: string) => {
+    console.log("Click en:", attr);
+
     setparamsURL({
-      ordering:attr
-    })
+      ordering: attr,
+    });
+
+    if (attr === paramsURL.ordering) {
+      setparamsURL({
+        ordering: "-" + attr,
+      });
+    }
+    if ("-" + attr === paramsURL.ordering) {
+      setparamsURL({
+        ordering: attr,
+      });
+    }
   };
 
-  const { data } = useSWRAuth(makeUrl(URL_USER_TRANSACTIONS,paramsURL), getTransactionWithURL);
+  const { data } = useSWRAuth(
+    makeUrl(URL_USER_TRANSACTIONS, paramsURL),
+    getTransactionWithURL
+  );
+
   useEffect(() => {
     if (calendarButton1 !== "" && calendarButton2 !== "") {
-      console.log("Tengo 2 fechas seleccionadas");
+      console.log("1",calendarButton1)
+      console.log("2",calendarButton2)
+      setparamsURL({
+        min_date: calendarButton1,
+        // max_date: calendarButton2,
+      });
     }
   }, [calendarButton1, calendarButton2]);
+
+  useEffect(() => {
+    console.log("return data",data);
+  }, [data]);
 
   return (
     <MainLayout activate="movements">

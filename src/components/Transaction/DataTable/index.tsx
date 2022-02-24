@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 interface DataTableProps {
   headers: any;
@@ -6,10 +5,8 @@ interface DataTableProps {
   handleOrderClick : (attr:string)=>void
 }
 
-const DataTable = ({ headers, items, handleOrderClick}: DataTableProps) => {
-  const [itemList, setItemList] = useState(items);
-  const [headerList, setHeaderList] = useState(headers);
-
+const DataTable = ({ headers:headerList, items:itemList, handleOrderClick}: DataTableProps) => {
+  
   const handleClick = (attr: string) => {
     handleOrderClick(attr)
   };
@@ -38,9 +35,9 @@ const DataTable = ({ headers, items, handleOrderClick}: DataTableProps) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {itemList?.map((element: any) => (
+                  {itemList?.map((element: any,index:number) => (
                     <tr
-                      key={element.idTransaction}
+                      key={index}
                       className="border-b border-gray-200"
                     >
                       {headerList?.map((item: any) => (

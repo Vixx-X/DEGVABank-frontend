@@ -30,6 +30,8 @@ export const API_URLS = {
   URL_USER_ACCOUNTS: `${API_URL}/user/accounts/`,
   URL_USER_CREDIT_CARDS: `${API_URL}/user/credit-cards/`,
   URL_USER_TRANSACTIONS: `${API_URL}/user/transactions/`,
+  URL_USER_PAYWAY: `${API_URL}/user/payway-meta/`,
+  URL_USER_PAYWAY_KEYS: `${API_URL}/user/payway-keys/`,
 };
 
 // Server routes paths
@@ -45,6 +47,7 @@ export const SERVER_URLS = {
   URL_USER_TRANSACTION: "/user/transaction/",
   URL_USER_TRANSFER: "/user/transfer/",
   URL_USER_REQUEST: "/user/request",
+  URL_USER_PASARELA_OPTIONS: "/user/pasarela/",
 
   // dashboard
   URL_HOME: "/home",

@@ -13,12 +13,12 @@ enum AccountType {
 }
 
 const Transaction: NextPage = () => {
-  interface SignupForm {
+  interface RequestForm {
     type: AccountType;
     balance: number;
   }
 
-  const initialValue: SignupForm = {
+  const initialValue: RequestForm = {
     type: AccountType.CHECKING,
     balance: 0,
   };
@@ -34,10 +34,9 @@ const Transaction: NextPage = () => {
         <Formik
           initialValues={initialValue}
           //validationSchema={SignupSchema}
-          onSubmit={() => {
-            //values: SignupForm
+          onSubmit={(values: RequestForm) => {
             pushData({
-              type: AccountType.CHECKING,
+              type: values.type,
               balance: 0,
             });
           }}

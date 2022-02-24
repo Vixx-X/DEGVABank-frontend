@@ -1,6 +1,7 @@
 import Button from "@components/Globals/Button/Button";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
+import ConfirmTrasaction from "@components/Transaction/ConfirmTransaction";
 import { API_URLS, SERVER_URLS } from "@config";
 import { getAccountDataWithURL, postTransferUser } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
@@ -8,7 +9,6 @@ import { useSWRAuth } from "@hooks/useSWRAuth";
 import { Field, Form, Formik } from "formik";
 import type { NextPage } from "next";
 import { Key, useEffect, useState } from "react";
-import ConfirmTrasaction from "@components/Transaction/ConfirmTransaction";
 
 const { URL_USER_ACCOUNTS } = API_URLS;
 const { URL_USER_TRANSACTION } = SERVER_URLS;
@@ -45,8 +45,10 @@ const Transfer: NextPage = () => {
   const [ITEMS_BILLS, setItems] = useState<any[]>([]);
   const [bill, setbill] = useState<any>();
   const [loading, setLoading] = useState(true);
-  const [valuesConfirmTrasaction, setvaluesConfirmTrasaction] = useState<TransferForm>();
-  const [isDisplayConfirmTransaction, setIsDisplayConfirmTransaction] = useState(false)
+  const [valuesConfirmTrasaction, setvaluesConfirmTrasaction] =
+    useState<TransferForm>();
+  const [isDisplayConfirmTransaction, setIsDisplayConfirmTransaction] =
+    useState(false);
 
   const postTransfer = useFetchCallback(postTransferUser);
 
@@ -94,8 +96,9 @@ const Transfer: NextPage = () => {
   };
 
   const handleCancel = () => {
-    setIsDisplayConfirmTransaction(false)
-  }
+    console.log("Cancelar !");
+    setIsDisplayConfirmTransaction(false);
+  };
 
   return (
     <MainLayout>
@@ -106,9 +109,9 @@ const Transfer: NextPage = () => {
           <Formik
             initialValues={initialValue}
             onSubmit={(values: TransferForm) => {
-              console.log("OnSubmit",values)
-              setvaluesConfirmTrasaction(values)
-              setIsDisplayConfirmTransaction(true)
+              // console.log("OnSubmit",values)
+              setvaluesConfirmTrasaction(values);
+              setIsDisplayConfirmTransaction(true);
               // handleSubmit(values);
             }}
           >
@@ -294,9 +297,9 @@ const Transfer: NextPage = () => {
                   transacción ha sido realizada de manera exitosa.
                 </div>
               )}
-                
-                {
-                  !isDisplayConfirmTransaction && <div className="flex justify-center gap-x-6">
+
+              {!isDisplayConfirmTransaction && (
+                <div className="flex justify-center gap-x-6">
                   {/* <Button
                     className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                   >
@@ -309,7 +312,7 @@ const Transfer: NextPage = () => {
                     <p>Aceptar</p>
                   </Button>
                 </div>
-                }
+              )}
 
               {loading && (
                 <div className="relative w-full bg-gray-200 rounded mt-4">
@@ -318,17 +321,15 @@ const Transfer: NextPage = () => {
               )}
             </Form>
           </Formik>
-          {
-            isDisplayConfirmTransaction && (
+          {isDisplayConfirmTransaction && (
             <div className="mt-5">
-              <ConfirmTrasaction 
+              <ConfirmTrasaction
                 value={valuesConfirmTrasaction}
                 onSubmit={handleSubmit}
                 onCancel={handleCancel}
               />
             </div>
-            )
-          }
+          )}
         </>
       )}
     </MainLayout>

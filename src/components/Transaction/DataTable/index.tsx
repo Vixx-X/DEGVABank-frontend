@@ -3,14 +3,15 @@ import { useState } from "react";
 interface DataTableProps {
   headers: any;
   items: any;
+  handleOrderClick : (attr:string)=>void
 }
 
-const DataTable = ({ headers, items }: DataTableProps) => {
+const DataTable = ({ headers, items, handleOrderClick}: DataTableProps) => {
   const [itemList, setItemList] = useState(items);
   const [headerList, setHeaderList] = useState(headers);
 
-  const handleOrderClick = (attr: String) => {
-    console.log("Atributo", attr);
+  const handleClick = (attr: string) => {
+    handleOrderClick(attr)
   };
 
   return (
@@ -28,7 +29,7 @@ const DataTable = ({ headers, items }: DataTableProps) => {
                         scope="col"
                         className="cursor-pointer py-2 px-2 sm:py-4 sm:px-8 text-xs tracking-wider text-left uppercase text-darkprimary font-montserrat"
                         onClick={() => {
-                          handleOrderClick(element.value);
+                          handleClick(element.value);
                         }}
                       >
                         {element.name}

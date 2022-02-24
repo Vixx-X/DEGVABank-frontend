@@ -9,8 +9,8 @@ interface ConfirmTrasactionProps {
 const HEADERS = [
   { value: "name", name: "Nombre" },
   { value: "lastname", name: "Apellido" },
-  { value: "account_dest", name: "Cuenta Destino" },
-  { value: "account_src", name: "Cuenta Origen" },
+  { value: "target", name: "Cuenta Destino" },
+  { value: "source", name: "Cuenta Origen" },
   { value: "amount", name: "Cantidad" },
   { value: "email", name: "Correo Electronico" },
   { value: "reason", name: "Razon" },
@@ -22,7 +22,6 @@ const ConfirmTrasaction = ({
   onCancel,
 }: ConfirmTrasactionProps) => {
   const handleSubmit = () => {
-    console.log("Me hicieron click", value);
     onSubmit(value);
   };
 

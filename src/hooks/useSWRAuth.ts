@@ -2,7 +2,7 @@ import { auth } from "@hooks/auth";
 import useSWR from "swr";
 
 export function useSWRAuth(
-  url: string,
+  url: any,
   fetcher: (key: string, auth: string) => any,
   options = {}
 ) {

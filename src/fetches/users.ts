@@ -1,6 +1,7 @@
 import { API_URLS } from "@config";
 import { assertApiError } from "@utils/assertApiError";
 import { makeFetchOption } from "@utils/makeFetchOption";
+import { makeUrl } from "@utils/makeUrl";
 import stringify from "fast-json-stable-stringify";
 
 const {
@@ -14,6 +15,7 @@ const {
   URL_USER_CREDIT_CARDS,
   URL_USER_TRANSACTIONS,
   URL_USER_PAYWAY,
+  URL_USER_PAYWAY_APPS,
   URL_USER_PAYWAY_KEYS,
 } = API_URLS;
 
@@ -104,11 +106,42 @@ export async function postTransferUser(auth: string, _data: any) {
 
 export async function postPayway(auth: string, _data: any) {
   const resp = await fetch(
-    URL_USER_PAYWAY,
+    URL_USER_PAYWAY_APPS,
     makeFetchOption(
       {
         method: "POST",
         body: stringify(_data),
+      },
+      auth
+    )
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function putPayway(auth: string, app_name: string, _data: any) {
+  const resp = await fetch(
+    makeUrl(URL_USER_PAYWAY, { app_name }),
+    makeFetchOption(
+      {
+        method: "PUT",
+        body: stringify(_data),
+      },
+      auth
+    )
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function deletePayway(auth: string, app_name: string) {
+  const resp = await fetch(
+    makeUrl(URL_USER_PAYWAY, { app_name }),
+    makeFetchOption(
+      {
+        method: "DELETE",
       },
       auth
     )
@@ -174,11 +207,18 @@ export async function getAccountDataWithURL(auth: string, url: string) {
   return data;
 }
 
+export async function getListPaywayDataWithURL(auth: string, url: string) {
+  const resp = await fetch(url, makeFetchOption({}, auth));
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data.results;
+}
+
 export async function getPaywayDataWithURL(auth: string, url: string) {
   const resp = await fetch(url, makeFetchOption({}, auth));
   await assertApiError(resp);
   const data = await resp.json();
-  return data.results?.[0];
+  return data.results.data;
 }
 
 export async function getCreditCardWithURL(auth: string, url: string) {

@@ -30,8 +30,9 @@ export const API_URLS = {
   URL_USER_ACCOUNTS: `${API_URL}/user/accounts/`,
   URL_USER_CREDIT_CARDS: `${API_URL}/user/credit-cards/`,
   URL_USER_TRANSACTIONS: `${API_URL}/user/transactions/`,
-  URL_USER_PAYWAY: `${API_URL}/user/payway-meta/`,
   URL_USER_PAYWAY_KEYS: `${API_URL}/user/payway-keys/`,
+  URL_USER_PAYWAY_APPS: `${API_URL}/user/user-payway-meta/`,
+  URL_USER_PAYWAY: `${API_URL}/user/user-payway-meta/[app_name]/`,
 };
 
 // Server routes paths

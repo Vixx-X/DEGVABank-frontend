@@ -1,4 +1,5 @@
 import Button from "@components/Globals/Button/Button";
+import ErrorMessage from "@components/Globals/ErrorMessage";
 import { API_URLS } from "@config";
 import { postPayway, putPayway } from "@fetches/users";
 import { getAccountDataWithURL } from "@fetches/users";
@@ -47,11 +48,11 @@ const PayWayForm = ({
     try {
       if (initialValue) await putPaywayOption(initialValue.app_name, data);
       else await postPaywayOption(data);
+      submitCallback?.();
+      setEditable?.(false);
     } catch (e) {
       setMessageError(e);
     } finally {
-      submitCallback?.();
-      setEditable?.(false);
       // setLoading(false);
     }
   };
@@ -72,110 +73,125 @@ const PayWayForm = ({
       }}
     >
       <Form>
-        <div className="rounded-2xl w-full overflow-hidden shadow-lg p-8">
-          <label
-            className="text-darkprimary font-bold uppercase"
-            htmlFor="idBill"
-          >
-            Información para habilitar pasarela
-          </label>
+        <label
+          className="text-darkprimary font-bold uppercase"
+          htmlFor="idBill"
+        >
+          Información para habilitar pasarela
+        </label>
 
-          <div className="my-2">
-            <label
-              className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
-              htmlFor="app-name"
-            >
-              Nombre unico de tu app
-            </label>
-            <Field
-              name="app_name"
-              className="appearance-none rounded w-full py-3 
-          border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="app-name"
-              type="text"
-              placeholder="Escribir nombre del app"
-              disabled={!editable}
-            />
-            <label
-              className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
-              htmlFor="backend"
-            >
-              URL para Backend
-            </label>
-            <Field
-              name="backend"
-              className="appearance-none rounded w-full py-3 
-          border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="backend"
-              type="text"
-              placeholder="Colocar Url"
-              disabled={!editable}
-            />
-            <label
-              className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
-              htmlFor="success"
-            >
-              URL para redireccionar en caso exitoso
-            </label>
-            <Field
-              name="success"
-              className="appearance-none rounded w-full py-3 
-          border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="success"
-              type="text"
-              placeholder="Colocar Url"
-              disabled={!editable}
-            />
-            <label
-              className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
-              htmlFor="fail"
-            >
-              URL para redireccionar en caso fallido
-            </label>
-            <Field
-              name="fail"
-              className="appearance-none rounded w-full py-3 
-          border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="fail"
-              type="text"
-              placeholder="Colocar Url"
-              disabled={!editable}
-            />
-            <label
-              className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
-              htmlFor="account"
-            >
-              Seleccionar cuenta beneficiaria
-            </label>
-            <Field
-              as="select"
-              id="account"
-              className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              name="account"
-              disabled={!editable}
-            >
-              <option value="">--Seleccionar--</option>
-              {accounts &&
-                accounts.map(
-                  ({ id, type }: any, index: Key | null | undefined) => (
-                    <option key={index} value={id}>
-                      {`Cuenta de ${type} : ${id}`}
-                    </option>
-                  )
-                )}
-            </Field>
-          </div>
-          {editable && (
-            <div className="flex justify-center pt-10">
-              <Button
-                type="submit"
-                className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+        <div className="my-2">
+          <div className="sm:grid sm:grid-cols-2 sm:gap-x-8">
+            <div>
+              <label
+                className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
+                htmlFor="app-name"
               >
-                <p>{!initialValue ? "Crear" : "Guardar"}</p>
-              </Button>
+                Nombre unico de tu app
+              </label>
+              <Field
+                name="app_name"
+                className="appearance-none rounded w-full py-3 
+            border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="app-name"
+                type="text"
+                placeholder="Escribir nombre del app"
+                disabled={!editable}
+              />
+              <ErrorMessage name="app_name" error={messageError} />
             </div>
-          )}
+            <div>
+              <label
+                className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
+                htmlFor="account"
+              >
+                Seleccionar cuenta beneficiaria
+              </label>
+              <Field
+                as="select"
+                id="account"
+                className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                name="account"
+                disabled={!editable}
+              >
+                <option value="">--Seleccionar--</option>
+                {accounts &&
+                  accounts.map(
+                    ({ id, type }: any, index: Key | null | undefined) => (
+                      <option key={index} value={id}>
+                        {`Cuenta de ${type} : ${id}`}
+                      </option>
+                    )
+                  )}
+              </Field>
+              <ErrorMessage name="account" error={messageError} />
+            </div>
+            <div>
+              <label
+                className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
+                htmlFor="backend"
+              >
+                URL para Backend
+              </label>
+              <Field
+                name="backend"
+                className="appearance-none rounded w-full py-3 
+          border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="backend"
+                type="text"
+                placeholder="Colocar Url"
+                disabled={!editable}
+              />
+              <ErrorMessage name="backend" error={messageError} />
+            </div>
+            <div>
+              <label
+                className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
+                htmlFor="success"
+              >
+                URL para redireccionar en caso exitoso
+              </label>
+              <Field
+                name="success"
+                className="appearance-none rounded w-full py-3 
+          border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="success"
+                type="text"
+                placeholder="Colocar Url"
+                disabled={!editable}
+              />
+              <ErrorMessage name="success" error={messageError} />
+            </div>
+            <div>
+              <label
+                className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
+                htmlFor="fail"
+              >
+                URL para redireccionar en caso fallido
+              </label>
+              <Field
+                name="fail"
+                className="appearance-none rounded w-full py-3 
+          border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="fail"
+                type="text"
+                placeholder="Colocar Url"
+                disabled={!editable}
+              />
+              <ErrorMessage name="fail" error={messageError} />
+            </div>
+          </div>
         </div>
+        {editable && (
+          <div className="flex justify-center pt-10">
+            <Button
+              type="submit"
+              className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            >
+              <p>{!initialValue ? "Crear" : "Guardar"}</p>
+            </Button>
+          </div>
+        )}
       </Form>
     </Formik>
   );

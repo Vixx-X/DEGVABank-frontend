@@ -48,15 +48,20 @@ const PasarelaOptions: NextPage = () => {
   return (
     <MainLayout>
       <>
-        <div className="flex justify-end w-full">
+        <div className="flex justify-start w-full">
           <Button id="create-modal" onClick={toggleModal}>
             Crear pasarela
           </Button>
         </div>
-        <div className="flex justify-center">
+        <div className="mt-8">
           {!loading ? (
             payWays?.length > 0 ? (
-              <DataTable headers={HEADERS} items={payWays} />
+              <>
+                <p className="text-darkprimary font-bold uppercase my-4">
+                  Lista de pasarela de pago habilitadas
+                </p>
+                <DataTable headers={HEADERS} items={payWays} />
+              </>
             ) : (
               <p>
                 {" "}

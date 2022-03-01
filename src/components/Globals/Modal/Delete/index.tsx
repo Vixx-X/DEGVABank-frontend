@@ -64,9 +64,9 @@ export default function DeleteModal({
               <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 text-center"
                 >
-                  Eliminar pasarela
+                  ¿Está seguro de eliminar la pasarela de pago {payWay} ?
                 </Dialog.Title>
 
                 <div className="mt-4 flex justify-around">

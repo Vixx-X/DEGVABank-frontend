@@ -34,7 +34,7 @@ const PasarelaOptions: NextPage = () => {
     });
     const [warningAlert, setWarningAlert] = useState<boolean>(false);
     return (
-      <div className="rounded-2xl w-full overflow-hidden shadow-lg p-8">
+      <div>
         <div>
           <label className="text-darkprimary font-bold uppercase">
             Generar llave publica y privada
@@ -93,24 +93,26 @@ const PasarelaOptions: NextPage = () => {
               <Button onClick={() => setEditable?.(true)}>Edit</Button>
             </div>
           )}
-          <div className="sm:grid sm:grid-cols-2 sm:gap-x-8">
+          <div className="sm:grid sm:gap-x-8 divide-y">
             <PayWayForm
               initialValue={data}
               editable={editable}
               submitCallback={() => setEditable(false)}
               setEditable={setEditable}
             />
-            <Keys appName={app_name} />
+            <div className="mt-8 pt-8">
+              <Keys appName={app_name} />
+            </div>
+          </div>
+          <div className="w-full flex justify-center text-center mt-16">
+            <Link href={URL_USER_PAYWAY_APPS}>
+              <a className="w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                <span>Volver</span>
+              </a>
+            </Link>
           </div>
         </>
       )}
-      <div className="w-full flex justify-center text-center mt-16">
-        <Link href={URL_USER_PAYWAY_APPS}>
-          <a className="w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-            <span>Volver</span>
-          </a>
-        </Link>
-      </div>
     </MainLayout>
   );
 };

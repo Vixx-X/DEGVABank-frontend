@@ -7,15 +7,22 @@ import { Fragment, useCallback } from "react";
 interface ModalProps {
   isOpen: boolean;
   setIsOpen: any;
-  payWay: any;
+  payWay: string;
+  submitCallback?: Function;
 }
 
-export default function DeleteModal({ isOpen, setIsOpen, payWay }: ModalProps) {
+export default function DeleteModal({
+  isOpen,
+  setIsOpen,
+  payWay,
+  submitCallback,
+}: ModalProps) {
   const deleteOption = useFetchCallback(deletePayway);
 
   const deletePayWay = useCallback(() => {
-    deleteOption(payWay.app_name);
-  }, [payWay, deleteOption]);
+    deleteOption(payWay);
+    setIsOpen(false);
+  }, [payWay, deleteOption, setIsOpen]);
 
   return (
     <>
@@ -66,6 +73,7 @@ export default function DeleteModal({ isOpen, setIsOpen, payWay }: ModalProps) {
                   <Button
                     onClick={() => {
                       deletePayWay();
+                      submitCallback?.();
                       setIsOpen(false);
                     }}
                   >

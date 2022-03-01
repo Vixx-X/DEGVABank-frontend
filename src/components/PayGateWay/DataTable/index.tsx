@@ -1,4 +1,4 @@
-import Actions from "../Actions";
+import { useMemo } from "react";
 
 interface DataTableProps {
   headers: any;
@@ -9,6 +9,7 @@ const DataTable = ({
   headers: headerList,
   items: itemList,
 }: DataTableProps) => {
+  const attrs = useMemo(() => Object.keys(headerList), [headerList]);
   return (
     <>
       <div className="flex flex-col w-full">
@@ -18,13 +19,13 @@ const DataTable = ({
               <table className="min-w-full border shadow-xl p-1">
                 <thead className="border-b border-gray-300">
                   <tr>
-                    {headerList?.map((element: any) => (
+                    {attrs?.map((key: any) => (
                       <th
-                        key={element.value}
+                        key={key}
                         scope="col"
                         className="cursor-pointer py-2 px-2 sm:py-4 sm:px-8 text-xs tracking-wider text-left uppercase text-darkprimary font-montserrat"
                       >
-                        {element.name}
+                        {headerList[key]}
                       </th>
                     ))}
                   </tr>
@@ -32,15 +33,14 @@ const DataTable = ({
                 <tbody>
                   {itemList?.map((element: any, index: number) => (
                     <tr key={index} className="border-b border-gray-200">
-                      {headerList?.map((item: any) => (
+                      {attrs?.map((key: any, idx: number) => (
                         <td
-                          key={`${element}${item.value}`}
+                          key={`${index}-${idx}`}
                           className="py-2 px-2 sm:py-4 sm:px-8 text-xs font-montserrat sm:text-sm whitespace-nowrap"
                         >
-                          {element[item.value]}
+                          {element[key]}
                         </td>
                       ))}
-                      <Actions />
                     </tr>
                   ))}
                 </tbody>

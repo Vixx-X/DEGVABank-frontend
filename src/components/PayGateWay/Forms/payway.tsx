@@ -1,18 +1,16 @@
 import Button from "@components/Globals/Button/Button";
-import { postPayway } from "@fetches/users";
-import { useFetchCallback } from "@hooks/useFetchCallback";
-import { Field, Form, Formik } from "formik";
 import { API_URLS } from "@config";
-import {
-  getAccountDataWithURL,
-  getListPaywayDataWithURL,
-} from "@fetches/users";
-import { Key, useState, useEffect } from "react";
+import { postPayway, putPayway } from "@fetches/users";
+import { getAccountDataWithURL } from "@fetches/users";
+import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
+import { Field, Form, Formik } from "formik";
+import { Key, useState, useEffect } from "react";
 
-const { URL_USER_ACCOUNTS, URL_USER_PAYWAY_APPS } = API_URLS;
+const { URL_USER_ACCOUNTS } = API_URLS;
 
 interface PasarelaForm {
+  app_name: string;
   backend: string;
   success: string;
   fail: string;
@@ -20,17 +18,23 @@ interface PasarelaForm {
 }
 
 interface PayWayFormProp {
-  initialValue: PasarelaForm;
+  initialValue?: PasarelaForm;
   editable?: boolean;
+  setEditable?: Function;
+  submitCallback?: Function;
 }
 
-const PayWayForm = ({ initialValue, editable = false }: PayWayFormProp) => {
+const PayWayForm = ({
+  initialValue,
+  editable = false,
+  setEditable,
+  submitCallback,
+}: PayWayFormProp) => {
   const postPaywayOption = useFetchCallback(postPayway);
+  const putPaywayOption = useFetchCallback(putPayway);
 
   const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
-  const dataPayway = useSWRAuth(URL_USER_PAYWAY_APPS, getListPaywayDataWithURL);
   const [accounts, setAccounts] = useState<any[]>([]);
-  const [payWay, setPayWay] = useState<any>();
   const [messageError, setMessageError] = useState<any>();
 
   useEffect(() => {
@@ -39,25 +43,30 @@ const PayWayForm = ({ initialValue, editable = false }: PayWayFormProp) => {
     }
   }, [dataAccounts]);
 
-  useEffect(() => {
-    if (dataPayway.data && dataPayway.data.results) {
-      setPayWay(dataPayway.data);
-    }
-  }, [dataPayway]);
-
   const handleSubmitPayway = async (data: PasarelaForm) => {
     try {
-      await postPaywayOption(data);
+      if (initialValue) await putPaywayOption(initialValue.app_name, data);
+      else await postPaywayOption(data);
     } catch (e) {
       setMessageError(e);
     } finally {
+      submitCallback?.();
+      setEditable?.(false);
       // setLoading(false);
     }
   };
 
   return (
     <Formik
-      initialValues={initialValue}
+      initialValues={
+        initialValue ?? {
+          app_name: "",
+          backend: "",
+          success: "",
+          fail: "",
+          account: "",
+        }
+      }
       onSubmit={(values: PasarelaForm) => {
         handleSubmitPayway(values);
       }}
@@ -74,6 +83,21 @@ const PayWayForm = ({ initialValue, editable = false }: PayWayFormProp) => {
           <div className="my-2">
             <label
               className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
+              htmlFor="app-name"
+            >
+              Nombre unico de tu app
+            </label>
+            <Field
+              name="app_name"
+              className="appearance-none rounded w-full py-3 
+          border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="app-name"
+              type="text"
+              placeholder="Escribir nombre del app"
+              disabled={!editable}
+            />
+            <label
+              className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
               htmlFor="backend"
             >
               URL para Backend
@@ -85,7 +109,6 @@ const PayWayForm = ({ initialValue, editable = false }: PayWayFormProp) => {
               id="backend"
               type="text"
               placeholder="Colocar Url"
-              value={payWay?.backend}
               disabled={!editable}
             />
             <label
@@ -101,7 +124,6 @@ const PayWayForm = ({ initialValue, editable = false }: PayWayFormProp) => {
               id="success"
               type="text"
               placeholder="Colocar Url"
-              value={payWay?.sucess}
               disabled={!editable}
             />
             <label
@@ -143,14 +165,16 @@ const PayWayForm = ({ initialValue, editable = false }: PayWayFormProp) => {
                 )}
             </Field>
           </div>
-          <div className="flex justify-center pt-10">
-            <Button
-              type="submit"
-              className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            >
-              <p>Continuar</p>
-            </Button>
-          </div>
+          {editable && (
+            <div className="flex justify-center pt-10">
+              <Button
+                type="submit"
+                className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              >
+                <p>{!initialValue ? "Crear" : "Guardar"}</p>
+              </Button>
+            </div>
+          )}
         </div>
       </Form>
     </Formik>

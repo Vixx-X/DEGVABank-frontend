@@ -1,102 +1,82 @@
 import Button from "@components/Globals/Button/Button";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
+import Modal from "@components/Globals/Modal";
+import Actions from "@components/PayGateWay/Actions";
 import DataTable from "@components/PayGateWay/DataTable";
+import PayWayForm from "@components/PayGateWay/Forms/payway";
 import { API_URLS } from "@config";
-import {
-  deletePayway,
-  getAccountDataWithURL,
-  getListPaywayDataWithURL,
-  postPayway,
-  postPaywayKey,
-} from "@fetches/users";
-import { useFetchCallback } from "@hooks/useFetchCallback";
+import { getListPaywayDataWithURL } from "@fetches/users";
 import { useSWRAuth } from "@hooks/useSWRAuth";
+import useToggle from "@hooks/useToggle";
 import type { NextPage } from "next";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
-const { URL_USER_ACCOUNTS, URL_USER_PAYWAY, URL_USER_PAYWAY_APPS } = API_URLS;
-const { URL_USER_TRANSACTIONS } = API_URLS;
+const { URL_USER_PAYWAY_APPS } = API_URLS;
 
-const HEADERS = [
-  { name: "id", value: "id" },
-  { name: "title", value: "title" },
-  { name: "action", value: "action" },
-];
-
-interface PasarelaForm {
-  backend: string;
-  success: string;
-  fail: string;
-  account: string;
-}
-
-const initialValue = {
-  backend: "",
-  success: "",
-  fail: "",
-  account: "",
+const HEADERS = {
+  id: "id",
+  app_name: "app name",
+  date_created: "created date",
+  action: "action",
 };
 
 const PasarelaOptions: NextPage = () => {
-  const dataPayway = useSWRAuth(URL_USER_PAYWAY_APPS, getListPaywayDataWithURL);
-  const [payWay, setPayWay] = useState<any>();
-  const [payWays, setPayWays] = useState<any>();
-  const [messageError, setMessageError] = useState<any>();
-  const [warningAlert, setWarningAlert] = useState<boolean>(false);
-  const [keys, setKeys] = useState(false);
-  const [currentkeys, setCurrentKeys] = useState(
-    keys
-      ? {
-          private: "**********************************************************",
-          public: "**********************************************************",
-        }
-      : { private: "", public: "" }
+  const { data, error, mutate } = useSWRAuth(
+    URL_USER_PAYWAY_APPS,
+    getListPaywayDataWithURL
   );
+  const [payWays, setPayWays] = useState<any[]>([]);
 
-  const deleteOption = useFetchCallback(deletePayway);
-  
- const deletePayWay  = useCallback(
-   () => {
-    deleteOption(payWay.app_name)
-   },
-   [payWay],
- )
-
-  const loading = useMemo(
-    () => !dataPayway.data && !dataPayway.error,
-    [dataPayway.data, dataPayway.error]
-  );
+  const loading = useMemo(() => !data && !error, [data, error]);
 
   useEffect(() => {
-    if (dataAccounts.data && dataAccounts.data.results) {
-      setAccounts(dataAccounts.data.results);
-    }
-  }, [dataAccounts]);
+    if (!data) return;
+    setPayWays(
+      data.map((item: any) => {
+        return {
+          ...item,
+          action: <Actions appName={item.app_name} onDelete={() => mutate()} />,
+        };
+      })
+    );
+  }, [data, mutate]);
 
-  useEffect(() => {
-    if (dataPayway.data && dataPayway.data.results) {
-      setPayWay(dataPayway.data);
-    }
-  }, [dataPayway]);
+  const [openModal, toggleModal] = useToggle(false);
 
   return (
     <MainLayout>
       <>
-        <Button>
-          <>Crear una nueva Pasarela</>
-        </Button>
+        <div className="flex justify-end w-full">
+          <Button id="create-modal" onClick={toggleModal}>
+            Crear pasarela
+          </Button>
+        </div>
         <div className="flex justify-center">
           {!loading ? (
-            payWay?.length > 0 ? (
-              <DataTable headers={HEADERS} items={payWay} />
+            payWays?.length > 0 ? (
+              <DataTable headers={HEADERS} items={payWays} />
             ) : (
-              <p> No hay movimientos.</p>
+              <p>
+                {" "}
+                No posee ninguna pasarela con nosotros, creala{" "}
+                <Link href="#create-modal">aquí</Link>.
+              </p>
             )
           ) : (
             <Loading />
           )}
         </div>
+        <Modal isOpen={openModal} setIsOpen={toggleModal}>
+          <PayWayForm
+            editable
+            submitCallback={() => {
+              toggleModal(false);
+              mutate();
+            }}
+          />
+        </Modal>
       </>
     </MainLayout>
   );

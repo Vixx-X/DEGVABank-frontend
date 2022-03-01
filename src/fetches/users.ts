@@ -14,7 +14,7 @@ const {
   URL_USER_ACCOUNTS,
   URL_USER_CREDIT_CARDS,
   URL_USER_TRANSACTIONS,
-  URL_USER_PAYWAY,
+  URL_USER_PAYWAY_APP,
   URL_USER_PAYWAY_APPS,
   URL_USER_PAYWAY_KEYS,
 } = API_URLS;
@@ -122,7 +122,7 @@ export async function postPayway(auth: string, _data: any) {
 
 export async function putPayway(auth: string, app_name: string, _data: any) {
   const resp = await fetch(
-    makeUrl(URL_USER_PAYWAY, { app_name }),
+    makeUrl(URL_USER_PAYWAY_APP, { app_name }),
     makeFetchOption(
       {
         method: "PUT",
@@ -138,7 +138,7 @@ export async function putPayway(auth: string, app_name: string, _data: any) {
 
 export async function deletePayway(auth: string, app_name: string) {
   const resp = await fetch(
-    makeUrl(URL_USER_PAYWAY, { app_name }),
+    makeUrl(URL_USER_PAYWAY_APP, { app_name }),
     makeFetchOption(
       {
         method: "DELETE",
@@ -147,8 +147,6 @@ export async function deletePayway(auth: string, app_name: string) {
     )
   );
   await assertApiError(resp);
-  const data = await resp.json();
-  return data;
 }
 
 export async function postPaywayKey(auth: string, _data: any) {
@@ -218,7 +216,7 @@ export async function getPaywayDataWithURL(auth: string, url: string) {
   const resp = await fetch(url, makeFetchOption({}, auth));
   await assertApiError(resp);
   const data = await resp.json();
-  return data.results.data;
+  return data;
 }
 
 export async function getCreditCardWithURL(auth: string, url: string) {

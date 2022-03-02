@@ -1,16 +1,34 @@
 import Button from "@components/Globals/Button/Button";
+import DataTable from "@components/Globals/DataTable";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
-import { postUserAccont, postUserCreditCard } from "@fetches/users";
+import { API_URLS } from "@config";
+import {
+  getRequestWithURL,
+  postUserAccont,
+  postUserCreditCard,
+} from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
+import { useSWRAuth } from "@hooks/useSWRAuth";
+import { makeUrl } from "@utils/makeUrl";
 import { Field, Form, Formik } from "formik";
-// import { SERVER_URLS } from "@config";
 import type { NextPage } from "next";
+import { useState } from "react";
 
-// const { URL_LOGIN, URL_REGISTER } = SERVER_URLS;
 enum AccountType {
   CHECKING = "CHECKING",
   SAVING = "SAVING",
 }
+
+const { URL_USER_REQUESTS } = API_URLS;
+
+const HEADERS = {
+  id: "id",
+  reason: "razón",
+  status: "estado",
+  date_processed: "fecha procesada",
+  date_created: "fecha emitida",
+  object_id: "target",
+};
 
 const Transaction: NextPage = () => {
   interface RequestForm {
@@ -23,21 +41,26 @@ const Transaction: NextPage = () => {
     balance: 0,
   };
 
+  const [paramsURL, setparamsURL] = useState({} as any);
+
   const pushData = useFetchCallback(postUserAccont);
 
   const pushDataCard = useFetchCallback(postUserCreditCard);
 
+  const { data } = useSWRAuth(
+    makeUrl(URL_USER_REQUESTS, paramsURL),
+    getRequestWithURL
+  );
+
   return (
-    //useFetchCallback
     <MainLayout activate="movements">
       <div className="sm:grid sm:grid-cols-2 sm:gap-x-8">
         <Formik
           initialValues={initialValue}
-          //validationSchema={SignupSchema}
           onSubmit={(values: RequestForm) => {
             pushData({
               type: values.type,
-              balance: 0,
+              balance: values.balance,
             });
           }}
         >
@@ -72,6 +95,20 @@ const Transaction: NextPage = () => {
                   />
                   <p>Corriente</p>
                 </label>
+                <label
+                  className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark xl:text-lg"
+                  htmlFor="initial-balance"
+                >
+                  Balance Inicial
+                </label>
+                <Field
+                  name="balance"
+                  className="appearance-none rounded w-full py-3 
+            border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="initial-balance"
+                  type="number"
+                  placeholder="Balance inicial"
+                />
               </div>
               <Button
                 type="submit"
@@ -101,6 +138,14 @@ const Transaction: NextPage = () => {
             </Button>
           </div>
         </div>
+      </div>
+
+      <div className="flex justify-center mt-8 mx-8">
+        {data?.results && data.results.length > 0 ? (
+          <DataTable headers={HEADERS} items={data.results} />
+        ) : (
+          <p> No posee peticiones con nosotros.</p>
+        )}
       </div>
     </MainLayout>
   );

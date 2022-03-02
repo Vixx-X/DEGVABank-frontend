@@ -1,5 +1,6 @@
 import Button from "@components/Globals/Button/Button";
 import DataTable from "@components/Globals/DataTable";
+import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import { API_URLS } from "@config";
 import {
@@ -46,6 +47,22 @@ const Transaction: NextPage = () => {
   const pushData = useFetchCallback(postUserAccont);
 
   const pushDataCard = useFetchCallback(postUserCreditCard);
+  const [messageError, setMessageError] = useState<any>();
+
+  const handleSubmit = async (data: RequestForm) => {
+    try {
+      await pushData({
+        type: data.type,
+        balance: data.balance,
+      });
+      // setSucess(true);
+    } catch (e) {
+      setMessageError(e);
+      console.log("errores", e);
+    } finally {
+      // setLoading(false);
+    }
+  };
 
   const { data } = useSWRAuth(
     makeUrl(URL_USER_REQUESTS, paramsURL),
@@ -58,10 +75,7 @@ const Transaction: NextPage = () => {
         <Formik
           initialValues={initialValue}
           onSubmit={(values: RequestForm) => {
-            pushData({
-              type: values.type,
-              balance: values.balance,
-            });
+            handleSubmit(values);
           }}
         >
           <Form>
@@ -116,6 +130,7 @@ const Transaction: NextPage = () => {
               >
                 <p>Mandar la solicitud</p>
               </Button>
+              <ErrorMessage name="non_field_errors" error={messageError} />
             </div>
           </Form>
         </Formik>

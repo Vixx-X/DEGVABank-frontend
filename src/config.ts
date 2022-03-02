@@ -54,5 +54,6 @@ export const SERVER_URLS = {
 
   // dashboard
   URL_HOME: "/home",
+  URL_PAYWAYS_DOCS: "/payways/docs",
   URL_LANDING: "/",
 };

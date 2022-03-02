@@ -4,10 +4,10 @@ import {
   faHome,
   faUserCircle,
   faPeopleArrows,
-  faCogs,
+  faAngleDoubleRight,
+  faCreditCard
 } from "@fortawesome/free-solid-svg-icons";
-
-const { URL_HOME, URL_USER_PROFILE, URL_USER_CONFIG, URL_USER_TRANSACTION } =
+const { URL_HOME, URL_USER_PROFILE, URL_USER_TRANSFER, URL_USER_TRANSACTION,URL_USER_REQUEST } =
   SERVER_URLS;
 
 interface HeaderProps {
@@ -20,13 +20,13 @@ const NavBar = ({ activate }: HeaderProps) => {
       <ElementNavBar
         icon={faHome}
         link={URL_HOME}
-        text="home"
+        text="Home"
         activate={activate == "home"}
       />
       <ElementNavBar
         icon={faUserCircle}
         link={URL_USER_PROFILE}
-        text="Usuario"
+        text="Perfil"
         activate={activate == "user"}
       />
       <ElementNavBar
@@ -36,10 +36,16 @@ const NavBar = ({ activate }: HeaderProps) => {
         activate={activate == "movements"}
       />
       <ElementNavBar
-        icon={faCogs}
-        link={URL_USER_CONFIG}
-        text="Ajustes"
-        activate={activate == "settings"}
+        icon={faAngleDoubleRight}
+        link={URL_USER_TRANSFER}
+        text="Realizar Trasferencia"
+        activate={activate == "transfer"}
+      />
+      <ElementNavBar
+        icon={faCreditCard}
+        link={URL_USER_REQUEST}
+        text="Solicitar Producto"
+        activate={activate == "products"}
       />
     </nav>
   );

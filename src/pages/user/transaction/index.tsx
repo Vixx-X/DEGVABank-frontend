@@ -88,7 +88,7 @@ const Transaction: NextPage = () => {
       </div>
       <div className="flex justify-center">
         {data?.results && data.results.length > 0 ? (
-          <DataTable headers={HEADERS} items={data.results} />
+          <DataTable headers={HEADERS} items={data.results} handleOrderClick={handleOrderClick} />
         ) : (
           <p> No hay movimientos.</p>
         )}

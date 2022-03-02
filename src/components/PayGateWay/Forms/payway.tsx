@@ -79,6 +79,7 @@ const PayWayForm = ({
         }
       }
       onSubmit={(values: PasarelaForm) => {
+        alert(JSON.stringify(values, null, 2));
         handleSubmitPayway(values);
       }}
     >
@@ -92,6 +93,24 @@ const PayWayForm = ({
 
         <div className="my-2">
           <div className="sm:grid sm:grid-cols-2 sm:gap-x-8">
+            <div>
+              <label
+                className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
+                htmlFor="app-id"
+              >
+                Identificador unico de tu app
+              </label>
+              <Field
+                name="app_id"
+                className="appearance-none rounded w-full py-3 
+            border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="app-id"
+                type="text"
+                placeholder="Escribir identificador del app"
+                disabled={!editable}
+              />
+              <ErrorMessage name="app_id" error={messageError} />
+            </div>
             <div>
               <label
                 className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"

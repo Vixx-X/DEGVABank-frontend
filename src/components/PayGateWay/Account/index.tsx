@@ -2,7 +2,7 @@ import Button from "@components/Globals/Button/Button";
 import ErrorMessage from "@components/Globals/ErrorMessage";
 import Logotype from "@components/Globals/Logotype";
 import { API_URLS } from "@config";
-import { getAccountDataWithURL, postTransferUser } from "@fetches/users";
+import { getAccountDataWithURL, postPaywayAccount } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
 import { Formik, Form, Field } from "formik";
@@ -11,32 +11,32 @@ import { Key, useEffect, useState } from "react";
 const { URL_USER_ACCOUNTS } = API_URLS;
 
 interface AccountProp {
-  num: number;
+  amount: string;
+  reason: string;
+  publicKey: string;
 }
 
-interface TransferForm {
-  source: string;
-  amount: number;
+interface AccountForm {
+  account: string;
 }
 
-const initialValue: TransferForm = {
-  source: "",
-  amount: 0,
+const initialValue: AccountForm = {
+  account: "",
 };
 
-const Account = ({ num }: AccountProp) => {
+const Account = ({ amount, reason, publicKey }: AccountProp) => {
   const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
   const [sucessTransaction, setSucess] = useState<boolean>(false);
-  const [ITEMS_BILLS, setItems] = useState<any[]>([]);
-  const [bill, setbill] = useState<any>();
+  const [accounts, setAccounts] = useState<any[]>([]);
+  const [currentAccount, setcurrentAccount] = useState<any>();
   const [loading, setLoading] = useState(true);
   const [messageError, setMessageError] = useState<any>();
 
-  const postTransfer = useFetchCallback(postTransferUser);
+  const postPayWayAccountOption = useFetchCallback(postPaywayAccount);
 
   useEffect(() => {
     if (dataAccounts.data && dataAccounts.data.results) {
-      setItems(dataAccounts.data.results);
+      setAccounts(dataAccounts.data.results);
       setLoading(false);
     } else {
       setLoading(true);
@@ -44,14 +44,14 @@ const Account = ({ num }: AccountProp) => {
   }, [dataAccounts]);
 
   useEffect(() => {
-    if (ITEMS_BILLS) {
-      setbill(ITEMS_BILLS[0]);
+    if (accounts) {
+      setcurrentAccount(accounts[0]);
     }
-  }, [ITEMS_BILLS]);
+  }, [accounts]);
 
   useEffect(() => {
     if (dataAccounts.data && dataAccounts.data.results) {
-      setItems(dataAccounts.data.results);
+      setAccounts(dataAccounts.data.results);
       setLoading(false);
     } else {
       setLoading(true);
@@ -59,23 +59,23 @@ const Account = ({ num }: AccountProp) => {
   }, [dataAccounts]);
 
   useEffect(() => {
-    if (ITEMS_BILLS) {
-      setbill(ITEMS_BILLS[0]);
+    if (accounts) {
+      setcurrentAccount(accounts[0]);
     }
-  }, [ITEMS_BILLS]);
+  }, [accounts]);
 
-  const handleSubmit = async (data: TransferForm) => {
-    console.log("Data ", data);
+  const handleSubmit = async (data: AccountForm) => {
     setLoading(true);
-    const transfer = {
-      source: data.source,
-      target: "00691337710525376401",
-      document_id: "V26956071",
-      amount: num,
-      reason: "no reason",
+    const pay = {
+      key: publicKey,
+      amount: amount,
+      reason: reason,
+      account: {
+        number: data.account,
+      },
     };
     try {
-      await postTransfer(transfer);
+      await postPayWayAccountOption(pay);
       setSucess(true);
     } catch (e) {
       setMessageError(e);
@@ -85,12 +85,14 @@ const Account = ({ num }: AccountProp) => {
     }
   };
 
-  const handleCurrentBill = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const findBill = ITEMS_BILLS.find(
+  const handleCurrentcurrentAccount = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const findcurrentAccount = accounts.find(
       ({ id }) => e.target.value == id.toString()
     );
-    if (findBill) {
-      setbill(findBill);
+    if (findcurrentAccount) {
+      setcurrentAccount(findcurrentAccount);
     }
   };
   return (
@@ -99,8 +101,7 @@ const Account = ({ num }: AccountProp) => {
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}
-          onSubmit={(values: TransferForm) => {
-            alert(JSON.stringify(values, null, 2));
+          onSubmit={(values: AccountForm) => {
             handleSubmit(values);
           }}
         >
@@ -114,17 +115,17 @@ const Account = ({ num }: AccountProp) => {
                 </div>
                 <Field
                   as="select"
-                  id="source"
+                  id="account"
                   className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  name="source"
+                  name="account"
                   onChange={(e: any) => {
                     handleChange(e);
-                    handleCurrentBill(e);
+                    handleCurrentcurrentAccount(e);
                   }}
                 >
                   <option value="">--Seleccionar--</option>
-                  {ITEMS_BILLS &&
-                    ITEMS_BILLS.map(
+                  {accounts &&
+                    accounts.map(
                       ({ id, type }: any, index: Key | null | undefined) => (
                         <option key={index} value={id}>
                           {`Cuenta de ${type} : ${id}`}
@@ -134,10 +135,10 @@ const Account = ({ num }: AccountProp) => {
                 </Field>
                 <p className="text-darkprimary mt-2">
                   Saldo disponible en:{" "}
-                  <span className="text-gray-500">{bill?.id}</span>
+                  <span className="text-gray-500">{currentAccount?.id}</span>
                 </p>
-                <ErrorMessage name="source" error={messageError} />
-                <p className="text-xl my-2 mb-4">{`$${bill?.balance}`}</p>
+                <ErrorMessage name="account.number" error={messageError} />
+                <p className="text-xl my-2 mb-4">{`$${currentAccount?.balance}`}</p>
                 {sucessTransaction && (
                   <div
                     className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
@@ -157,7 +158,7 @@ const Account = ({ num }: AccountProp) => {
                     type="submit"
                     className="bg-primary hover:bg-blue-700 text-white font-semibold py-2  rounded-full w-full max-w-[22rem]"
                   >
-                    <p>Pay ${num}</p>
+                    <p>Pay ${amount}</p>
                   </Button>
                 </div>
               </>

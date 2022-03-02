@@ -1,45 +1,61 @@
 import Button from "@components/Globals/Button/Button";
 import ErrorMessage from "@components/Globals/ErrorMessage";
 import Logotype from "@components/Globals/Logotype";
-import { Formik, Form, Field, FormikHelpers } from "formik";
+import { postPaywayCard } from "@fetches/users";
+import { Formik, Form, Field } from "formik";
 import { useState } from "react";
 
-interface PayGateway {
-  cardInfo: {
-    number: string;
-    expirationDate: string;
-    cvc: string;
-  };
-  name: string;
-}
-
 interface CreditCardProp {
-  num: number;
+  amount: string;
+  publicKey: string;
+  reason: string;
   setComponent: any;
 }
 
-const CreditCard = ({ num, setComponent }: CreditCardProp) => {
+interface CreditCardForm {
+  security_code: string;
+  expiration_date: string;
+  number: string;
+  user: string;
+}
+
+const CreditCard = ({
+  amount,
+  publicKey,
+  reason,
+  setComponent,
+}: CreditCardProp) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [messageError, setMessageError] = useState<any>();
-  
-  const handleSubmitCreditCard = () => {
+  const [sucessTransaction, setSucess] = useState<boolean>(false);
+
+  const handleSubmit = async (data: CreditCardForm) => {
     setLoading(true);
+    const pay = {
+      key: publicKey,
+      amount: amount,
+      reason: reason,
+      card: {
+        security_code: data.security_code,
+        expiration_date: data.expiration_date,
+      },
+    };
     try {
-      setComponent(1);
-    } catch (error) {
-      setMessageError(error);
+      await postPaywayCard(pay);
+      setSucess(true);
+    } catch (e) {
+      setMessageError(e);
+      console.log("errores", e);
     } finally {
       setLoading(false);
     }
   };
 
-  const initialValue: PayGateway = {
-    cardInfo: {
-      number: "",
-      expirationDate: "",
-      cvc: "",
-    },
-    name: "",
+  const initialValue: CreditCardForm = {
+    security_code: "",
+    expiration_date: "",
+    number: "",
+    user: "",
   };
 
   return (
@@ -48,15 +64,8 @@ const CreditCard = ({ num, setComponent }: CreditCardProp) => {
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}
-          onSubmit={(
-            values: PayGateway,
-            { setSubmitting }: FormikHelpers<PayGateway>
-          ) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 500);
-            handleSubmitCreditCard();
+          onSubmit={(values: CreditCardForm) => {
+            handleSubmit(values);
           }}
         >
           <Form className="w-full p-4">
@@ -67,19 +76,19 @@ const CreditCard = ({ num, setComponent }: CreditCardProp) => {
               Titular de la tarjeta
             </label>
             <Field
-              name="name"
+              name="user"
               className="appearance-none rounded w-full py-3 
                 border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="name"
+              id="user"
               type="text"
               placeholder="Name On Card"
             />
-            <ErrorMessage name="name" error={messageError} />
+            <ErrorMessage name="user" error={messageError} />
             <label className="block text-sm xl:text-lg font-bold mb-2 text-dark pt-10">
               Card Information
             </label>
             <Field
-              name="cardInfo.number"
+              name="number"
               className="shadow appearance-none border-gray-300 rounded-t w-full py-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline my-2"
               id="number"
               type="text"
@@ -88,22 +97,31 @@ const CreditCard = ({ num, setComponent }: CreditCardProp) => {
             <ErrorMessage name="number" error={messageError} />
             <div className="flex gap-x-2">
               <Field
-                name="cardInfo.expirationDate"
+                name="expiration_date"
                 className="shadow appearance-none border-gray-300 rounded-b py-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-1/2"
-                id="date"
+                id="expiration_date"
                 type="date"
                 placeholder="dd/mm"
               />
-              <ErrorMessage name="expirationDate" error={messageError} />
+              <ErrorMessage name="expiration_date" error={messageError} />
               <Field
-                name="cardInfo.cvc"
+                name="security_code"
                 className="shadow appearance-none border-gray-300 rounded-b py-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-1/2"
-                id="cvc"
+                id="security_code"
                 type="text"
                 placeholder="CVC"
               />
-              <ErrorMessage name="cvc" error={messageError} />
+              <ErrorMessage name="security_code" error={messageError} />
             </div>
+            {sucessTransaction && (
+              <div
+                className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                role="alert"
+              >
+                <span className="font-medium">Pago Exitoso!</span> Su pago ha
+                sido realizado de manera exitosa.
+              </div>
+            )}
             {loading && (
               <div className="relative w-full bg-gray-200 rounded mt-4">
                 <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>
@@ -114,7 +132,7 @@ const CreditCard = ({ num, setComponent }: CreditCardProp) => {
                 type="submit"
                 className="bg-primary hover:bg-blue-700 text-white font-semibold py-2  rounded-full w-full max-w-[22rem]"
               >
-                <p>Pay ${num}</p>
+                <p>Pay ${amount}</p>
               </Button>
             </div>
             <Button

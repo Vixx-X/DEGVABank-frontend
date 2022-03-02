@@ -34,6 +34,8 @@ export const API_URLS = {
   URL_USER_PAYWAY_APPS: `${API_URL}/user/payway-meta/`,
   URL_USER_PAYWAY_APP: `${API_URL}/user/payway-meta/[app_id]/`,
   URL_USER_REQUESTS: `${API_URL}/user/petitions/`,
+  URL_PAYWAY_ACCOUNT: `${API_URL}/paygateway/account/`,
+  URL_PAYWAY_CARD: `${API_URL}/paygateway/card/`,
 };
 
 // Server routes paths

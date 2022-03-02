@@ -3,11 +3,13 @@ import { useMemo } from "react";
 interface DataTableProps {
   headers: any;
   items: any;
+  handleOrderClick?:(atr:string)=>void;
 }
 
 const DataTable = ({
   headers: headerList,
   items: itemList,
+  handleOrderClick
 }: DataTableProps) => {
   const attrs = useMemo(() => Object.keys(headerList), [headerList]);
   return (
@@ -24,6 +26,11 @@ const DataTable = ({
                         key={key}
                         scope="col"
                         className="cursor-pointer py-2 px-2 sm:py-4 sm:px-8 text-xs tracking-wider text-left uppercase text-darkprimary font-montserrat"
+                        onClick={()=>{
+                          if(handleOrderClick){
+                            handleOrderClick(key)
+                          }
+                        }}
                       >
                         {headerList[key]}
                       </th>

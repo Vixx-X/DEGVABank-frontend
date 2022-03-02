@@ -1,26 +1,38 @@
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import CodeFormatter from "@components/PayGateWay/CodeFormatter";
 import { SERVER_URLS } from "@config";
+import RegisterCapture from "@public/RegisterCapture.png";
+import LoginCapture from "@public/LoginCapture.png";
 import type { NextPage } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { a11yDark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 const { URL_LOGIN, URL_REGISTER, URL_USER_PAYWAY_APPS } = SERVER_URLS;
-
-// import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const Documentation: NextPage = () => {
   return (
     <MainLayout>
       <ol className="px-4 list-decimal font-montserrat">
         <li className="my-2">
-          <Link href={URL_REGISTER}>
-            <a className="text-blue-600 hover:text-blue-800 visited:text-purple-600">
-              Registrarse
-            </a>
-          </Link>{" "}
-          con una cuenta de usuario jurídico.
+          <span className="block">
+            <Link href={URL_REGISTER}>
+              <a className="text-blue-600 hover:text-blue-800 visited:text-purple-600">
+                Registrarse
+              </a>
+            </Link>{" "}
+            con una cuenta de usuario jurídico.
+          </span>
+          <div className="my-4">
+            <Image
+              src={RegisterCapture}
+              alt="preview image"
+              width={350}
+              height={100}
+            />
+          </div>
         </li>
+
         <li className="my-2">
           <Link href={URL_LOGIN}>
             <a className="text-blue-600 hover:text-blue-800 visited:text-purple-600">
@@ -28,6 +40,14 @@ const Documentation: NextPage = () => {
             </a>
           </Link>{" "}
           con la cuenta de usuario jurídico registrada.
+          <div className="my-4">
+            <Image
+              src={LoginCapture}
+              alt="preview image"
+              width={300}
+              height={320}
+            />
+          </div>
         </li>
         <li className="my-2">
           Dirigirse a la sección de{" "}
@@ -71,7 +91,7 @@ const Documentation: NextPage = () => {
         </li>
       </ol>
       <CodeFormatter language="javascript" style={a11yDark}>
-        {"(num) => num + 1"}
+        {`/paygateway?name=$[product_name]&image=$[product_image]&amount=$[amount]&num=$[product_num]&tax=$[tax]`}
       </CodeFormatter>
     </MainLayout>
   );

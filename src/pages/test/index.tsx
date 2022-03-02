@@ -10,7 +10,7 @@ const Test: NextPage = () => {
             Primera compra
           </a>
         </Link>
-        <Link href="/paygateway?name=producto 1&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=80&num=5&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&name=producto 1&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=80&num=5&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&tax=5&logotype=https://upload.wikimedia.org/wikipedia/commons/9/9b/Zortrax-logotype.svg">
+        <Link href="/paygateway?name=producto 1&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=80&num=5&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&name=producto 1&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=80&num=5&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&name=producto 2&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=90&num=2&tax=5&logotype=https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Songkick_logotype.svg/1280px-Songkick_logotype.svg.png">
           <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Segunda compra
           </a>

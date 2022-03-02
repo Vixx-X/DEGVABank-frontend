@@ -38,7 +38,7 @@ const NavBar = ({ activate }: HeaderProps) => {
       <ElementNavBar
         icon={faAngleDoubleRight}
         link={URL_USER_TRANSFER}
-        text="Realizar Trasferencia"
+        text="Trasferencia"
         activate={activate == "transfer"}
       />
       <ElementNavBar

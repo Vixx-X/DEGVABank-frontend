@@ -4,35 +4,36 @@ import { UserContext } from "@contexts/UserContext";
 import { useState } from "react";
 import { useContext } from "react";
 
+const {
+  URL_USER_PROFILE,
+  URL_USER_TRANSACTION,
+  URL_USER_TRANSFER,
+  URL_USER_REQUEST,
+  URL_USER_PAYWAY_APPS,
+  URL_PAYWAYS_DOCS,
+} = SERVER_URLS;
+
 const SideBar = () => {
   const { user } = useContext(UserContext);
   console.log(user);
-  const [openAccount, setOpenAcount] = useState(true);
-  const [openRunway, setOpenRunway] = useState(false);
-  const [displayAccounts, setDisplayAccounts] = useState(false);
-  const [displayRunway, setdisplayRunway] = useState(false);
-  const {
-    URL_USER_PROFILE,
-    URL_USER_TRANSACTION,
-    URL_USER_TRANSFER,
-    URL_USER_REQUEST,
-    URL_USER_PAYWAY_APPS,
-    URL_PAYWAYS_DOCS,
-  } = SERVER_URLS;
+  const [openAccount, setOpenAcount] = useState<boolean>(true);
+  const [openRunway, setOpenRunway] = useState<boolean>(true);
+  const [displayAccounts, setDisplayAccounts] = useState<boolean>(false);
+  const [displayRunway, setDisplayRunway] = useState<boolean>(false);
 
   const handleAccountOpen = () => {
     setDisplayAccounts(!displayAccounts);
     setOpenAcount(!openAccount);
   };
   const handleOpenRunWay = () => {
-    setdisplayRunway(!displayRunway);
+    setDisplayRunway(!displayRunway);
     setOpenRunway(!openRunway);
   };
 
   return (
     <div className="shadow-md bg-white border-gray-200">
       <div className="pb-2 px-6"></div>
-      <ul className="relative pb-2 divide-y">
+      <ul className="relative divide-y">
         <li className="relative" id="sidenavSecEx2">
           <div
             className="flex items-center border-l-4 border-primary text-sm py-5 px-6 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer justify-between"
@@ -98,14 +99,9 @@ const SideBar = () => {
           </ul>
         </li>
         <SideBarOption
-          text="Solicitar Producto"
-          link={URL_USER_REQUEST}
-          className="border-l-4 border-darkprimary py-4 px-8"
-        />
-        <SideBarOption
           text="Ver perfil"
           link={URL_USER_PROFILE}
-          className="border-r-4 border-primary py-4 px-8"
+          className="border-r-4 border-darkprimary py-4 px-8"
         />
         <li className="relative" id="sidenavSecEx2">
           <div
@@ -173,8 +169,12 @@ const SideBar = () => {
             />
           </ul>
         </li>
+        <SideBarOption
+          text="Solicitar Producto"
+          link={URL_USER_REQUEST}
+          className="border-r-4 border-darkprimary py-4 px-8"
+        />
       </ul>
-      {/* <hr className="my-2"> */}
     </div>
   );
 };

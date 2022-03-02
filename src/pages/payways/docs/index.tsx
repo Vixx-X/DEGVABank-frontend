@@ -1,8 +1,9 @@
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import CodeFormatter from "@components/PayGateWay/CodeFormatter";
 import { SERVER_URLS } from "@config";
-import RegisterCapture from "@public/RegisterCapture.png";
 import LoginCapture from "@public/LoginCapture.png";
+import PayWayButton from "@public/PayWayButton.png";
+import RegisterCapture from "@public/RegisterCapture.png";
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +13,7 @@ const { URL_LOGIN, URL_REGISTER, URL_USER_PAYWAY_APPS } = SERVER_URLS;
 
 const Documentation: NextPage = () => {
   return (
-    <MainLayout>
+    <MainLayout activate="">
       <ol className="px-4 list-decimal font-montserrat">
         <li className="my-2">
           <span className="block">
@@ -57,6 +58,14 @@ const Documentation: NextPage = () => {
             </a>
           </Link>{" "}
           y hacer click en el boton de &quot;Crear pasarela&quot;.
+          <div className="my-4">
+            <Image
+              src={PayWayButton}
+              alt="preview image"
+              width={150}
+              height={50}
+            />
+          </div>
         </li>
         <li className="my-2">
           Completar el formulario que te aparezca.

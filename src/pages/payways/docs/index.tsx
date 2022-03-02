@@ -100,7 +100,31 @@ const Documentation: NextPage = () => {
         </li>
       </ol>
       <CodeFormatter language="javascript" style={a11yDark}>
-        {`/paygateway?name=$[product_name]&image=$[product_image]&amount=$[amount]&num=$[product_num]&tax=$[tax]`}
+        {`//Example Javascript 
+console.log("Hello world!");
+function factorial(n) {
+  if (n === 0) {
+    return 1;
+  }
+  return n * factorial(n - 1);
+}`}
+      </CodeFormatter>
+
+      <br />
+      <CodeFormatter language="kotlin" style={a11yDark}>
+        {`// Example Kotlin
+fun main(args : Array<String>) {
+  println("Hello, World!")
+}`}
+      </CodeFormatter>
+      <br />
+      <CodeFormatter language="python" style={a11yDark}>
+        {`# Example Python
+x = 1
+if x == 1:
+  # indented four spaces
+  print("x is 1.")
+  print("Hello World")`}
       </CodeFormatter>
     </MainLayout>
   );

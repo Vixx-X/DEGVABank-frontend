@@ -36,6 +36,7 @@ const CreditCard = ({
       amount: amount,
       reason: reason,
       card: {
+        number: data.number,
         security_code: data.security_code,
         expiration_date: data.expiration_date,
       },
@@ -65,6 +66,7 @@ const CreditCard = ({
         <Formik
           initialValues={initialValue}
           onSubmit={(values: CreditCardForm) => {
+            alert(JSON.stringify(values, null, 2));
             handleSubmit(values);
           }}
         >
@@ -85,7 +87,7 @@ const CreditCard = ({
             />
             <ErrorMessage name="user" error={messageError} />
             <label className="block text-sm xl:text-lg font-bold mb-2 text-dark pt-10">
-              Card Information
+              Card Number
             </label>
             <Field
               name="number"
@@ -94,7 +96,7 @@ const CreditCard = ({
               type="text"
               placeholder="0000 0000 0000 0000 0000"
             />
-            <ErrorMessage name="number" error={messageError} />
+            <ErrorMessage name="card.number" error={messageError} embed={true} />
             <div className="flex gap-x-2">
               <Field
                 name="expiration_date"
@@ -103,7 +105,7 @@ const CreditCard = ({
                 type="date"
                 placeholder="dd/mm"
               />
-              <ErrorMessage name="expiration_date" error={messageError} />
+              <ErrorMessage name="card.expiration_date" error={messageError} embed={true} />
               <Field
                 name="security_code"
                 className="shadow appearance-none border-gray-300 rounded-b py-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-1/2"
@@ -111,7 +113,7 @@ const CreditCard = ({
                 type="text"
                 placeholder="CVC"
               />
-              <ErrorMessage name="security_code" error={messageError} />
+              <ErrorMessage name="card.security_code" error={messageError} embed={true} />
             </div>
             {sucessTransaction && (
               <div

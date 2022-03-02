@@ -101,6 +101,12 @@ const Login = ({ setComponent }: LoginProp) => {
                 <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>
               </div>
             )}
+            {messageError && messageError.info && messageError.info.detail && (
+              <div className="bg-red-400 border border-red-700 w-full p-3 my-3 py-2 rounded-lg text-sm font-normal">
+                <strong>Error: </strong>
+                <span>{messageError.info.detail}</span>
+              </div>
+            )}
             <div className="flex justify-center pt-10">
               <Button
                 type="submit"

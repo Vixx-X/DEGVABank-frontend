@@ -33,6 +33,7 @@ export const API_URLS = {
   URL_USER_PAYWAY_KEYS: `${API_URL}/user/payway-meta/[app_id]/keys/`,
   URL_USER_PAYWAY_APPS: `${API_URL}/user/payway-meta/`,
   URL_USER_PAYWAY_APP: `${API_URL}/user/payway-meta/[app_id]/`,
+  URL_USER_REQUESTS: `${API_URL}/user/petitions/`,
 };
 
 // Server routes paths

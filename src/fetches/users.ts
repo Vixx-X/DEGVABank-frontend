@@ -17,6 +17,7 @@ const {
   URL_USER_PAYWAY_APP,
   URL_USER_PAYWAY_APPS,
   URL_USER_PAYWAY_KEYS,
+  URL_USER_REQUESTS,
 } = API_URLS;
 
 export async function postUserAccont(auth: string, _data: any) {
@@ -226,6 +227,13 @@ export async function getCreditCardWithURL(auth: string, url: string) {
 }
 
 export async function getTransactionWithURL(auth: string, url: string) {
+  const resp = await fetch(url, makeFetchOption({}, auth));
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function getRequestWithURL(auth: string, url: string) {
   const resp = await fetch(url, makeFetchOption({}, auth));
   await assertApiError(resp);
   const data = await resp.json();

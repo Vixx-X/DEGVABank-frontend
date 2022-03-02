@@ -6,9 +6,7 @@ import { API_URLS } from "@config";
 import { getTransactionWithURL } from "@fetches/users";
 import { useSWRAuth } from "@hooks/useSWRAuth";
 import { makeUrl } from "@utils/makeUrl";
-// import { SERVER_URLS } from "@config";
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 const { URL_USER_TRANSACTIONS } = API_URLS;
@@ -22,8 +20,6 @@ const HEADERS = {
 };
 
 const Transaction: NextPage = () => {
-  const router = useRouter();
-
   const [calendarButton1, setCalendarButton1] = useState("");
   const [calendarButton2, setCalendarButton2] = useState("");
   const [paramsURL, setparamsURL] = useState({} as any);
@@ -92,11 +88,7 @@ const Transaction: NextPage = () => {
       </div>
       <div className="flex justify-center">
         {data?.results && data.results.length > 0 ? (
-          <DataTable
-            handleOrderClick={handleOrderClick}
-            headers={HEADERS}
-            items={data.results}
-          />
+          <DataTable headers={HEADERS} items={data.results} />
         ) : (
           <p> No hay movimientos.</p>
         )}

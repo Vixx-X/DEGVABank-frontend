@@ -36,6 +36,7 @@ const CreditCard = ({
       amount: amount,
       reason: reason,
       card: {
+        number: data.number,
         security_code: data.security_code,
         expiration_date: data.expiration_date,
       },

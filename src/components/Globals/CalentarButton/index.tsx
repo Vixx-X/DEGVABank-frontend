@@ -5,8 +5,11 @@ interface CalentarButtonProps {
 const CalentarButton = ({ onchange }: CalentarButtonProps) => {
   const handleChangeCalendar = (e: any) => {
     const date = new Date(e.target.value);
-    date.setDate(date.getDate()+1);
-    onchange(date.toISOString());
+    date.setDate(date.getDate() + 1);
+    const month = date.getUTCMonth() + 1;
+    const day = date.getUTCDate();
+    const year = date.getUTCFullYear();
+    onchange(`${year}-${month}-${day}`);
   };
 
   return (

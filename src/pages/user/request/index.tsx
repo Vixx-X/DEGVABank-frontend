@@ -1,5 +1,6 @@
 import Button from "@components/Globals/Button/Button";
 import DataTable from "@components/Globals/DataTable";
+import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import { API_URLS } from "@config";
 import {
@@ -41,11 +42,27 @@ const Transaction: NextPage = () => {
     balance: 0,
   };
 
-  const [paramsURL, setparamsURL] = useState({} as any);
+  const paramsURL: any = {};
 
   const pushData = useFetchCallback(postUserAccont);
 
   const pushDataCard = useFetchCallback(postUserCreditCard);
+  const [messageError, setMessageError] = useState<any>();
+
+  const handleSubmit = async (data: RequestForm) => {
+    try {
+      await pushData({
+        type: data.type,
+        balance: data.balance,
+      });
+      // setSucess(true);
+    } catch (e) {
+      setMessageError(e);
+      console.log("errores", e);
+    } finally {
+      // setLoading(false);
+    }
+  };
 
   const { data } = useSWRAuth(
     makeUrl(URL_USER_REQUESTS, paramsURL),
@@ -53,15 +70,13 @@ const Transaction: NextPage = () => {
   );
 
   return (
-    <MainLayout activate="movements">
+    //useFetchCallback
+    <MainLayout activate="products">
       <div className="sm:grid sm:grid-cols-2 sm:gap-x-8">
         <Formik
           initialValues={initialValue}
           onSubmit={(values: RequestForm) => {
-            pushData({
-              type: values.type,
-              balance: values.balance,
-            });
+            handleSubmit(values);
           }}
         >
           <Form>
@@ -116,6 +131,7 @@ const Transaction: NextPage = () => {
               >
                 <p>Mandar la solicitud</p>
               </Button>
+              <ErrorMessage name="non_field_errors" error={messageError} />
             </div>
           </Form>
         </Formik>
@@ -140,7 +156,7 @@ const Transaction: NextPage = () => {
         </div>
       </div>
 
-      <div className="flex justify-center mt-8 mx-8">
+      <div className="flex justify-center mt-8">
         {data?.results && data.results.length > 0 ? (
           <DataTable headers={HEADERS} items={data.results} />
         ) : (

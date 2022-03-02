@@ -64,7 +64,7 @@ const Transaction: NextPage = () => {
       console.log("2", calendarButton2);
       setparamsURL({
         min_date: calendarButton1,
-        // max_date: calendarButton2,
+        max_date: calendarButton2,
       });
     }
   }, [calendarButton1, calendarButton2]);
@@ -88,7 +88,7 @@ const Transaction: NextPage = () => {
       </div>
       <div className="flex justify-center">
         {data?.results && data.results.length > 0 ? (
-          <DataTable headers={HEADERS} items={data.results} />
+          <DataTable headers={HEADERS} items={data.results} handleOrderClick={handleOrderClick} />
         ) : (
           <p> No hay movimientos.</p>
         )}

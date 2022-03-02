@@ -18,6 +18,8 @@ const {
   URL_USER_PAYWAY_APPS,
   URL_USER_PAYWAY_KEYS,
   URL_USER_REQUESTS,
+  URL_PAYWAY_ACCOUNT,
+  URL_PAYWAY_CARD,
 } = API_URLS;
 
 export async function postUserAccont(auth: string, _data: any) {
@@ -159,6 +161,35 @@ export async function postPaywayKey(auth: string, app_id: string) {
       },
       auth
     )
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function postPaywayAccount(auth: string, _data: any) {
+  const resp = await fetch(
+    URL_PAYWAY_ACCOUNT,
+    makeFetchOption(
+      {
+        method: "POST",
+        body: stringify(_data),
+      },
+      auth
+    )
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function postPaywayCard(_data: any) {
+  const resp = await fetch(
+    URL_PAYWAY_CARD,
+    makeFetchOption({
+      method: "POST",
+      body: stringify(_data),
+    })
   );
   await assertApiError(resp);
   const data = await resp.json();

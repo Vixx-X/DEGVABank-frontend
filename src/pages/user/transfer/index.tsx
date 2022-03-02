@@ -3,7 +3,7 @@ import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
 import ConfirmTrasaction from "@components/Transaction/ConfirmTransaction";
-import { API_URLS, SERVER_URLS } from "@config";
+import { API_URLS } from "@config";
 import { getAccountDataWithURL, postTransferUser } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
@@ -12,7 +12,6 @@ import type { NextPage } from "next";
 import { Key, useEffect, useState } from "react";
 
 const { URL_USER_ACCOUNTS } = API_URLS;
-const { URL_USER_TRANSACTION } = SERVER_URLS;
 
 interface TransferForm {
   name: string;
@@ -106,7 +105,7 @@ const Transfer: NextPage = () => {
   };
 
   return (
-    <MainLayout>
+    <MainLayout activate="transfer">
       {loading ? (
         <Loading />
       ) : (

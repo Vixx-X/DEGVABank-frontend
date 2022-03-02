@@ -62,21 +62,22 @@ const Transaction: NextPage = () => {
     makeUrl(URL_USER_TRANSACTIONS, paramsURL),
     getTransactionWithURL
   );
-
   useEffect(() => {
-    if (calendarButton1 !== "" && calendarButton2 !== "") {
-      console.log("1",calendarButton1)
-      console.log("2",calendarButton2)
-      setparamsURL({
-        min_date: calendarButton1,
-        // max_date: calendarButton2,
-      });
-    }
-  }, [calendarButton1, calendarButton2]);
+      if (calendarButton1 !== "") {
+        console.log("1",calendarButton1)
+        setparamsURL({
+          min_date: calendarButton1,
+        });
+      }
+    }, [calendarButton1]);
 
   useEffect(() => {
     console.log("return data",data);
   }, [data]);
+
+  useEffect(()=>{
+    console.log(makeUrl(URL_USER_TRANSACTIONS, paramsURL))
+  },[paramsURL])
 
   return (
     <MainLayout activate="movements">

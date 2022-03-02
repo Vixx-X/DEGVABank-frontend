@@ -106,7 +106,7 @@ const Transfer: NextPage = () => {
   };
 
   return (
-    <MainLayout>
+    <MainLayout activate="transfer">
       {loading ? (
         <Loading />
       ) : (

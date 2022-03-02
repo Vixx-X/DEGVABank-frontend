@@ -69,7 +69,7 @@ const Transaction: NextPage = () => {
       console.log("2",calendarButton2)
       setparamsURL({
         min_date: calendarButton1,
-        // max_date: calendarButton2,
+        max_date: calendarButton2,
       });
     }
   }, [calendarButton1, calendarButton2]);

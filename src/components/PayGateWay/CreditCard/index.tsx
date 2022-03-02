@@ -66,7 +66,6 @@ const CreditCard = ({
         <Formik
           initialValues={initialValue}
           onSubmit={(values: CreditCardForm) => {
-            alert(JSON.stringify(values, null, 2));
             handleSubmit(values);
           }}
         >
@@ -96,24 +95,40 @@ const CreditCard = ({
               type="text"
               placeholder="0000 0000 0000 0000 0000"
             />
-            <ErrorMessage name="card.number" error={messageError} embed={true} />
+            <ErrorMessage
+              name="card.number"
+              error={messageError}
+              embed={true}
+            />
             <div className="flex gap-x-2">
-              <Field
-                name="expiration_date"
-                className="shadow appearance-none border-gray-300 rounded-b py-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-1/2"
-                id="expiration_date"
-                type="date"
-                placeholder="dd/mm"
-              />
-              <ErrorMessage name="card.expiration_date" error={messageError} embed={true} />
-              <Field
-                name="security_code"
-                className="shadow appearance-none border-gray-300 rounded-b py-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-1/2"
-                id="security_code"
-                type="text"
-                placeholder="CVC"
-              />
-              <ErrorMessage name="card.security_code" error={messageError} embed={true} />
+              <div className="w-1/2">
+                <Field
+                  name="expiration_date"
+                  className="shadow appearance-none border-gray-300 rounded-b py-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
+                  id="expiration_date"
+                  type="date"
+                  placeholder="dd/mm"
+                />
+                <ErrorMessage
+                  name="card.expiration_date"
+                  error={messageError}
+                  embed={true}
+                />
+              </div>
+              <div className="w-1/2">
+                <Field
+                  name="security_code"
+                  className="shadow appearance-none border-gray-300 rounded-b py-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
+                  id="security_code"
+                  type="text"
+                  placeholder="CVC"
+                />
+                <ErrorMessage
+                  name="card.security_code"
+                  error={messageError}
+                  embed={true}
+                />
+              </div>
             </div>
             {sucessTransaction && (
               <div

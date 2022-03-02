@@ -1,7 +1,7 @@
 import CalendarButton from "@components/Globals/CalentarButton";
+import DataTable from "@components/Globals/DataTable";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import SearchBar from "@components/Globals/SearchBar";
-import DataTable from "@components/Transaction/DataTable";
 import { API_URLS } from "@config";
 import { getTransactionWithURL } from "@fetches/users";
 import { useSWRAuth } from "@hooks/useSWRAuth";
@@ -13,14 +13,13 @@ import { useState, useEffect } from "react";
 
 const { URL_USER_TRANSACTIONS } = API_URLS;
 
-const HEADERS = [
-  { name: "id", value: "id" },
-  { name: "source", value: "source" },
-  { name: "target", value: "target" },
-  { name: "amount", value: "amount" },
-  { name: "reason", value: "reason" },
-  { name: "Fecha", value: "date" },
-];
+const HEADERS = {
+  id: "id",
+  target: "target",
+  amount: "amount",
+  reason: "reason",
+  date: "date",
+};
 
 const Transaction: NextPage = () => {
   const router = useRouter();
@@ -65,8 +64,8 @@ const Transaction: NextPage = () => {
 
   useEffect(() => {
     if (calendarButton1 !== "" && calendarButton2 !== "") {
-      console.log("1",calendarButton1)
-      console.log("2",calendarButton2)
+      console.log("1", calendarButton1);
+      console.log("2", calendarButton2);
       setparamsURL({
         min_date: calendarButton1,
         // max_date: calendarButton2,
@@ -75,7 +74,7 @@ const Transaction: NextPage = () => {
   }, [calendarButton1, calendarButton2]);
 
   useEffect(() => {
-    console.log("return data",data);
+    console.log("return data", data);
   }, [data]);
 
   return (

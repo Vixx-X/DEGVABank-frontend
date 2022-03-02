@@ -3,7 +3,7 @@ import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
 import Modal from "@components/Globals/Modal";
 import Actions from "@components/PayGateWay/Actions";
-import DataTable from "@components/PayGateWay/DataTable";
+import DataTable from "@components/Globals/DataTable";
 import PayWayForm from "@components/PayGateWay/Forms/payway";
 import { API_URLS } from "@config";
 import { getListPaywayDataWithURL } from "@fetches/users";

@@ -1,15 +1,19 @@
 import Button from "@components/Globals/Button/Button";
-import { API_URLS } from "@config";
+import { API_URLS, SERVER_URLS } from "@config";
 import { postPayway, putPayway } from "@fetches/users";
 import { getAccountDataWithURL } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
+import { makeUrl } from "@utils/makeUrl";
 import { Field, Form, Formik } from "formik";
+import { useRouter } from "next/router";
 import { Key, useState, useEffect } from "react";
 
 const { URL_USER_ACCOUNTS } = API_URLS;
+const { URL_USER_PAYWAY_APP } = SERVER_URLS;
 
 interface PasarelaForm {
+  app_id: string;
   app_name: string;
   backend: string;
   success: string;
@@ -30,6 +34,7 @@ const PayWayForm = ({
   setEditable,
   submitCallback,
 }: PayWayFormProp) => {
+  const router = useRouter();
   const postPaywayOption = useFetchCallback(postPayway);
   const putPaywayOption = useFetchCallback(putPayway);
 
@@ -44,14 +49,18 @@ const PayWayForm = ({
   }, [dataAccounts]);
 
   const handleSubmitPayway = async (data: PasarelaForm) => {
+    let next = "";
     try {
-      if (initialValue) await putPaywayOption(initialValue.app_name, data);
-      else await postPaywayOption(data);
+      const resp = await (initialValue
+        ? putPaywayOption(initialValue.app_id, data)
+        : postPaywayOption(data));
+      next = resp.app_id;
     } catch (e) {
       setMessageError(e);
     } finally {
       submitCallback?.();
       setEditable?.(false);
+      router.push(makeUrl(URL_USER_PAYWAY_APP, { app_id: next }));
       // setLoading(false);
     }
   };
@@ -60,6 +69,7 @@ const PayWayForm = ({
     <Formik
       initialValues={
         initialValue ?? {
+          app_id: "",
           app_name: "",
           backend: "",
           success: "",
@@ -83,9 +93,24 @@ const PayWayForm = ({
           <div className="my-2">
             <label
               className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
+              htmlFor="app-id"
+            >
+              Identificador único de tu app
+            </label>
+            <Field
+              name="app_id"
+              className="appearance-none rounded w-full py-3 
+          border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="app-id"
+              type="text"
+              placeholder="Escribir id del app"
+              disabled={!editable}
+            />
+            <label
+              className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
               htmlFor="app-name"
             >
-              Nombre unico de tu app
+              Nombre de tu app
             </label>
             <Field
               name="app_name"

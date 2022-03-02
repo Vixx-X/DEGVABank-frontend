@@ -3,7 +3,8 @@ import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
 import PayWayForm from "@components/PayGateWay/Forms/payway";
 import { API_URLS, SERVER_URLS } from "@config";
-import { getPaywayDataWithURL } from "@fetches/users";
+import { getPaywayDataWithURL, postPaywayKey } from "@fetches/users";
+import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
 import useToggle from "@hooks/useToggle";
 import { makeUrl } from "@utils/makeUrl";
@@ -18,16 +19,17 @@ const HIDDEN_KEY = "****************";
 
 const PasarelaOptions: NextPage = () => {
   const router = useRouter();
-  const { app_name } = router.query;
+  const { app_id } = router.query;
   const [editable, setEditable] = useToggle(!!router.query?.editable ?? false);
 
   const { data, error } = useSWRAuth(
-    makeUrl(URL_USER_PAYWAY_APP, { app_name: app_name as string }),
+    makeUrl(URL_USER_PAYWAY_APP, { app_id: app_id as string }),
     getPaywayDataWithURL
   );
   const isLoading = useMemo(() => !data && !error, [data, error]);
 
-  const Keys = ({ app_name }: any) => {
+  const Keys = ({ appId }: any) => {
+    const renewKey = useFetchCallback(postPaywayKey);
     const [currentkeys, setCurrentKeys] = useState({
       public: HIDDEN_KEY,
       private: HIDDEN_KEY,
@@ -68,13 +70,19 @@ const PasarelaOptions: NextPage = () => {
                 <path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"></path>
               </svg>
               <div>
-                <span className="font-medium">Alerta!</span> Guarde la clave
-                privada porque no volverá a aparecer. De lo contrario deberá
+                <span className="font-medium">Alerta!</span> Guarde ambas claves
+                porque no volverán a aparecer completas. De necesitarlo podrá
                 volver a generarla
               </div>
             </div>
           )}
-          <Button className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+          <Button
+            className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            onClick={() => {
+              setCurrentKeys(renewKey(appId));
+              setWarningAlert(true);
+            }}
+          >
             <p>Generar</p>
           </Button>
         </div>
@@ -100,7 +108,7 @@ const PasarelaOptions: NextPage = () => {
               submitCallback={() => setEditable(false)}
               setEditable={setEditable}
             />
-            <Keys appName={app_name} />
+            <Keys appId={app_id} />
           </div>
         </>
       )}

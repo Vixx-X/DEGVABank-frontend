@@ -16,8 +16,10 @@ import { useEffect, useMemo, useState } from "react";
 const { URL_USER_PAYWAY_APPS } = API_URLS;
 
 const HEADERS = {
-  id: "id",
   app_name: "app name",
+  transactions: "transactions",
+  public: "public key",
+  private: "private key",
   date_created: "created date",
   action: "action",
 };
@@ -37,7 +39,9 @@ const PasarelaOptions: NextPage = () => {
       data.map((item: any) => {
         return {
           ...item,
-          action: <Actions appName={item.app_name} onDelete={() => mutate()} />,
+          public: item?.api_keys?.public ?? "Never created",
+          private: item?.api_keys?.private ?? "Never created",
+          action: <Actions appId={item.app_id} onDelete={() => mutate()} />,
         };
       })
     );

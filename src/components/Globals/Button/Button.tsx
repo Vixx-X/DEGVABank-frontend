@@ -1,11 +1,10 @@
 interface ButtonProps {
   className?: string;
   [key: string]: any;
-  children?: JSX.Element[] | JSX.Element;
+  children?: JSX.Element[] | JSX.Element | string;
 }
 
 const Button = ({ className, children, ...props }: ButtonProps) => {
-  
   return (
     <button
       className={
@@ -20,3 +19,4 @@ const Button = ({ className, children, ...props }: ButtonProps) => {
 };
 
 export default Button;
+

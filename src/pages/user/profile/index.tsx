@@ -1,52 +1,20 @@
 import Button from "@components/Globals/Button/Button";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
+import Loading from "@components/Globals/Loading";
 import InputImage from "@components/Profile/InputImage";
 import { UserContext } from "@contexts/UserContext";
 import DEFAULT_USER_IMAGE from "@public/defaul_user.png";
 import { Formik, Form, Field, FormikHelpers } from "formik";
 import type { NextPage } from "next";
-import { useState, useEffect, useContext } from "react";
-
-//import * as Yup from "yup";
-
-interface ProfileForm {
-  username: string;
-  first_name: string;
-  last_name: string;
-  language: string;
-  nationality: string;
-  direction: string;
-  email: string;
-  tel: number;
-}
+import { useState, useContext } from "react";
+import { User } from "user";
 
 const Profile: NextPage = () => {
-  const { user } = useContext(UserContext);
-  console.log("User desde context",user)
+  const { user, isLoading } = useContext(UserContext);
   const [displayInputUserName, setdisplayInputUserName] = useState(false);
-  const [displayInputDirection, setdisplayInputDirection] = useState(false);
+  // const [displayInputDirection, setdisplayInputDirection] = useState(false);
   const [displayInputEmail, setdisplayInputEmail] = useState(false);
   const [displayInputTel, setdisplayInputTel] = useState(false);
-  const [initialValue, setInitialValue] = useState(user ?? {
-    username: "",
-    first_name: "",
-    last_name: "",
-    language: "",
-    nationality: "",
-    direction: "",
-    email: "",
-    tel: 0,
-  });
-
-  useEffect(() => {
-    user.direction="Caracas, Baruta";
-    user.tel="0412-123-123-123"
-    setInitialValue(user);
-  }, [user]);
-
-  const handleChangeDirection = () => {
-    setdisplayInputDirection(!displayInputDirection);
-  };
 
   const handleChangeUserName = () => {
     setdisplayInputUserName(!displayInputUserName);
@@ -62,13 +30,12 @@ const Profile: NextPage = () => {
 
   return (
     <MainLayout activate="user">
-      {user?.username !== "" ? (
+      {isLoading ? (
+        <Loading />
+      ) : (
         <Formik
-          initialValues={initialValue}
-          onSubmit={(
-            values: ProfileForm,
-            { setSubmitting }: FormikHelpers<ProfileForm>
-          ) => {
+          initialValues={user}
+          onSubmit={(values: User, { setSubmitting }: FormikHelpers<User>) => {
             setTimeout(() => {
               alert(JSON.stringify(values, null, 2));
               setSubmitting(false);
@@ -154,7 +121,7 @@ const Profile: NextPage = () => {
                   </div>
                 </div>
                 <div className="w-full md:basis-[45%] rounded overflow-hidden md:shadow-lg p-8">
-                  <div className="flex justify-between items-center px-2">
+                  {/* <div className="flex justify-between items-center px-2">
                     <p className="text-darkprimary font-bold text-lg uppercase">
                       Dirección
                     </p>
@@ -183,7 +150,7 @@ const Profile: NextPage = () => {
                         placeholder="Direccion"
                       />
                     )}
-                  </div>
+                  </div> */}
                   <div className="flex justify-between items-center px-2">
                     <p className="text-darkprimary font-bold text-lg uppercase mt-4">
                       Correo electrónico
@@ -215,7 +182,7 @@ const Profile: NextPage = () => {
                     )}
                   </div>
 
-                  <div className="flex justify-between items-center px-2">
+                  {/* <div className="flex justify-between items-center px-2">
                     <p className="text-darkprimary font-bold text-lg uppercase mt-4">
                       Teléfono
                     </p>
@@ -225,9 +192,9 @@ const Profile: NextPage = () => {
                     >
                       Cambiar Telefono
                     </p>
-                  </div>
+                  </div> */}
                   <div className="flex justify-between items-center m-3">
-                    {!displayInputTel ? (
+                    {/* {!displayInputTel ? (
                       <label
                         className="block text-sm xl:text-lg mb-2 text-dark"
                         htmlFor="username"
@@ -243,7 +210,7 @@ const Profile: NextPage = () => {
                         className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Telefono"
                       />
-                    )}
+                    )} */}
                   </div>
                   <Button type="submit">
                     <p>Guardar</p>
@@ -258,8 +225,6 @@ const Profile: NextPage = () => {
             </Form>
           )}
         </Formik>
-      ) : (
-        <p>Perate nene</p>
       )}
     </MainLayout>
   );

@@ -10,7 +10,7 @@ const SideBar = () => {
     URL_USER_TRANSACTION,
     URL_USER_TRANSFER,
     URL_USER_REQUEST,
-    URL_USER_PASARELA_OPTIONS,
+    URL_USER_PAYWAY_APPS,
   } = SERVER_URLS;
 
   const handleOpen = () => {
@@ -84,7 +84,7 @@ const SideBar = () => {
         />
         <SideBarOption
           text="Habilitar Pasarela de Pago"
-          link={URL_USER_PASARELA_OPTIONS}
+          link={URL_USER_PAYWAY_APPS}
           className="border-l-4 border-darkprimary py-4 px-8"
         />
         <SideBarOption

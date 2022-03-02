@@ -1,18 +1,19 @@
 import { API_URLS } from "@config";
-
-import { useSWRAuth } from "@hooks/useSWRAuth";
-
 import { getProfileDataWithURL } from "@fetches/users";
-
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import { useSWRAuth } from "@hooks/useSWRAuth";
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { User } from "user";
 
 const { URL_USER_PROFILE } = API_URLS;
 
 export const UserContext = createContext<any>(null);
 
-interface User {
-  email: string;
-}
 interface UserContextProviderProps extends Props {
   user: User;
 }
@@ -37,12 +38,17 @@ export const UserContextProvider = ({
     setUser(data ?? { email: "" });
   }, [data]);
 
+  const isLoading = useMemo(
+    () => (!error && !data) || !user?.email,
+    [data, error, user?.email]
+  );
+
   return (
     <UserContext.Provider
       value={{
         user,
         setUser,
-        isLoading: !error && !data,
+        isLoading,
         refetch,
       }}
     >

@@ -14,7 +14,7 @@ const Profile: NextPage = () => {
   const [displayInputUserName, setdisplayInputUserName] = useState(false);
   // const [displayInputDirection, setdisplayInputDirection] = useState(false);
   const [displayInputEmail, setdisplayInputEmail] = useState(false);
-  const [displayInputTel, setdisplayInputTel] = useState(false);
+  // const [displayInputTel, setdisplayInputTel] = useState(false);
 
   const handleChangeUserName = () => {
     setdisplayInputUserName(!displayInputUserName);
@@ -24,9 +24,9 @@ const Profile: NextPage = () => {
     setdisplayInputEmail(!displayInputEmail);
   };
 
-  const handleChangeTel = () => {
-    setdisplayInputTel(!displayInputTel);
-  };
+  // const handleChangeTel = () => {
+  //   setdisplayInputTel(!displayInputTel);
+  // };
 
   return (
     <MainLayout activate="user">

@@ -21,6 +21,7 @@ interface CreditCardProp {
 const CreditCard = ({ num, setComponent }: CreditCardProp) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [messageError, setMessageError] = useState<any>();
+  
   const handleSubmitCreditCard = () => {
     setLoading(true);
     try {
@@ -55,6 +56,7 @@ const CreditCard = ({ num, setComponent }: CreditCardProp) => {
               alert(JSON.stringify(values, null, 2));
               setSubmitting(false);
             }, 500);
+            handleSubmitCreditCard();
           }}
         >
           <Form className="w-full p-4">

@@ -42,7 +42,7 @@ const Transaction: NextPage = () => {
     balance: 0,
   };
 
-  const [paramsURL, setparamsURL] = useState({} as any);
+  const paramsURL: any = {};
 
   const pushData = useFetchCallback(postUserAccont);
 
@@ -156,7 +156,7 @@ const Transaction: NextPage = () => {
         </div>
       </div>
 
-      <div className="flex justify-center mt-8 mx-8">
+      <div className="flex justify-center mt-8">
         {data?.results && data.results.length > 0 ? (
           <DataTable headers={HEADERS} items={data.results} />
         ) : (

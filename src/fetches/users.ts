@@ -120,9 +120,9 @@ export async function postPayway(auth: string, _data: any) {
   return data;
 }
 
-export async function putPayway(auth: string, app_name: string, _data: any) {
+export async function putPayway(auth: string, app_id: string, _data: any) {
   const resp = await fetch(
-    makeUrl(URL_USER_PAYWAY_APP, { app_name }),
+    makeUrl(URL_USER_PAYWAY_APP, { app_id }),
     makeFetchOption(
       {
         method: "PUT",
@@ -136,9 +136,9 @@ export async function putPayway(auth: string, app_name: string, _data: any) {
   return data;
 }
 
-export async function deletePayway(auth: string, app_name: string) {
+export async function deletePayway(auth: string, app_id: string) {
   const resp = await fetch(
-    makeUrl(URL_USER_PAYWAY_APP, { app_name }),
+    makeUrl(URL_USER_PAYWAY_APP, { app_id }),
     makeFetchOption(
       {
         method: "DELETE",
@@ -149,13 +149,12 @@ export async function deletePayway(auth: string, app_name: string) {
   await assertApiError(resp);
 }
 
-export async function postPaywayKey(auth: string, _data: any) {
+export async function postPaywayKey(auth: string, app_id: string) {
   const resp = await fetch(
-    URL_USER_PAYWAY_KEYS,
+    makeUrl(URL_USER_PAYWAY_KEYS, { app_id }),
     makeFetchOption(
       {
         method: "POST",
-        body: stringify(_data),
       },
       auth
     )

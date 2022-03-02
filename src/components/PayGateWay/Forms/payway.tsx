@@ -1,16 +1,20 @@
 import Button from "@components/Globals/Button/Button";
 import ErrorMessage from "@components/Globals/ErrorMessage";
-import { API_URLS } from "@config";
+import { API_URLS, SERVER_URLS } from "@config";
 import { postPayway, putPayway } from "@fetches/users";
 import { getAccountDataWithURL } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
+import { makeUrl } from "@utils/makeUrl";
 import { Field, Form, Formik } from "formik";
+import { useRouter } from "next/router";
 import { Key, useState, useEffect } from "react";
 
 const { URL_USER_ACCOUNTS } = API_URLS;
+const { URL_USER_PAYWAY_APP } = SERVER_URLS;
 
 interface PasarelaForm {
+  app_id: string;
   app_name: string;
   backend: string;
   success: string;
@@ -31,6 +35,7 @@ const PayWayForm = ({
   setEditable,
   submitCallback,
 }: PayWayFormProp) => {
+  const router = useRouter();
   const postPaywayOption = useFetchCallback(postPayway);
   const putPaywayOption = useFetchCallback(putPayway);
 
@@ -45,11 +50,15 @@ const PayWayForm = ({
   }, [dataAccounts]);
 
   const handleSubmitPayway = async (data: PasarelaForm) => {
+    let next = "";
     try {
-      if (initialValue) await putPaywayOption(initialValue.app_name, data);
-      else await postPaywayOption(data);
+      const resp = await (initialValue
+        ? putPaywayOption(initialValue.app_id, data)
+        : postPaywayOption(data));
+      next = resp.app_id;
       submitCallback?.();
       setEditable?.(false);
+      router.push(makeUrl(URL_USER_PAYWAY_APP, { app_id: next }));
     } catch (e) {
       setMessageError(e);
     } finally {
@@ -61,6 +70,7 @@ const PayWayForm = ({
     <Formik
       initialValues={
         initialValue ?? {
+          app_id: "",
           app_name: "",
           backend: "",
           success: "",

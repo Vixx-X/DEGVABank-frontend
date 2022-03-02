@@ -6,18 +6,18 @@ import Link from "next/link";
 
 const { URL_USER_PAYWAY_APP } = SERVER_URLS;
 interface ActionProp {
-  appName: string;
+  appId: string;
   onDelete?: Function;
 }
 
-const Actions = ({ appName, onDelete }: ActionProp) => {
+const Actions = ({ appId, onDelete }: ActionProp) => {
   const [openModal, toggleModal] = useToggle(false);
   return (
     <>
       <td className="text-sm font-medium leading-5 text-center whitespace-no-wrap">
         <Link
           href={makeUrl(URL_USER_PAYWAY_APP, {
-            app_name: appName,
+            app_id: appId,
             editable: "editable",
           })}
         >
@@ -40,7 +40,7 @@ const Actions = ({ appName, onDelete }: ActionProp) => {
         </Link>
       </td>
       <td className="text-sm font-medium leading-5 text-center whitespace-no-wrap">
-        <Link href={makeUrl(URL_USER_PAYWAY_APP, { app_name: appName })}>
+        <Link href={makeUrl(URL_USER_PAYWAY_APP, { app_id: appId })}>
           <a className="text-gray-600 hover:text-gray-900">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +86,7 @@ const Actions = ({ appName, onDelete }: ActionProp) => {
       <DeleteModal
         isOpen={openModal}
         setIsOpen={toggleModal}
-        payWay={appName}
+        payWay={appId}
         submitCallback={onDelete}
       />
     </>

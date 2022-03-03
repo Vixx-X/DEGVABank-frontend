@@ -2,8 +2,8 @@ import CreditCard from "../../components/PayGateWay/CreditCard";
 import Item from "../../components/PayGateWay/Item";
 import Account from "@components/PayGateWay/Account";
 import Login from "@components/PayGateWay/Login";
-// import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DEFAULT_USER_IMAGE from "@public/defaul_user.png";
 import type { NextPage } from "next";
 import Image from "next/image";
@@ -32,7 +32,9 @@ const PayGateway: NextPage = () => {
       <div className="grid md:grid-cols-2 w-full min-h-screen divide-x">
         <div className="p-10 py-20 min-h-screen flex justify-center">
           <div className="w-full md:w-8/12">
-            {/* <FontAwesomeIcon icon={faArrowLeft} /> */}
+            <button onClick={() => history.back()}>
+              <FontAwesomeIcon icon={faArrowLeft} size="2x" color="grey" />
+            </button>
             <div className="relative w-40 h-10 my-8">
               <Image
                 src={

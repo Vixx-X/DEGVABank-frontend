@@ -1,8 +1,9 @@
-import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import SyntaxHighlighter from "react-syntax-highlighter";
 
-// import js from "react-syntax-highlighter/dist/esm/languages/hljs/javascript";
-// import kotlin from "react-syntax-highlighter/dist/esm/languages/hljs/kotlin";
-// import python from "react-syntax-highlighter/dist/esm/languages/hljs/python";
+// import { LightAsync as SyntaxHighlighter } from "react-syntax-highlighter";
+// import js from "react-syntax-highlighter/dist/esm/languages/prism/javascript";
+// import kotlin from "react-syntax-highlighter/dist/esm/languages/prism/kotlin";
+// import python from "react-syntax-highlighter/dist/esm/languages/prism/python";
 
 // SyntaxHighlighter.registerLanguage("javascript", js);
 // SyntaxHighlighter.registerLanguage("kotlin", kotlin);

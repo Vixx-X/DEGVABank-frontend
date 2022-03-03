@@ -314,7 +314,9 @@ def decrypt(msg):
                 </CodeFormatter>
               </div>
             </div>
-            Si pudes leer el siguiente mensaje, lo tienes bien configurado:
+            <p className="my-4">
+              Si pudes leer el siguiente mensaje, lo tienes bien configurado:
+            </p>
             <CodeFormatter language="json" style={a11yDark}>
               {`// key: bbbbbbb
 aaaaaaaaaaaaaaaaaa`}

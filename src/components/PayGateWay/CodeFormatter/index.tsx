@@ -13,6 +13,8 @@ const CodeFormatter = ({ language, style, children }: CodeFormatterProps) => {
         language={language}
         style={style}
         className="rounded p-16 w-[90%] h-full overflow-auto"
+        showLineNumbers={true}
+        showInlineLineNumbers={true}
       >
         {children}
       </SyntaxHighlighter>

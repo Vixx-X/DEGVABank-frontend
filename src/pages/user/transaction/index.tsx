@@ -1,3 +1,4 @@
+import Button from "@components/Globals/Button/Button";
 import CalendarButton from "@components/Globals/CalentarButton";
 import DataTable from "@components/Globals/DataTable";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
@@ -7,7 +8,9 @@ import { getTransactionWithURL } from "@fetches/users";
 import { useSWRAuth } from "@hooks/useSWRAuth";
 import { makeUrl } from "@utils/makeUrl";
 import type { NextPage } from "next";
-import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState, useEffect} from "react";
 
 const { URL_USER_TRANSACTIONS } = API_URLS;
 
@@ -24,6 +27,11 @@ const Transaction: NextPage = () => {
   const [calendarButton2, setCalendarButton2] = useState("");
   const [paramsURL, setparamsURL] = useState({} as any);
 
+  const router = useRouter();
+  const page = parseInt(router?.query?.page as string ?? 1 ,10) 
+
+  console.log("Page",page)
+
   const handleCalendarButton1 = (date: string) => {
     setCalendarButton1(date);
   };
@@ -31,9 +39,12 @@ const Transaction: NextPage = () => {
     setCalendarButton2(date);
   };
   const handleSubmitSearchBar = (data: string) => {
-    alert(`Data a buscar: ${data}`);
     console.log("Voy a buscar ", data);
+    setparamsURL({
+      search: data,
+    });
   };
+
   const handleOrderClick = (attr: string) => {
     console.log("Click en:", attr);
 
@@ -54,7 +65,7 @@ const Transaction: NextPage = () => {
   };
 
   const { data } = useSWRAuth(
-    makeUrl(URL_USER_TRANSACTIONS, paramsURL),
+    makeUrl(URL_USER_TRANSACTIONS, { ...paramsURL, offset: (page - 1) * 10 }),
     getTransactionWithURL
   );
 
@@ -88,7 +99,25 @@ const Transaction: NextPage = () => {
       </div>
       <div className="flex justify-center">
         {data?.results && data.results.length > 0 ? (
-          <DataTable headers={HEADERS} items={data.results} handleOrderClick={handleOrderClick} />
+          <div className="w-full">
+            <DataTable
+              headers={HEADERS}
+              items={data.results}
+              handleOrderClick={handleOrderClick}
+            />
+            <div className="mt-3 w-full flex justify-end gap-2">
+              { page > 1 &&
+              <Link passHref href={`?page=${page - 1}`}>
+                <Button>--</Button>
+              </Link>
+              }
+              { page < data.count / 10 &&
+              <Link passHref href={`?page=${page + 1}`}>
+                <Button>+</Button>
+              </Link>
+              }
+            </div>
+          </div>
         ) : (
           <p> No hay movimientos.</p>
         )}

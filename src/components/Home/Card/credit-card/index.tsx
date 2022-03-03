@@ -64,6 +64,12 @@ const CreditCard = ({ ITEMS_CARDS }: CreditCardProps) => {
                   Fecha de Expiracion:{" "}
                   <span className="text-gray-500">{bill.expiration_date}</span>
                 </p>
+                <strong>
+                <p className="text-red-600">
+                  Deuda:{" "}
+                  <span className="text-gray-500">{bill.credit}</span>
+                </p>
+                </strong>
               </div>
               <div>
                 <Button>

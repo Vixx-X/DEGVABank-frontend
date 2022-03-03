@@ -28,7 +28,7 @@ const Transaction: NextPage = () => {
   const [paramsURL, setparamsURL] = useState({} as any);
 
   const router = useRouter();
-  const page = parseInt(router?.query?.page as string,10) ?? 1
+  const page = parseInt(router?.query?.page as string ?? 1 ,10) 
 
   console.log("Page",page)
 

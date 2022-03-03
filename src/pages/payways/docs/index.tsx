@@ -41,7 +41,7 @@ public static class Decrypter {
   // SECRET_KEY = "<your-secret-key>";
   private static Key key = new Key(SECRET_KEY);
 
-  public static string decrypt(final String msg) {
+  public static string decrypt(final string msg) {
     final Token token = Token.fromString(msg);
     final Validator<String> validator = new StringValidator() {
     };

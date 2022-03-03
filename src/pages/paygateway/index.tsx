@@ -33,17 +33,18 @@ const PayGateway: NextPage = () => {
         <div className="p-10 py-20 min-h-screen flex justify-center">
           <div className="w-full md:w-8/12">
             {/* <FontAwesomeIcon icon={faArrowLeft} /> */}
-            <Image
-              className="rounded w-[18em] h-96"
-              src={
-                typeof product.logotype === "string"
-                  ? product.logotype
-                  : DEFAULT_USER_IMAGE
-              }
-              alt="preview image"
-              width={100}
-              height={50}
-            />
+            <div className="relative w-40 h-10 my-8">
+              <Image
+                src={
+                  typeof product.logotype === "string"
+                    ? product.logotype
+                    : DEFAULT_USER_IMAGE
+                }
+                alt="logotypeimage"
+                layout={"fill"}
+                objectFit={"contain"}
+              />
+            </div>
             <section className="divide-y">
               <div className="max-h-96 overflow-auto">
                 {product.name !== undefined &&

@@ -8,6 +8,7 @@ import PayWayButton from "@public/PayWayButton.png";
 import RegisterCapture from "@public/RegisterCapture.png";
 import FormPayWay from "@public/formpayway.png";
 import KeyGenerate from "@public/keys.png";
+import PayWay from "@public/payway.png";
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,8 +21,7 @@ const Documentation: NextPage = () => {
   const [selectedSnippet, setSelectedSnippet] = useState("javascript");
   const snippets = useMemo<{ [key: string]: string }>(() => {
     return {
-      javascript: `
-// In javascript you could use the fernet package
+      javascript: `// In javascript you could use the fernet package
 // See more at: https://www.npmjs.com/package/fernet
 
 const SECRET_KEY = "<your-secret-key>";
@@ -35,23 +35,21 @@ function decrypt(msg) {
   });
   return token.decode();
 }`,
-      kotlin: `
-// In kotlin you could use the fernet-java8 package
+      kotlin: `// In kotlin you could use the fernet-java8 package
 // See more at: https://github.com/l0s/fernet-java8
 
 public static class Decrypter {
   // SECRET_KEY = "<your-secret-key>";
   private static Key key = new Key(SECRET_KEY);
 
-  public static string decrypt(final String msg) {
+  public static string decrypt(final string msg) {
     final Token token = Token.fromString(msg);
     final Validator<String> validator = new StringValidator() {
     };
     return token.validateAndDecrypt(key, validator);
   }
 }`,
-      python: `
-# In python you could use the cryptography module
+      python: `# In python you could use the cryptography module
 # See more at: https://cryptography.io/en/latest/fernet/
 
 from cryptography.fernet import Fernet
@@ -71,7 +69,7 @@ def decrypt(msg):
         <Header />
       </div>
       <main className="xl:w-[70rem] max-w-[90%] mx-auto py-8">
-        <h1 className="text-center text-xl font-bold uppercase text-darkprimary">
+        <h1 className="text-center mb-8 text-xl font-bold uppercase text-darkprimary">
           Documentación de la pasarela
         </h1>
         <ol className="px-4 list-decimal font-montserrat">
@@ -153,9 +151,26 @@ def decrypt(msg):
           </div>
 
           <li className="my-2">
-            Dentro de la aplicación pasar como <code>query-params</code> el
-            producto o la lista de productos asociados que se quieran facturar a
-            través de la pasarela.
+            Dentro de su aplicación a la hora de realizar el pago debe redirigir
+            a su cliente al sitio web{" "}
+            <Link href="https://bank.vittorioadesso.com/paygateway">
+              <a className="text-blue-600 hover:text-blue-800 visited:text-purple-600">
+                https://bank.vittorioadesso.com/paygateway
+              </a>
+            </Link>{" "}
+            con los <code className="bg-gray-100">query-params</code> adecuados
+            para procesar la orden de compra del producto o la lista de
+            productos asociados que se quieran facturar a través de la pasarela.
+            Al cliente lo redigirá a un sitio web, cuyo aspecto será parecido al
+            siguiente (customizado de acuerdo a la lista de productos del
+            cliente en cuestión).
+            <div className="my-4 max-w-full w-full border border-gray">
+              <Image src={PayWay} alt="preview image" />
+            </div>
+            <p className="my-4">
+              El formato de los{" "}
+              <code className="bg-gray-100">query-params</code> es el siguiente:
+            </p>
             <ul className="list-disc my-2">
               <li className="ml-6 my-4">
                 Parametros obligatorios generales que debe incluir
@@ -221,21 +236,15 @@ def decrypt(msg):
                   Los parametros <code>name</code> y <code>amount</code> son
                   obligatorios por producto.
                 </p>
-                <p className="my-4">Ejemplo:</p>
-                <p className="my-4">
-                  <code className="bg-gray-100">
-                    ?name=producto1&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=80&num=5&name=producto2&image=&amount=90&num=2
-                  </code>
-                </p>
               </li>
             </ul>
             <div className="my-4">
-              <p className="my-2 text-darkprimary">
-                Ejemplo de <code>query-params</code> completo válido
+              <p className="my-2 font-bold">
+                Ejemplo de URL válida a redireccionar.
               </p>
-              <code className="bg-gray-100">
-                ?name=producto1&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=80&num=5&tax=5&logotype=https://upload.wikimedia.org/wikipedia/commons/9/9b/Zortrax-logotype.svg&order=001&key=VphD_VwHLWU27VioQYOIByBnamY4wa-G8oEKDVs8kW3E&reason=prueba
-              </code>
+              <p className="text-blue-600 hover:text-blue-800 visited:text-purple-600 w-full overflow-auto">
+                https://bank.vittorioadesso.com/paygateway?name=producto1&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=80&num=5&tax=5&logotype=https://upload.wikimedia.org/wikipedia/commons/9/9b/Zortrax-logotype.svg&order=001&key=VphD_VwHLWU27VioQYOIByBnamY4wa-G8oEKDVs8kW3E&reason=prueba
+              </p>
             </div>
           </li>
           <li className="my-2">
@@ -263,7 +272,20 @@ def decrypt(msg):
                     <Listbox.Button className="w-full absolute py-2 pl-3 pr-10 text-left bg-white rounded shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
                       <span className="block truncate">{selectedSnippet}</span>
                       <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                        ^
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          className="w-3 h-3 ml-auto"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 448 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                          ></path>
+                        </svg>
                       </span>
                     </Listbox.Button>
                     <Transition
@@ -318,8 +340,8 @@ def decrypt(msg):
               Si pudes leer el siguiente mensaje, lo tienes bien configurado:
             </p>
             <CodeFormatter language="json" style={a11yDark}>
-              {`// key: bbbbbbb
-aaaaaaaaaaaaaaaaaa`}
+              {`// key: BxIA5nHI8_CGptA5V2yDJUhjpWKnXIwfCx1iilBFCfs=
+gAAAAABiIGAW1jFK3d2fMZCScoejIlkm1VOqfrBpmzfcB4SDxiOZQi5kHZPA4jsMvdtIMof37W7Trv-v9WUxC23eN_oC9dCCMb4ueeRCc6Ipj3i6SFa5ASg=`}
             </CodeFormatter>
           </li>
 
@@ -339,8 +361,9 @@ aaaaaaaaaaaaaaaaaa`}
           </li>
           <li className="my-2">
             Y listo, así se completaría el setup de la pasarela de pagos con
-            DEGVA-Bank, {"<slogan>"}. Cualquier duda o error contactar a{" "}
-            {"<contacto>"}.
+            DEGVA Bank. Cualquier duda o error ponerse en contacto con nuestro
+            equipo a través del número{" "}
+            <span className="text-darkprimary">0424-1315948</span>.
           </li>
         </ol>
       </main>

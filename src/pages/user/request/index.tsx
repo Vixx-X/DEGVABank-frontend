@@ -70,7 +70,6 @@ const Transaction: NextPage = () => {
   );
 
   return (
-    //useFetchCallback
     <MainLayout activate="products">
       <div className="sm:grid sm:grid-cols-2 sm:gap-x-8">
         <Formik

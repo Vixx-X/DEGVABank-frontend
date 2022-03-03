@@ -17,9 +17,16 @@ interface CodeFormatterProps {
 
 const CodeFormatter = ({ language, style, children }: CodeFormatterProps) => {
   return (
-    <SyntaxHighlighter language={language} style={style} showLineNumbers>
-      {children}
-    </SyntaxHighlighter>
+    <div className="w-full flex justify-center my-4 h-full">
+      <SyntaxHighlighter
+        language={language}
+        style={style}
+        className="rounded p-16 w-[90%] h-full overflow-auto !flex !items-center"
+        showLineNumbers
+      >
+        {children}
+      </SyntaxHighlighter>
+    </div>
   );
 };
 

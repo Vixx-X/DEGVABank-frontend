@@ -1,6 +1,8 @@
 import Button from "@components/Globals/Button/Button";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
+import Modal from "@components/Globals/Modal";
+import FormChangePassword from "@components/Profile/FormChangePassword";
 import InputImage from "@components/Profile/InputImage";
 import { UserContext } from "@contexts/UserContext";
 import DEFAULT_USER_IMAGE from "@public/defaul_user.png";
@@ -12,9 +14,8 @@ import { User } from "user";
 const Profile: NextPage = () => {
   const { user, isLoading } = useContext(UserContext);
   const [displayInputUserName, setdisplayInputUserName] = useState(false);
-  // const [displayInputDirection, setdisplayInputDirection] = useState(false);
   const [displayInputEmail, setdisplayInputEmail] = useState(false);
-  // const [displayInputTel, setdisplayInputTel] = useState(false);
+  const [displayChangePassword, setDisplayChangePassword] = useState(false);
 
   const handleChangeUserName = () => {
     setdisplayInputUserName(!displayInputUserName);
@@ -24,9 +25,10 @@ const Profile: NextPage = () => {
     setdisplayInputEmail(!displayInputEmail);
   };
 
-  // const handleChangeTel = () => {
-  //   setdisplayInputTel(!displayInputTel);
-  // };
+  const handleChangePassword = () => {
+    setDisplayChangePassword(true);
+    console.log("Cambiar contraseña");
+  };
 
   return (
     <MainLayout activate="user">
@@ -120,101 +122,53 @@ const Profile: NextPage = () => {
                     </Field>
                   </div>
                 </div>
-                <div className="w-full md:basis-[45%] rounded overflow-hidden md:shadow-lg p-8">
-                  {/* <div className="flex justify-between items-center px-2">
-                    <p className="text-darkprimary font-bold text-lg uppercase">
-                      Dirección
-                    </p>
-                    <p
-                      className="cursor-pointer text-primary"
-                      onClick={handleChangeDirection}
-                    >
-                      Cambiar Direccion
-                    </p>
-                  </div>
-                  <div className="flex justify-between items-center m-3">
-                    {!displayInputDirection ? (
-                      <label
-                        className="block text-sm xl:text-lg mb-2 text-dark"
-                        htmlFor="username"
+                <div className="w-full md:basis-[45%]">
+                  <div className="w-full rounded overflow-hidden md:shadow-lg p-8">
+                    <div className="flex justify-between items-center px-2">
+                      <p className="text-darkprimary font-bold text-lg uppercase mt-4">
+                        Correo electrónico
+                      </p>
+                      <p
+                        className="cursor-pointer text-primary"
+                        onClick={handleChangeEmail}
                       >
-                        {values.direction}
-                      </label>
-                    ) : (
-                      <Field
-                        as="textarea"
-                        label="Idioma"
-                        name="direction"
-                        id="direction"
-                        className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        placeholder="Direccion"
-                      />
-                    )}
-                  </div> */}
-                  <div className="flex justify-between items-center px-2">
-                    <p className="text-darkprimary font-bold text-lg uppercase mt-4">
-                      Correo electrónico
-                    </p>
-                    <p
-                      className="cursor-pointer text-primary"
-                      onClick={handleChangeEmail}
-                    >
-                      Cambiar Correo
-                    </p>
+                        Cambiar Correo
+                      </p>
+                    </div>
+                    <div className="flex justify-between items-center m-3">
+                      {!displayInputEmail ? (
+                        <label
+                          className="block text-sm xl:text-lg mb-2 text-dark"
+                          htmlFor="username"
+                        >
+                          {values.email}
+                        </label>
+                      ) : (
+                        <Field
+                          type="text"
+                          label="Email"
+                          name="email"
+                          id="email"
+                          className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          placeholder="Correo Electronico"
+                        />
+                      )}
+                    </div>
+                    <Button type="submit">
+                      <p>Guardar</p>
+                    </Button>
                   </div>
-                  <div className="flex justify-between items-center m-3">
-                    {!displayInputEmail ? (
-                      <label
-                        className="block text-sm xl:text-lg mb-2 text-dark"
-                        htmlFor="username"
-                      >
-                        {values.email}
-                      </label>
-                    ) : (
-                      <Field
-                        type="text"
-                        label="Email"
-                        name="email"
-                        id="email"
-                        className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        placeholder="Correo Electronico"
-                      />
-                    )}
-                  </div>
-
-                  {/* <div className="flex justify-between items-center px-2">
-                    <p className="text-darkprimary font-bold text-lg uppercase mt-4">
-                      Teléfono
+                  <div className="w-full rounded overflow-hidden md:shadow-lg p-8">
+                    <p className="text-darkprimary font-bold text-lg uppercase my-4">
+                      Solicitar Cambio de contraseña
                     </p>
-                    <p
-                      className="cursor-pointer text-primary"
-                      onClick={handleChangeTel}
-                    >
-                      Cambiar Telefono
-                    </p>
-                  </div> */}
-                  <div className="flex justify-between items-center m-3">
-                    {/* {!displayInputTel ? (
-                      <label
-                        className="block text-sm xl:text-lg mb-2 text-dark"
-                        htmlFor="username"
-                      >
-                        {values.tel}
-                      </label>
-                    ) : (
-                      <Field
-                        type="tel"
-                        label="Telefono"
-                        name="tel"
-                        id="tel"
-                        className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        placeholder="Telefono"
-                      />
-                    )} */}
+                    {/* <p className="my-2">
+                      Usted recibira un correo electronico para validar el cambio de contraseña
+                    </p> */}
+                    <Button type="button" onClick={handleChangePassword}>
+                      Cambiar Contraseña
+                    </Button>
                   </div>
-                  <Button type="submit">
-                    <p>Guardar</p>
-                  </Button>
                 </div>
               </div>
               {isSubmitting && (
@@ -226,6 +180,15 @@ const Profile: NextPage = () => {
           )}
         </Formik>
       )}
+
+      <Modal
+        isOpen={displayChangePassword}
+        setIsOpen={setDisplayChangePassword}
+      >
+        <FormChangePassword
+          isOpenModal={setDisplayChangePassword}
+        ></FormChangePassword>
+      </Modal>
     </MainLayout>
   );
 };

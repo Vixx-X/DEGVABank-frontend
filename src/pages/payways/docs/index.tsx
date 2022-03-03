@@ -6,6 +6,9 @@ import { Listbox, Transition } from "@headlessui/react";
 import LoginCapture from "@public/LoginCapture.png";
 import PayWayButton from "@public/PayWayButton.png";
 import RegisterCapture from "@public/RegisterCapture.png";
+import FormPayWay from "@public/formpayway.png";
+import KeyGenerate from "@public/keys.png";
+import PayWay from "@public/payway.png";
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,8 +21,7 @@ const Documentation: NextPage = () => {
   const [selectedSnippet, setSelectedSnippet] = useState("javascript");
   const snippets = useMemo<{ [key: string]: string }>(() => {
     return {
-      javascript: `
-// In javascript you could use the fernet package
+      javascript: `// In javascript you could use the fernet package
 // See more at: https://www.npmjs.com/package/fernet
 
 const SECRET_KEY = "<your-secret-key>";
@@ -33,8 +35,7 @@ function decrypt(msg) {
   });
   return token.decode();
 }`,
-      kotlin: `
-// In kotlin you could use the fernet-java8 package
+      kotlin: `// In kotlin you could use the fernet-java8 package
 // See more at: https://github.com/l0s/fernet-java8
 
 public static class Decrypter {
@@ -48,8 +49,7 @@ public static class Decrypter {
     return token.validateAndDecrypt(key, validator);
   }
 }`,
-      python: `
-# In python you could use the cryptography module
+      python: `# In python you could use the cryptography module
 # See more at: https://cryptography.io/en/latest/fernet/
 
 from cryptography.fernet import Fernet
@@ -69,7 +69,7 @@ def decrypt(msg):
         <Header />
       </div>
       <main className="xl:w-[70rem] max-w-[90%] mx-auto py-8">
-        <h1 className="text-center text-xl font-bold uppercase text-darkprimary">
+        <h1 className="text-center mb-8 text-xl font-bold uppercase text-darkprimary">
           Documentación de la pasarela
         </h1>
         <ol className="px-4 list-decimal font-montserrat">
@@ -82,7 +82,7 @@ def decrypt(msg):
               </Link>{" "}
               con una cuenta de usuario jurídico.
             </span>
-            <div className="my-4">
+            <div className="my-4 max-w-full">
               <Image
                 src={RegisterCapture}
                 alt="preview image"
@@ -99,13 +99,8 @@ def decrypt(msg):
               </a>
             </Link>{" "}
             con la cuenta de usuario jurídico registrada.
-            <div className="my-4">
-              <Image
-                src={LoginCapture}
-                alt="preview image"
-                width={300}
-                height={320}
-              />
+            <div className="my-4 max-w-full w-80">
+              <Image src={LoginCapture} alt="login image" />
             </div>
           </li>
           <li className="my-2">
@@ -116,17 +111,15 @@ def decrypt(msg):
               </a>
             </Link>{" "}
             y hacer click en el boton de &quot;Crear pasarela&quot;.
-            <div className="my-4">
-              <Image
-                src={PayWayButton}
-                alt="preview image"
-                width={150}
-                height={50}
-              />
+            <div className="my-4 max-w-full w-36">
+              <Image src={PayWayButton} alt="button payway" />
             </div>
           </li>
           <li className="my-2">
             Completar el formulario que te aparezca.
+            <div className="my-4 max-w-full w-[35rem] border border-gray">
+              <Image src={FormPayWay} alt="preview image" />
+            </div>
             <ul className="list-disc my-2">
               <li className="ml-6">
                 Ingresar un identificador único para esa pasarela de pago
@@ -148,77 +141,204 @@ def decrypt(msg):
               </li>
             </ul>
           </li>
+
           <li className="my-2">
             Generar una clave pública y privada dentro de la misma página y
             utilizar esas claves dentro de su aplicación.
           </li>
+          <div className="my-4 max-w-full w-80 border border-gray">
+            <Image src={KeyGenerate} alt="preview image" />
+          </div>
+
           <li className="my-2">
-            Dentro de la aplicación pasar como query-params el producto o la
-            lista de productos asociados que se quieran facturar a través de la
-            pasarela.
+            Dentro de su aplicación a la hora de realizar el pago debe redirigir
+            a su cliente al sitio web{" "}
+            <Link href="https://bank.vittorioadesso.com/paygateway">
+              <a className="text-blue-600 hover:text-blue-800 visited:text-purple-600">
+                https://bank.vittorioadesso.com/paygateway
+              </a>
+            </Link>{" "}
+            con los <code className="bg-gray-100">query-params</code> adecuados
+            para procesar la orden de compra del producto o la lista de
+            productos asociados que se quieran facturar a través de la pasarela.
+            Al cliente lo redigirá a un sitio web, cuyo aspecto será parecido al
+            siguiente (customizado de acuerdo a la lista de productos del
+            cliente en cuestión).
+            <div className="my-4 max-w-full w-full border border-gray">
+              <Image src={PayWay} alt="preview image" />
+            </div>
+            <p className="my-4">
+              El formato de los{" "}
+              <code className="bg-gray-100">query-params</code> es el siguiente:
+            </p>
+            <ul className="list-disc my-2">
+              <li className="ml-6 my-4">
+                Parametros obligatorios generales que debe incluir
+                <ul className="list-disc my-1">
+                  <li className="ml-6">
+                    <code className="bg-gray-100">key:</code> deberá suministrar
+                    la clave pública asociada a su pasarela
+                  </li>
+                  <li className="ml-6">
+                    <code className="bg-gray-100">order:</code> deberá
+                    suministrar la orden asociada a la compra en cuestión
+                  </li>
+                  <li className="ml-6">
+                    <code className="bg-gray-100">reason:</code> deberá
+                    suministrar el motivo de compra.
+                  </li>
+                </ul>
+              </li>
+              <li className="ml-6 my-4">
+                Parametros opcionales generales que puede incluir
+                <ul className="list-disc my-1">
+                  <li className="ml-6">
+                    <code className="bg-gray-100">tax:</code> si existe un
+                    impuesto general de la compra que se deba incluir
+                  </li>
+                  <li className="ml-6">
+                    <code className="bg-gray-100">logotype:</code> imagen
+                    asociada al logotipo de su aplicación.
+                  </li>
+                </ul>
+              </li>
+              <li className="ml-6 my-4">
+                Por producto se tienen los siguientes datos:
+                <ul className="list-disc my-1">
+                  <li className="ml-6">
+                    <code className="bg-gray-100">name:</code> nombre de
+                    producto
+                  </li>
+                  <li className="ml-6">
+                    <code className="bg-gray-100">image:</code> imagen asociada
+                    al producto
+                  </li>
+                  <li className="ml-6">
+                    <code className="bg-gray-100">amount:</code> precio del
+                    producto por unidad
+                  </li>
+                  <li className="ml-6">
+                    <code className="bg-gray-100">num:</code> cantidad de
+                    unidades a comprar de ese producto
+                  </li>
+                </ul>
+                <p className="my-4">
+                  Es importante acotar que de ser una lista de productos deben
+                  suministrarse todos los <code>query-params</code> de un
+                  producto antes de pasar a definir los{" "}
+                  <code>query-params</code> de un siguiente producto. Si un
+                  producto no posee alguno de los <code>query-params</code>{" "}
+                  antes señalados, es necesario de todas maneras incluirlo, solo
+                  que sin colocarle el valor para no perturbar la asociación de
+                  cada producto con sus correspondientes atributos.
+                </p>
+                <p className="my-4">
+                  Los parametros <code>name</code> y <code>amount</code> son
+                  obligatorios por producto.
+                </p>
+              </li>
+            </ul>
+            <div className="my-4">
+              <p className="my-2 font-bold">
+                Ejemplo de URL válida a redireccionar.
+              </p>
+              <p className="text-blue-600 hover:text-blue-800 visited:text-purple-600 w-full overflow-auto">
+                https://bank.vittorioadesso.com/paygateway?name=producto1&image=https://sc04.alicdn.com/kf/Uc0b56e875b04467aa767dda132693ee5V.jpg&amount=80&num=5&tax=5&logotype=https://upload.wikimedia.org/wikipedia/commons/9/9b/Zortrax-logotype.svg&order=001&key=VphD_VwHLWU27VioQYOIByBnamY4wa-G8oEKDVs8kW3E&reason=prueba
+              </p>
+            </div>
           </li>
           <li className="my-2">
             En el endpoint que especificaste como url de backend, deberá recibir
-            un POST de texto, el cual viene encriptado bajo la especificación de
-            Fernet https://github.com/fernet/spec/blob/master/Spec.md , usando
-            su clave privada, para lo cual tendrá que desencriptar en su server,
-            para así poder acceder al contenido. Aquí podrán visualizar algunas
-            de las posibles formas de desencriptar de acuerdo al lenguaje:
-            <div className="w-48 absolute">
-              <Listbox value={selectedSnippet} onChange={setSelectedSnippet}>
-                <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                  <span className="block truncate">{selectedSnippet}</span>
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                    ^
-                  </span>
-                </Listbox.Button>
-                <Transition
-                  as={Fragment}
-                  leave="transition ease-in duration-100"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                    {snippetsChoices.map((choice, index) => (
-                      <Listbox.Option
-                        key={index}
-                        className={({ active }) =>
-                          `cursor-default select-none relative py-2 pl-10 pr-4 ${
-                            active
-                              ? "text-amber-900 bg-amber-100"
-                              : "text-gray-900"
-                          }`
-                        }
-                        value={choice}
-                      >
-                        {({ selected }) => (
-                          <>
-                            <span
-                              className={`block truncate ${
-                                selected ? "font-medium" : "font-normal"
-                              }`}
-                            >
-                              {choice}
-                            </span>
-                            {selected ? (
-                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                                {"✓ "}
-                              </span>
-                            ) : null}
-                          </>
-                        )}
-                      </Listbox.Option>
-                    ))}
-                  </Listbox.Options>
-                </Transition>
-              </Listbox>
+            un POST de texto, el cual viene encriptado bajo la especificación de{" "}
+            <Link href="https://github.com/fernet/spec/blob/master/Spec.md">
+              <a
+                target="_blank"
+                className="text-blue-600 hover:text-blue-800 visited:text-purple-600"
+              >
+                Fernet
+              </a>
+            </Link>
+            , usando su clave privada, para lo cual tendrá que desencriptar en
+            su server, para así poder acceder al contenido. Aquí podrán
+            visualizar algunas de las posibles formas de desencriptar de acuerdo
+            al lenguaje:
+            <div className="w-full h-full relative">
+              <div className="w-[90%] absolute left-[5%] flex flex-end">
+                <div className="absolute w-48 right-2 top-2">
+                  <Listbox
+                    value={selectedSnippet}
+                    onChange={setSelectedSnippet}
+                  >
+                    <Listbox.Button className="w-full absolute py-2 pl-3 pr-10 text-left bg-white rounded shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+                      <span className="block truncate">{selectedSnippet}</span>
+                      <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          data-prefix="fas"
+                          className="w-3 h-3 ml-auto"
+                          role="img"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 448 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"
+                          ></path>
+                        </svg>
+                      </span>
+                    </Listbox.Button>
+                    <Transition
+                      as={Fragment}
+                      leave="transition ease-in duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        {snippetsChoices.map((choice, index) => (
+                          <Listbox.Option
+                            key={index}
+                            className={({ active }) =>
+                              `cursor-default select-none relative py-2 pl-10 pr-4 ${
+                                active
+                                  ? "text-amber-900 bg-amber-100"
+                                  : "text-gray-900"
+                              }`
+                            }
+                            value={choice}
+                          >
+                            {({ selected }) => (
+                              <>
+                                <span
+                                  className={`block truncate ${
+                                    selected ? "font-medium" : "font-normal"
+                                  }`}
+                                >
+                                  {choice}
+                                </span>
+                                {selected ? (
+                                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
+                                    {"✓ "}
+                                  </span>
+                                ) : null}
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                      </Listbox.Options>
+                    </Transition>
+                  </Listbox>
+                </div>
+              </div>
+              <div className="h-96">
+                <CodeFormatter language={selectedSnippet} style={a11yDark}>
+                  {snippets[selectedSnippet]}
+                </CodeFormatter>
+              </div>
             </div>
-            <div className="overflow-auto h-96">
-              <CodeFormatter language={selectedSnippet} style={a11yDark}>
-                {snippets[selectedSnippet]}
-              </CodeFormatter>
-            </div>
-            Si pudes leer el siguiente mensaje, lo tienes bien configurado:
+            <p className="my-4">
+              Si pudes leer el siguiente mensaje, lo tienes bien configurado:
+            </p>
             <CodeFormatter language="json" style={a11yDark}>
               {`// key: BxIA5nHI8_CGptA5V2yDJUhjpWKnXIwfCx1iilBFCfs=
 gAAAAABiIGAW1jFK3d2fMZCScoejIlkm1VOqfrBpmzfcB4SDxiOZQi5kHZPA4jsMvdtIMof37W7Trv-v9WUxC23eN_oC9dCCMb4ueeRCc6Ipj3i6SFa5ASg=`}
@@ -241,8 +361,9 @@ gAAAAABiIGAW1jFK3d2fMZCScoejIlkm1VOqfrBpmzfcB4SDxiOZQi5kHZPA4jsMvdtIMof37W7Trv-v
           </li>
           <li className="my-2">
             Y listo, así se completaría el setup de la pasarela de pagos con
-            DEGVA-Bank, {"<slogan>"}. Cualquier duda o error contactar a{" "}
-            {"<contacto>"}.
+            DEGVA Bank. Cualquier duda o error ponerse en contacto con nuestro
+            equipo a través del número{" "}
+            <span className="text-darkprimary">0424-1315948</span>.
           </li>
         </ol>
       </main>

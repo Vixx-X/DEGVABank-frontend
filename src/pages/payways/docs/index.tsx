@@ -220,8 +220,8 @@ def decrypt(msg):
             </div>
             Si pudes leer el siguiente mensaje, lo tienes bien configurado:
             <CodeFormatter language="json" style={a11yDark}>
-              {`// key: bbbbbbb
-aaaaaaaaaaaaaaaaaa`}
+              {`// key: BxIA5nHI8_CGptA5V2yDJUhjpWKnXIwfCx1iilBFCfs=
+gAAAAABiIGAW1jFK3d2fMZCScoejIlkm1VOqfrBpmzfcB4SDxiOZQi5kHZPA4jsMvdtIMof37W7Trv-v9WUxC23eN_oC9dCCMb4ueeRCc6Ipj3i6SFa5ASg=`}
             </CodeFormatter>
           </li>
 

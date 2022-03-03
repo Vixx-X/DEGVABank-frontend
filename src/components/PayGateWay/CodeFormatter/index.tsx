@@ -21,7 +21,7 @@ const CodeFormatter = ({ language, style, children }: CodeFormatterProps) => {
       <SyntaxHighlighter
         language={language}
         style={style}
-        className="rounded p-16 w-[90%] h-full overflow-auto !flex !items-center"
+        className="rounded p-16 w-[90%] h-full overflow-auto"
         showLineNumbers
       >
         {children}

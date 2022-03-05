@@ -14,6 +14,7 @@ interface AccountProp {
   amount: string;
   reason: string;
   publicKey: string;
+  order: string;
 }
 
 interface AccountForm {
@@ -24,7 +25,7 @@ const initialValue: AccountForm = {
   account: "",
 };
 
-const Account = ({ amount, reason, publicKey }: AccountProp) => {
+const Account = ({ order, amount, reason, publicKey }: AccountProp) => {
   const dataAccounts = useSWRAuth(URL_USER_ACCOUNTS, getAccountDataWithURL);
   const [sucessTransaction, setSucess] = useState<boolean>(false);
   const [accounts, setAccounts] = useState<any[]>([]);
@@ -67,6 +68,7 @@ const Account = ({ amount, reason, publicKey }: AccountProp) => {
   const handleSubmit = async (data: AccountForm) => {
     setLoading(true);
     const pay = {
+      order: order,
       key: publicKey,
       amount: amount,
       reason: reason,

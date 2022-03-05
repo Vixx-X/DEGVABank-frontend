@@ -20,6 +20,8 @@ const PayGateway: NextPage = () => {
         ? parseInt(product.amount) * parseInt(product.num)
         : parseInt(product.amount)
       : 0;
+  const order: string =
+    product.order && typeof product.order === "string" ? product.order : "";
   const tax: number =
     product.tax && typeof product.tax === "string" ? parseInt(product.tax) : 0;
   const publicKey: string =
@@ -116,6 +118,7 @@ const PayGateway: NextPage = () => {
           {component === 1 && <Login setComponent={setComponent} />}
           {component === 2 && (
             <Account
+              order={order}
               amount={`${tot + tax}`}
               publicKey={publicKey}
               reason={reason}

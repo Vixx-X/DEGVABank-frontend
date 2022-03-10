@@ -6,6 +6,7 @@ import { getAccountDataWithURL, postPaywayAccount } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
 import { Formik, Form, Field } from "formik";
+import { useRouter } from "next/router";
 import { Key, useEffect, useState } from "react";
 
 const { URL_USER_ACCOUNTS } = API_URLS;
@@ -32,7 +33,7 @@ const Account = ({ order, amount, reason, publicKey }: AccountProp) => {
   const [currentAccount, setcurrentAccount] = useState<any>();
   const [loading, setLoading] = useState(true);
   const [messageError, setMessageError] = useState<any>();
-
+  const router = useRouter();
   const postPayWayAccountOption = useFetchCallback(postPaywayAccount);
 
   useEffect(() => {
@@ -62,8 +63,9 @@ const Account = ({ order, amount, reason, publicKey }: AccountProp) => {
       },
     };
     try {
-      await postPayWayAccountOption(pay);
+      const ret = await postPayWayAccountOption(pay);
       setSucess(true);
+      router.push(ret.next);
     } catch (e) {
       setMessageError(e);
       console.log("errores", e);

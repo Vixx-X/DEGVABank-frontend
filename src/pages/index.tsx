@@ -7,7 +7,7 @@ import { GroupSvg, LockSvg, SpeedSvg } from "@public/assets/imagesSvg";
 import type { NextPage } from "next";
 import Link from "next/link";
 
-const { URL_LOGIN, URL_REGISTER } = SERVER_URLS;
+const { URL_LOGIN, URL_REGISTER, URL_DOCUMENTATION } = SERVER_URLS;
 
 const Home: NextPage = () => {
   return (
@@ -118,20 +118,15 @@ const Home: NextPage = () => {
         <div className="absolute bg-black/60 w-full h-[25rem] top-10">
           <div className="flex grow flex-col items-center justify-center gap-y-6 h-full max-w-[90%] mx-auto text-center">
             <h4 className="text-light text-3xl text-shadow">
-              ¿Quieres hacer tus compras de manera segura?
+              ¿Quieres incorporar nuestro banco a tu comercio?
             </h4>
             <p className="text-light text-2xl">
-              Hacemos de tu experiencia de compra la mejor
+              Aqui puedes obtener informacion sobre nuestra pasarela de pagos
             </p>
-            <div className="flex flex-col w-[60%] md:w-auto gap-y-4 md:flex-row md:gap-x-4 md:min-w-[35rem]">
-              <Link href={URL_LOGIN}>
+            <div className="flex flex-col justify-center w-[60%] md:w-auto gap-y-4 md:flex-row md:gap-x-4 md:min-w-[35rem]">
+              <Link href={URL_DOCUMENTATION}>
                 <a className="bg-secundary text-white font-bold py-1 px-4 rounded text-center basis-2/4 py-2">
-                  Iniciar Sesión
-                </a>
-              </Link>
-              <Link href={URL_REGISTER}>
-                <a className="bg-secundary text-white font-bold py-1 px-4 rounded text-center basis-2/4 py-2">
-                  Regístrate
+                  Documentacion
                 </a>
               </Link>
             </div>

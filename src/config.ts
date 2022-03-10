@@ -53,7 +53,8 @@ export const SERVER_URLS = {
   URL_USER_REQUEST: "/user/request",
   URL_USER_PAYWAY_APPS: "/user/payways",
   URL_USER_PAYWAY_APP: "/user/payways/[app_id]",
-
+  URL_DOCUMENTATION: "/payways/docs",
+  
   // dashboard
   URL_HOME: "/home",
   URL_PAYWAYS_DOCS: "/payways/docs",

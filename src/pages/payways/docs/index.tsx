@@ -351,9 +351,9 @@ gAAAAABiIGAW1jFK3d2fMZCScoejIlkm1VOqfrBpmzfcB4SDxiOZQi5kHZPA4jsMvdtIMof37W7Trv-v
             que:
             <CodeFormatter language="json" style={a11yDark}>
               {`{
-  "order": "number",
+  "order": "string",
   "reason": "string",
-  "amount": "string",
+  "amount": "float",
   "status": "APPROVED|DENIED",
 }`}
             </CodeFormatter>

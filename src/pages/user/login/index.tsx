@@ -95,7 +95,7 @@ const LogIn: NextPage = () => {
                 <ErrorMessage name="password" error={messageError} />
               </div>
             </div>
-            {messageError && messageError.info && messageError.info.detail && (
+            {/* {messageError && messageError.info && messageError.info.detail && (
               <div className="bg-red-400 border border-red-700 w-full p-3 my-3 py-2 rounded-lg text-sm font-normal">
                 <strong>Error: </strong>
                 {messageError.info.detail && (
@@ -108,7 +108,7 @@ const LogIn: NextPage = () => {
                   <p>{`Password: ${messageError.info.detail.password[0]}`}</p>
                 )}
               </div>
-            )}
+            )} */}
             <div className="flex justify-center">
               <Button
                 type="submit"

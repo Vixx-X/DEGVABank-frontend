@@ -48,7 +48,6 @@ const CreditCard = ({
     };
     try {
       const ret = await postPaywayCard(pay);
-      console.log(ret);
       setSucess(true);
       router.push(ret.next);
     } catch (e) {

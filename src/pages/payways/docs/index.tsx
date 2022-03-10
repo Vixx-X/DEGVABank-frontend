@@ -200,6 +200,16 @@ def decrypt(msg):
                     <code className="bg-gray-100">logotype:</code> imagen
                     asociada al logotipo de su aplicación.
                   </li>
+                  <li className="ml-6">
+                    <code className="bg-gray-100">windowclose=true</code> si se quiere
+                    cerrar la ventana en vez de redirigir a una página aparte setear
+                    el parámetro de esa manera
+                  </li>
+                  <li className="ml-6">
+                    <code className="bg-gray-100">timer</code> tiempo limitante (en minutos)
+                    para que su orden  se procese (de vencer
+                    ese tiempo se redirigirá a la página anterior)
+                  </li>
                 </ul>
               </li>
               <li className="ml-6 my-4">

@@ -15,7 +15,6 @@ const {
 
 const SideBar = () => {
   const { user } = useContext(UserContext);
-  console.log(user);
   const [openAccount, setOpenAcount] = useState<boolean>(true);
   const [openRunway, setOpenRunway] = useState<boolean>(true);
   const [displayAccounts, setDisplayAccounts] = useState<boolean>(false);

@@ -10,7 +10,7 @@ import { makeUrl } from "@utils/makeUrl";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 
 const { URL_USER_TRANSACTIONS } = API_URLS;
 
@@ -28,9 +28,9 @@ const Transaction: NextPage = () => {
   const [paramsURL, setparamsURL] = useState({} as any);
 
   const router = useRouter();
-  const page = parseInt(router?.query?.page as string ?? 1 ,10) 
+  const page = parseInt((router?.query?.page as string) ?? 1, 10);
 
-  console.log("Page",page)
+  console.log("Page", page);
 
   const handleCalendarButton1 = (date: string) => {
     setCalendarButton1(date);
@@ -106,16 +106,20 @@ const Transaction: NextPage = () => {
               handleOrderClick={handleOrderClick}
             />
             <div className="mt-3 w-full flex justify-end gap-2">
-              { page > 1 &&
-              <Link passHref href={`?page=${page - 1}`}>
-                <Button>--</Button>
-              </Link>
-              }
-              { page < data.count / 10 &&
-              <Link passHref href={`?page=${page + 1}`}>
-                <Button>+</Button>
-              </Link>
-              }
+              {page > 1 && (
+                <div className="justify-self-start">
+                  <Link passHref href={`?page=${page - 1}`}>
+                    <Button>Anterior</Button>
+                  </Link>
+                </div>
+              )}
+              {page < data.count / 10 && (
+                <div className="justify-self-end">
+                  <Link passHref href={`?page=${page + 1}`}>
+                    <Button>Siguiente</Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         ) : (

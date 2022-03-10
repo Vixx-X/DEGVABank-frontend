@@ -184,6 +184,7 @@ const Profile: NextPage = () => {
       <Modal
         isOpen={displayChangePassword}
         setIsOpen={setDisplayChangePassword}
+        widthModal="max-w-2xl"
       >
         <FormChangePassword
           isOpenModal={setDisplayChangePassword}

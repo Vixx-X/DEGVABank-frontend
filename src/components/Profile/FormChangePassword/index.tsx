@@ -3,7 +3,7 @@ import { Formik, Form, Field } from "formik";
 import { useState } from "react";
 
 interface FormChangePasswordProps {
-  isOpenModal: (bol:boolean) => void;
+  isOpenModal: (bol: boolean) => void;
 }
 
 interface ChangePasswordForm {
@@ -17,7 +17,7 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
     oldPassword: "",
     newPassword: "",
     newPassword2: "",
-    otp : "",
+    otp: "",
   };
 
   const [mode, setMode] = useState(1); //mode 1 = confirmar contraseñas y enviar correo
@@ -28,14 +28,13 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
       setMode(2);
     } else {
       console.log(e);
-      alert(e);
-      isOpenModal(false)
+      isOpenModal(false);
     }
   };
 
-  const backToModeOne = () =>{
+  const backToModeOne = () => {
     setMode(1);
-  }
+  };
 
   return (
     <div className="w-full p-4">
@@ -98,19 +97,10 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
             )}
             {mode === 2 && (
               <div>
-                <div>
-                  <Button
-                    onClick={backToModeOne}
-                  >
-                    x
-                  </Button>
-                </div>
                 <p className="text-darkprimary font-bold text-lg uppercase my-4">
                   Revisa Tu Correo
                 </p>
-                <p>
-                    Te hemos enviado un codigo de confirmacion a tu correo
-                </p>
+                <p>Te hemos enviado un codigo de confirmacion a tu correo</p>
                 <label
                   className="block text-sm xl:text-lg mb-2 text-dark "
                   htmlFor="otp"
@@ -125,8 +115,9 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
                 />
               </div>
             )}
-            <div>
-              <Button>Confirmar</Button>
+            <div className="flex gap-x-4">
+              {mode === 2 && <Button onClick={backToModeOne}>Volver</Button>}
+              <Button>{mode == 1 ? "Continuar" : "Confirmar"}</Button>
             </div>
           </div>
         </Form>

@@ -1,33 +1,41 @@
+import PayCreditCardForm from "./Form";
 import Button from "@components/Globals/Button/Button";
+import Modal from "@components/Globals/Modal";
 import { useEffect, useState } from "react";
+
+const LIMIT_CARD = 5000;
 
 interface CreditCard {
   id: number;
   number: string;
   security_code: string;
   expiration_date: string;
+  credit: string;
   user: number;
 }
 interface CreditCardProps {
-  ITEMS_CARDS: CreditCard[];
+  cards: CreditCard[];
+  accounts: any;
 }
 
-const CreditCard = ({ ITEMS_CARDS }: CreditCardProps) => {
-  console.log("Credit Card", ITEMS_CARDS);
-  const [bill, setbill] = useState<any>();
-  const handleCurrentBill = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const findBill = ITEMS_CARDS.find(
+const CreditCard = ({ cards, accounts }: CreditCardProps) => {
+  const [isOpenPayCard, setIsOpenPayCard] = useState<boolean>(false);
+  const [currentCard, setCurrentCard] = useState<any>();
+  const handleCurrentcurrentCard = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const findcurrentCard = cards.find(
       ({ number }) => e.target.value == number.toString()
     );
-    if (findBill) {
-      setbill(findBill);
+    if (findcurrentCard) {
+      setCurrentCard(findcurrentCard);
     }
   };
   useEffect(() => {
-    if (ITEMS_CARDS) {
-      setbill(ITEMS_CARDS[0]);
+    if (cards) {
+      setCurrentCard(cards[0]);
     }
-  }, [ITEMS_CARDS]);
+  }, [cards]);
 
   return (
     <>
@@ -38,16 +46,16 @@ const CreditCard = ({ ITEMS_CARDS }: CreditCardProps) => {
         >
           Tarjetas de Crédito
         </label>
-        {bill ? (
+        {currentCard ? (
           <>
             <select
               id="idCard"
               className="form-select appearance-none block w-full px-3 py-2 text-base font-normal text-gray-500 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none mt-4"
-              onChange={handleCurrentBill}
-              value={bill.id}
+              onChange={handleCurrentcurrentCard}
+              value={currentCard.id}
             >
               <option disabled>--Seleccionar--</option>
-              {ITEMS_CARDS.map(({ number }, index) => (
+              {cards.map(({ number }, index) => (
                 // Change for id when not static data
                 <option key={index} value={number}>
                   {`Tarjeta : ${number}`}
@@ -58,22 +66,26 @@ const CreditCard = ({ ITEMS_CARDS }: CreditCardProps) => {
               <div>
                 <p className="text-darkprimary mt-6">
                   Numero de Tarjeta:{" "}
-                  <span className="text-gray-500">{bill.number}</span>
+                  <span className="text-gray-500">{currentCard.number}</span>
                 </p>
                 <p className="text-darkprimary">
                   Fecha de Expiracion:{" "}
-                  <span className="text-gray-500">{bill.expiration_date}</span>
+                  <span className="text-gray-500">
+                    {currentCard.expiration_date}
+                  </span>
                 </p>
-                <strong>
-                <p className="text-red-600">
-                  Deuda:{" "}
-                  <span className="text-gray-500">{bill.credit}</span>
+                <p className="my-2 text-darkprimary">
+                  Saldo a pagar:{" "}
+                  <span className="mr-2 text-red-600 font-normal text-lg ">
+                    ${LIMIT_CARD - parseInt(currentCard.credit)}
+                  </span>
                 </p>
-                </strong>
-              </div>
-              <div>
-                <Button>
-                  <p>Cancelar</p>
+                <Button
+                  onClick={() => {
+                    setIsOpenPayCard(true);
+                  }}
+                >
+                  <p>Pagar tarjeta</p>
                 </Button>
               </div>
             </div>
@@ -82,6 +94,15 @@ const CreditCard = ({ ITEMS_CARDS }: CreditCardProps) => {
           <p> No hay tarjetas de crédito asociadas </p>
         )}
       </div>
+      {currentCard && (
+        <Modal isOpen={isOpenPayCard} setIsOpen={setIsOpenPayCard}>
+          <PayCreditCardForm
+            amount={`${LIMIT_CARD - parseInt(currentCard.credit)}`}
+            accounts={accounts}
+            currentCard={currentCard}
+          />
+        </Modal>
+      )}
     </>
   );
 };

@@ -75,6 +75,7 @@ const Transaction: NextPage = () => {
         <Formik
           initialValues={initialValue}
           onSubmit={(values: RequestForm) => {
+            alert(values);
             handleSubmit(values);
           }}
         >
@@ -134,7 +135,7 @@ const Transaction: NextPage = () => {
             </div>
           </Form>
         </Formik>
-        <div className="rounded-2xl w-full overflow-hidden shadow-lg p-8">
+        <div className="rounded-2xl w-full overflow-hidden shadow-lg p-8 flex flex-col justify-between">
           <div>
             <label
               className="text-darkprimary font-bold uppercase"
@@ -142,12 +143,17 @@ const Transaction: NextPage = () => {
             >
               Solicitar Apertura de Tarjeta de Crédito
             </label>
+            <p className="text-gray-600 italic my-4">
+              ***Todas las tarjetas tendrán un balance inicial de 5000$. Si
+              desea solicitar otro balance inicial consultar con administrador
+              de banco.
+            </p>
           </div>
           <div className="mt-8">
             <Button
               type="submit"
               className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-              onClick={() => pushDataCard({ credit: 0 })}
+              onClick={() => pushDataCard({ credit: 5000 })}
             >
               <p>Mandar la solicitud</p>
             </Button>
@@ -155,7 +161,12 @@ const Transaction: NextPage = () => {
         </div>
       </div>
 
-      <div className="flex justify-center mt-8">
+      <div className="mt-8">
+        <h3
+          className="my-4 text-darkprimary font-bold uppercase"
+        >
+          Información de peticiones.
+        </h3>
         {data?.results && data.results.length > 0 ? (
           <DataTable headers={HEADERS} items={data.results} />
         ) : (

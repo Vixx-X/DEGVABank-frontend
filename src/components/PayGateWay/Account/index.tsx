@@ -50,21 +50,6 @@ const Account = ({ order, amount, reason, publicKey }: AccountProp) => {
     }
   }, [accounts]);
 
-  useEffect(() => {
-    if (dataAccounts.data && dataAccounts.data.results) {
-      setAccounts(dataAccounts.data.results);
-      setLoading(false);
-    } else {
-      setLoading(true);
-    }
-  }, [dataAccounts]);
-
-  useEffect(() => {
-    if (accounts) {
-      setcurrentAccount(accounts[0]);
-    }
-  }, [accounts]);
-
   const handleSubmit = async (data: AccountForm) => {
     setLoading(true);
     const pay = {

@@ -330,7 +330,7 @@ def decrypt(msg):
                   </Listbox>
                 </div>
               </div>
-              <div className="h-96">
+              <div className="h-[22rem]">
                 <CodeFormatter language={selectedSnippet} style={a11yDark}>
                   {snippets[selectedSnippet]}
                 </CodeFormatter>

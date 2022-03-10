@@ -3,10 +3,12 @@ import ErrorMessage from "@components/Globals/ErrorMessage";
 import Logotype from "@components/Globals/Logotype";
 import { postPaywayCard } from "@fetches/users";
 import { Formik, Form, Field } from "formik";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 interface CreditCardProp {
   amount: string;
+  order: string;
   publicKey: string;
   reason: string;
   setComponent: any;
@@ -21,6 +23,7 @@ interface CreditCardForm {
 
 const CreditCard = ({
   amount,
+  order,
   publicKey,
   reason,
   setComponent,
@@ -28,12 +31,14 @@ const CreditCard = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [messageError, setMessageError] = useState<any>();
   const [sucessTransaction, setSucess] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleSubmit = async (data: CreditCardForm) => {
     setLoading(true);
     const pay = {
       key: publicKey,
       amount: amount,
+      order: order,
       reason: reason,
       card: {
         number: data.number,
@@ -42,8 +47,10 @@ const CreditCard = ({
       },
     };
     try {
-      await postPaywayCard(pay);
+      const ret = await postPaywayCard(pay);
+      console.log(ret);
       setSucess(true);
+      router.push(ret.next);
     } catch (e) {
       setMessageError(e);
       console.log("errores", e);

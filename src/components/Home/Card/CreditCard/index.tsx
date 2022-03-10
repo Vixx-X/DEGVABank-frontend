@@ -1,8 +1,8 @@
 import PayCreditCardForm from "./Form";
 import Button from "@components/Globals/Button/Button";
 import Modal from "@components/Globals/Modal";
-import { useEffect, useState } from "react";
-
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "@contexts/UserContext";
 const LIMIT_CARD = 5000;
 
 interface CreditCard {
@@ -19,6 +19,7 @@ interface CreditCardProps {
 }
 
 const CreditCard = ({ cards, accounts }: CreditCardProps) => {
+  const {user} = useContext(UserContext)
   const [isOpenPayCard, setIsOpenPayCard] = useState<boolean>(false);
   const [currentCard, setCurrentCard] = useState<any>();
   const handleCurrentcurrentCard = (
@@ -65,8 +66,16 @@ const CreditCard = ({ cards, accounts }: CreditCardProps) => {
             <div className="flex justify-between items-center">
               <div>
                 <p className="text-darkprimary mt-6">
+                  Titular de la cuenta:{" "}
+                  <span className="text-gray-500">{`${user.first_name} ${user.last_name}`}</span>
+                </p>
+                <p className="text-darkprimary">
                   Numero de Tarjeta:{" "}
                   <span className="text-gray-500">{currentCard.number}</span>
+                </p>
+                <p className="text-darkprimary">
+                  Codigo de Seguridad (CVC):{" "}
+                  <span className="text-gray-500">{currentCard.security_code}</span>
                 </p>
                 <p className="text-darkprimary">
                   Fecha de Expiracion:{" "}

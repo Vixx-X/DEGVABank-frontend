@@ -110,6 +110,7 @@ const PayGateway: NextPage = () => {
           {component === 0 && (
             <CreditCard
               amount={`${tot + tax}`}
+              order={order}
               publicKey={publicKey}
               reason={reason}
               setComponent={setComponent}

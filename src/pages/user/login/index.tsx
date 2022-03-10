@@ -32,6 +32,7 @@ const LogIn: NextPage = () => {
       const next = router.query?.next as string;
       router.push(next ? filterOpenRedirect(next) : URL_HOME);
     } catch (error) {
+      console.log(error);
       setMessageError(error);
     } finally {
       setLoading(false);
@@ -71,7 +72,7 @@ const LogIn: NextPage = () => {
                     name="username"
                     id="username"
                     className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    placeholder="username"
+                    placeholder="Username"
                   />
                 </div>
                 <ErrorMessage name="username" error={messageError} />
@@ -97,7 +98,15 @@ const LogIn: NextPage = () => {
             {messageError && messageError.info && messageError.info.detail && (
               <div className="bg-red-400 border border-red-700 w-full p-3 my-3 py-2 rounded-lg text-sm font-normal">
                 <strong>Error: </strong>
-                <span>{messageError.info.detail}</span>
+                {messageError.info.detail && (
+                  <p>{`User Name: ${messageError.info.detail}`}</p>
+                )}
+                {messageError.info.detail.username && (
+                  <p>{`User Name: ${messageError.info.detail.username[0]}`}</p>
+                )}
+                {messageError.info.detail.password && (
+                  <p>{`Password: ${messageError.info.detail.password[0]}`}</p>
+                )}
               </div>
             )}
             <div className="flex justify-center">

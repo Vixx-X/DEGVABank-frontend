@@ -48,7 +48,6 @@ const CreditCard = ({
     };
     try {
       const ret = await postPaywayCard(pay);
-      console.log(ret);
       setSucess(true);
       router.push(ret.next);
     } catch (e) {
@@ -68,7 +67,7 @@ const CreditCard = ({
 
   return (
     <>
-      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full xl:w-7/12">
+      <div className="rounded-2xl h-fit overflow-hidden shadow-lg p-4 md:p-8 w-full xl:w-9/12">
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}

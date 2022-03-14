@@ -1,6 +1,7 @@
 import CreditCard from "../../components/PayGateWay/CreditCard";
 import Item from "../../components/PayGateWay/Item";
 import Account from "@components/PayGateWay/Account";
+import CountdownTimer from "@components/PayGateWay/CountDownTimer";
 import Login from "@components/PayGateWay/Login";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,23 +18,38 @@ const PayGateway: NextPage = () => {
   let tot =
     typeof product.amount === "string"
       ? typeof product.num === "string"
-        ? parseInt(product.amount) * parseInt(product.num)
-        : parseInt(product.amount)
+        ? parseFloat(product.amount) * parseInt(product.num)
+        : parseFloat(product.amount)
       : 0;
   const order: string =
     product.order && typeof product.order === "string" ? product.order : "";
   const tax: number =
-    product.tax && typeof product.tax === "string" ? parseInt(product.tax) : 0;
+    product.tax && typeof product.tax === "string"
+      ? parseFloat(product.tax)
+      : 0;
   const publicKey: string =
     product.key && typeof product.key === "string" ? product.key : "";
   const reason: string =
     product.reason && typeof product.reason === "string" ? product.reason : "";
 
+  const timer: number =
+    product.timer && typeof product.timer === "string"
+      ? parseFloat(product.timer)
+      : 0;
+
+  const minutes: number = Math.floor(timer);
+  const seconds: number = (timer - minutes) * 100;
+
+  const TIME_LEFT = (minutes * 60 + seconds) * 1000;
+  const NOW_IN_MS = new Date().getTime();
+
+  const dateTimeAfterThreeDays = NOW_IN_MS + TIME_LEFT;
+
   return (
     <div className="min-h-screen flex items-center justify-center mx-auto">
       <div className="grid md:grid-cols-2 w-full min-h-screen divide-x">
         <div className="p-10 py-20 min-h-screen flex justify-center">
-          <div className="w-full md:w-8/12">
+          <div className="w-full w-full xl:w-9/12">
             <button onClick={() => history.back()}>
               <FontAwesomeIcon icon={faArrowLeft} size="2x" color="grey" />
             </button>
@@ -54,9 +70,11 @@ const PayGateway: NextPage = () => {
                 {product.name !== undefined &&
                   typeof product.name !== "string" &&
                   product.name.map((element, index) => {
-                    const num = product.num ? parseInt(product.num[index]) : 1;
+                    const num = product.num
+                      ? parseFloat(product.num[index])
+                      : 1;
                     const amount = product.amount
-                      ? parseInt(product.amount[index])
+                      ? parseFloat(product.amount[index])
                       : 0;
                     tot += amount * num;
                     return (
@@ -77,7 +95,7 @@ const PayGateway: NextPage = () => {
                       name={product.name}
                       image={product.image}
                       num={parseInt(product.num)}
-                      amount={parseInt(product.amount)}
+                      amount={parseFloat(product.amount)}
                     />
                   )}
               </div>
@@ -104,6 +122,11 @@ const PayGateway: NextPage = () => {
                 <p className="text-xl font-montserrat">${tot + tax}</p>
               </div>
             </section>
+            <div className="my-4">
+              {timer != 0 && (
+                <CountdownTimer targetDate={dateTimeAfterThreeDays} />
+              )}
+            </div>
           </div>
         </div>
         <div className="flex justify-center items-center p-10">

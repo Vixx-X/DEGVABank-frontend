@@ -176,16 +176,16 @@ def decrypt(msg):
                 Parametros obligatorios generales que debe incluir
                 <ul className="list-disc my-1">
                   <li className="ml-6">
-                    <code className="bg-gray-100">key:</code> deberá suministrar
-                    la clave pública asociada a su pasarela
+                    <code className="bg-gray-100">key (string):</code> deberá
+                    suministrar la clave pública asociada a su pasarela
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">order:</code> deberá
+                    <code className="bg-gray-100">order (string):</code> deberá
                     suministrar la orden asociada a la compra en cuestión
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">reason:</code> deberá
-                    suministrar el motivo de compra.
+                    <code className="bg-gray-100">reason (string) :</code>{" "}
+                    deberá suministrar el motivo de compra.
                   </li>
                 </ul>
               </li>
@@ -193,22 +193,23 @@ def decrypt(msg):
                 Parametros opcionales generales que puede incluir
                 <ul className="list-disc my-1">
                   <li className="ml-6">
-                    <code className="bg-gray-100">tax:</code> si existe un
-                    impuesto general de la compra que se deba incluir
+                    <code className="bg-gray-100">tax (float) :</code> si existe
+                    un impuesto general de la compra que se deba incluir
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">logotype:</code> imagen
-                    asociada al logotipo de su aplicación.
+                    <code className="bg-gray-100">logotype (string): </code>{" "}
+                    imagen asociada al logotipo de su aplicación.
                   </li>
-                  <li className="ml-6">
-                    <code className="bg-gray-100">windowclose=true</code> si se quiere
+                  {/* <li className="ml-6">
+                    <code className="bg-gray-100">windowclose=true (boolean): </code> si se quiere
                     cerrar la ventana en vez de redirigir a una página aparte setear
                     el parámetro de esa manera
-                  </li>
+                  </li> */}
                   <li className="ml-6">
-                    <code className="bg-gray-100">timer</code> tiempo limitante (en minutos)
-                    para que su orden  se procese (de vencer
-                    ese tiempo se redirigirá a la página anterior)
+                    <code className="bg-gray-100">timer (float): </code> tiempo
+                    limitante (en minutos) para que su orden se procese (de
+                    vencer ese tiempo se redirigirá a la página anterior). Parte
+                    entera minutos, parte decimal segundos.
                   </li>
                 </ul>
               </li>

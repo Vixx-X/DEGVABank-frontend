@@ -191,24 +191,6 @@ const PayWayForm = ({
               />
               <ErrorMessage name="success" error={messageError} />
             </div>
-            <div>
-              <label
-                className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
-                htmlFor="fail"
-              >
-                URL para redireccionar en caso fallido
-              </label>
-              <Field
-                name="fail"
-                className="appearance-none rounded w-full py-3 
-          border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="fail"
-                type="text"
-                placeholder="Colocar Url"
-                disabled={!editable}
-              />
-              <ErrorMessage name="fail" error={messageError} />
-            </div>
           </div>
         </div>
         {editable && (

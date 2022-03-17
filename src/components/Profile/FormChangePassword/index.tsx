@@ -122,7 +122,7 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
                     Contraseña Antigua
                   </label>
                   <Field
-                    type="text"
+                    type="password"
                     label="old_password"
                     name="old_password"
                     id="old_password"
@@ -141,7 +141,7 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
                     Contraseña Nueva
                   </label>
                   <Field
-                    type="text"
+                    type="password"
                     label="new_password1"
                     name="new_password1"
                     id="new_password1"
@@ -160,7 +160,7 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
                     Confirmar Contraseña Nueva
                   </label>
                   <Field
-                    type="text"
+                    type="password"
                     label="new_password2"
                     name="new_password2"
                     id="new_password2"

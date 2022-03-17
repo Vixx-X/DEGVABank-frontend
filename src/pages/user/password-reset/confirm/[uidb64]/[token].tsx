@@ -107,7 +107,7 @@ const PasswordResetConfirm = ({
                       Contraseña Nueva
                     </label>
                     <Field
-                      type="text"
+                      type="password"
                       label="new_password1"
                       name="new_password1"
                       id="new_password1"
@@ -125,7 +125,7 @@ const PasswordResetConfirm = ({
                       Confirmar Contraseña Nueva
                     </label>
                     <Field
-                      type="text"
+                      type="password"
                       label="new_password2"
                       name="new_password2"
                       id="new_password2"

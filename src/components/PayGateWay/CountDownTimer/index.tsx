@@ -6,9 +6,9 @@ const ShowCounter = ({ minutes, seconds }: any) => {
   return (
     <div className="show-counter">
       <div className="flex justify-center">
-        <DateTimeDisplay value={minutes} isDanger={seconds <= 10} />
+        <DateTimeDisplay value={minutes} isDanger={seconds <= 10 && minutes === 0} />
         <p className="mx-2 py-3 font-bold text-2xl rounded">:</p>
-        <DateTimeDisplay value={seconds} isDanger={seconds <= 10} />
+        <DateTimeDisplay value={seconds} isDanger={seconds <= 10 && minutes === 0} />
       </div>
     </div>
   );

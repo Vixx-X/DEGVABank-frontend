@@ -29,8 +29,6 @@ const PasswordResetConfirm = ({
 }: PasswordResetConfirmProps) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [error, setError] = useState(false);
   const [messageError, setMessageError] = useState<any>("");
 
   const handleSubmit = async (data: PasswordResetConfirmFormData) => {
@@ -186,71 +184,4 @@ export async function getServerSideProps({ params }: any) {
     console.log(error);
     return {};
   }
-}
-
-{
-  /* <Layout
-title="Resetear Contraseña"
-description="Resetea tu contraseña con una nueva"
->
-{loading ? (
-  <Loader />
-) : invalid_link ? (
-  <section className="my-12 ">
-    <div className="container mx-auto animate__animated animate__fadeIn animate__delay-3s">
-      <HeaderTitle title="Resetear Contraseña" />
-      <div className="flex flex-col items-center justify-center mb-20">
-        <p>
-          El link ha expirado o es invalido, vuelve a mandar el correo{' '}
-          <Link href={URL_PASSWORD_RESET}>
-            <a className="hover:underline">aquí</a>
-          </Link>
-          .
-        </p>
-      </div>
-    </div>
-  </section>
-) : success ? (
-  <section className="my-12 ">
-    <div className="container mx-auto animate__animated animate__fadeIn animate__delay-3s">
-      <HeaderTitle title="Resetear Contraseña" />
-      <div className="flex flex-col items-center justify-center mb-20">
-        <p>{successMessage}</p>
-      </div>
-    </div>
-  </section>
-) : (
-  <section className="my-12 ">
-    <div className="container mx-auto animate__animated animate__fadeIn animate__delay-3s">
-      <HeaderTitle title="Resetear Contraseña" />
-
-      <form method="POST" onSubmit={(e) => handleSubmit(e)}>
-        <div className="flex flex-col items-center justify-center mb-20">
-          <PasswordField
-            placeholder="Contraseña nueva"
-            name="new_password1"
-            onChange={handleChange}
-            value={form.new_password1}
-          />
-          <PasswordField
-            placeholder="Confirmar contraseña nueva"
-            name="new_password2"
-            onChange={handleChange}
-            value={form.new_password2}
-          />
-
-          <Button type="submit">Enviar</Button>
-
-          {error ? (
-            <div className="bg-red-400 border  border-red-700 w-96 p-3 my-3 py-3 rounded-lg text-sm font-normal">
-              <strong>Error: </strong> {messageError}
-            </div>
-          ) : null}
-        </div>
-      </form>
-    </div>
-  </section>
-)}
-</Layout>
- */
 }

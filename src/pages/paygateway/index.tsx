@@ -122,9 +122,12 @@ const PayGateway: NextPage = () => {
                 <p className="text-xl font-montserrat">${tot + tax}</p>
               </div>
             </section>
-            <div className="my-4">
+            <div className="my-4 flex justify-center">
               {timer != 0 && (
-                <CountdownTimer targetDate={dateTimeAfterThreeDays} />
+                <CountdownTimer
+                  targetDate={dateTimeAfterThreeDays}
+                  mode="payway"
+                />
               )}
             </div>
           </div>

@@ -1,5 +1,6 @@
 import Button from "@components/Globals/Button/Button";
 import ErrorMessage from "@components/Globals/ErrorMessage";
+import SuccessMessage from "@components/Globals/SuccessMessage";
 import ShowCounter from "@components/PayGateWay/CountDownTimer/index";
 import { UserContext } from "@contexts/UserContext";
 import { GenerateOTP, ChangePassword } from "@fetches/users";
@@ -20,6 +21,8 @@ interface ChangePasswordForm {
 
 const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
   const { user } = useContext(UserContext);
+  const [sucessTransaction, setSucess] = useState<boolean>(false);
+  const [showResend, setShowResend] = useState<boolean>(false);
 
   const generateOTP = useFetchCallback(GenerateOTP);
   const changePassword = useFetchCallback(ChangePassword);
@@ -66,7 +69,6 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
       };
       const response = await generateOTP(data);
       setResponseOTP(response);
-      console.log("Respuesta del Back modo", response);
       setMode(2);
     } else {
       try {
@@ -75,10 +77,11 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
           device: responseOTP.device,
         };
         const response = await changePassword(data);
-        console.log(response);
-        isOpenModal(false);
+        setSucess(true);
+        setTimeout(() => {
+          isOpenModal(false);
+        }, 1000);
       } catch (e: any) {
-        console.log(e);
         setMessageError(e);
         if (
           e.info.detail.new_password1 ||
@@ -119,7 +122,7 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
                     Contraseña Antigua
                   </label>
                   <Field
-                    type="text"
+                    type="password"
                     label="old_password"
                     name="old_password"
                     id="old_password"
@@ -138,7 +141,7 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
                     Contraseña Nueva
                   </label>
                   <Field
-                    type="text"
+                    type="password"
                     label="new_password1"
                     name="new_password1"
                     id="new_password1"
@@ -157,7 +160,7 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
                     Confirmar Contraseña Nueva
                   </label>
                   <Field
-                    type="text"
+                    type="password"
                     label="new_password2"
                     name="new_password2"
                     id="new_password2"
@@ -191,9 +194,36 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
                     placeholder="Codigo de Confirmacion"
                   />
                   <ErrorMessage name="token" error={messageError} />
-                  <div className="my-3">
-                    <ShowCounter targetDate={responseOTP.expire}></ShowCounter>
+                  <div className="my-4 ">
+                    {showResend ? (
+                      <>
+                        El tiempo ha expirado. Para volver a enviar el código de
+                        seguridad haga click{" "}
+                        <span
+                          onClick={() =>
+                            setResponseOTP(
+                              generateOTP({
+                                email: user.email,
+                              })
+                            )
+                          }
+                          className="text-primary hover:underline cursor-pointer"
+                        >
+                          aquí
+                        </span>
+                      </>
+                    ) : (
+                      <ShowCounter
+                        targetDate={responseOTP.expire}
+                        fun={() => setShowResend(true)}
+                      ></ShowCounter>
+                    )}
                   </div>
+                  {sucessTransaction && (
+                    <SuccessMessage>
+                      ¡Contraseña cambiada exitosamente!
+                    </SuccessMessage>
+                  )}
                 </div>
               )}
               <div className="flex gap-x-4">

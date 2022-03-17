@@ -36,8 +36,6 @@ export const API_URLS = {
   URL_USER_REQUESTS: `${API_URL}/user/petitions/`,
   URL_PAYWAY_ACCOUNT: `${API_URL}/paygateway/account/`,
   URL_PAYWAY_CARD: `${API_URL}/paygateway/card/`,
-  //OTP
-  URL_OTP: `${API_URL}/user/generate-otp/`,
 };
 
 // Server routes paths

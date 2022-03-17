@@ -27,7 +27,6 @@ const Profile: NextPage = () => {
 
   const handleChangePassword = () => {
     setDisplayChangePassword(true);
-    console.log("Cambiar contraseña");
   };
 
   return (

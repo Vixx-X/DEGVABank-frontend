@@ -19,7 +19,8 @@ const {
   URL_USER_PAYWAY_KEYS,
   URL_PAYWAY_ACCOUNT,
   URL_PAYWAY_CARD,
-  URL_OTP,
+  URL_CHANGE_PASSWORD,
+  URL_OTP_REQUEST
 } = API_URLS;
 
 export async function postUserAccont(auth: string, _data: any) {
@@ -273,7 +274,23 @@ export async function getRequestWithURL(auth: string, url: string) {
 
 export async function GenerateOTP(auth: string, _data: any) {
   const resp = await fetch(
-    URL_OTP,
+    URL_OTP_REQUEST,
+    makeFetchOption(
+      {
+        method: "POST",
+        body: stringify(_data),
+      },
+      auth
+    )
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function ChangePassword(auth: string, _data: any) {
+  const resp = await fetch(
+    URL_CHANGE_PASSWORD,
     makeFetchOption(
       {
         method: "POST",

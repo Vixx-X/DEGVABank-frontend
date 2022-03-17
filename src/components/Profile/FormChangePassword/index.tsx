@@ -1,7 +1,8 @@
 import Button from "@components/Globals/Button/Button";
 import { Formik, Form, Field } from "formik";
 import { useState } from "react";
-
+import { GenerateOTP } from "@fetches/users";
+import { useFetchCallback } from "@hooks/useFetchCallback";
 interface FormChangePasswordProps {
   isOpenModal: (bol: boolean) => void;
 }
@@ -13,6 +14,9 @@ interface ChangePasswordForm {
 }
 
 const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
+
+  const generateOTP =  useFetchCallback(GenerateOTP)
+
   const initialValue = {
     oldPassword: "",
     newPassword: "",
@@ -23,8 +27,11 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
   const [mode, setMode] = useState(1); //mode 1 = confirmar contraseñas y enviar correo
   //mode 2 = confirmar codigo OTP
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     if (mode === 1) {
+      console.log(e)
+      const response =  await generateOTP(e);
+      console.log("Respuesta del Back", response);
       setMode(2);
     } else {
       console.log(e);

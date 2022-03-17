@@ -136,9 +136,6 @@ def decrypt(msg):
               <li className="ml-6">
                 Ingresar un URL para redireccionar al cliente en caso exitoso.
               </li>
-              <li className="ml-6">
-                Ingresar un URL para redireccionar al cliente en caso fallido.
-              </li>
             </ul>
           </li>
 
@@ -217,19 +214,19 @@ def decrypt(msg):
                 Por producto se tienen los siguientes datos:
                 <ul className="list-disc my-1">
                   <li className="ml-6">
-                    <code className="bg-gray-100">name:</code> nombre de
-                    producto
+                    <code className="bg-gray-100">name: (string)</code> nombre
+                    de producto
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">image:</code> imagen asociada
-                    al producto
+                    <code className="bg-gray-100">image: (string)</code> imagen
+                    asociada al producto
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">amount:</code> precio del
-                    producto por unidad
+                    <code className="bg-gray-100">amount: (float)</code> precio
+                    del producto por unidad
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">num:</code> cantidad de
+                    <code className="bg-gray-100">num: (int)</code> cantidad de
                     unidades a comprar de ese producto
                   </li>
                 </ul>
@@ -242,6 +239,10 @@ def decrypt(msg):
                   antes señalados, es necesario de todas maneras incluirlo, solo
                   que sin colocarle el valor para no perturbar la asociación de
                   cada producto con sus correspondientes atributos.
+                </p>
+                <p>
+                  Los tipos de datos son meramente intuitos para saber cómo se
+                  manejarán internamente los datos en nuestra pasarela de pagos.
                 </p>
                 <p className="my-4">
                   Los parametros <code>name</code> y <code>amount</code> son

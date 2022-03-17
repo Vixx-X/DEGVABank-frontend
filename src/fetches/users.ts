@@ -19,6 +19,8 @@ const {
   URL_USER_PAYWAY_KEYS,
   URL_PAYWAY_ACCOUNT,
   URL_PAYWAY_CARD,
+  URL_PASSWORD_RESET,
+  URL_PASSWORD_RESET_CONFIRM,
 } = API_URLS;
 
 export async function postUserAccont(auth: string, _data: any) {
@@ -77,7 +79,50 @@ export async function getToken(username: string, password: string) {
   return data;
 }
 
+export async function postsendEmailResetPassWord(email: any) {
+  const resp = await fetch(
+    URL_PASSWORD_RESET,
+    makeFetchOption({
+      method: "POST",
+      body: stringify(email),
+    })
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function postResetPassWord(
+  _data: any,
+  uidb64: string,
+  token: string
+) {
+  const resp = await fetch(
+    makeUrl(URL_PASSWORD_RESET_CONFIRM, { uidb64, token }),
+    makeFetchOption({
+      method: "POST",
+      body: stringify(_data),
+    })
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
 export async function postRegisterUser(userData: any) {
+  const resp = await fetch(
+    URL_USER_REGISTER,
+    makeFetchOption({
+      method: "POST",
+      body: stringify(userData),
+    })
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function postEmailUser(userData: any) {
   const resp = await fetch(
     URL_USER_REGISTER,
     makeFetchOption({

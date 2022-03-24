@@ -1,6 +1,6 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
+import SuccessMessage from "@components/Globals/Alerts/SuccessMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
-import SuccessMessage from "@components/Globals/SuccessMessage";
 import ShowCounter from "@components/PayGateWay/CountDownTimer/index";
 import { UserContext } from "@contexts/UserContext";
 import { GenerateOTP, ChangePassword } from "@fetches/users";

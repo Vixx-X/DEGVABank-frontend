@@ -1,5 +1,5 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
 import ConfirmTrasaction from "@components/Transaction/ConfirmTransaction";
@@ -61,12 +61,6 @@ const Transfer: NextPage = () => {
       setLoading(true);
     }
   }, [dataAccounts]);
-
-  useEffect(() => {
-    if (ITEMS_BILLS) {
-      setbill(ITEMS_BILLS[0]);
-    }
-  }, [ITEMS_BILLS]);
 
   const handleSubmit = async (data: TransferForm) => {
     setLoading(true);
@@ -133,7 +127,9 @@ const Transfer: NextPage = () => {
                         handleCurrentBill(e);
                       }}
                     >
-                      <option value="">--Seleccionar--</option>
+                      <option disabled value="">
+                        --Seleccionar--
+                      </option>
                       {ITEMS_BILLS &&
                         ITEMS_BILLS.map(
                           (
@@ -146,12 +142,21 @@ const Transfer: NextPage = () => {
                           )
                         )}
                     </Field>
+
+                    {bill ? (
+                      <>
+                        <p className="text-darkprimary mt-2">
+                          Saldo disponible en:{" "}
+                          <span className="text-gray-500">{bill.id}</span>
+                        </p>
+                        <p className="text-xl my-2 mb-4">{`$${bill.balance}`}</p>
+                      </>
+                    ) : (
+                      <p className="text-gray-400 my-4 italic">
+                        Por favor seleccionar una cuenta de donde debitar
+                      </p>
+                    )}
                     <ErrorMessage name="source" error={messageError} />
-                    <p className="text-darkprimary mt-2">
-                      Saldo disponible en:{" "}
-                      <span className="text-gray-500">{bill?.id}</span>
-                    </p>
-                    <p className="text-xl my-2 mb-4">{`$${bill?.balance}`}</p>
                   </div>
                   <div className="mt-4 pt-4">
                     <div>

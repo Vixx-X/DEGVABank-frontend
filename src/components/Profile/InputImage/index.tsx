@@ -16,11 +16,7 @@ const InputImage = ({ initialImage }: InputImageProps) => {
 
   return (
     <div className="flex-col content-center">
-      <img
-        className="rounded-[50%] w-[6em] h-[6em] m-1"
-        src={image}
-        alt="preview image"
-      />
+      <img className="rounded-full my-2" src={image} alt="preview image" />
       <label htmlFor="imageInput" className="cursor-pointer text-primary">
         Editar Foto
       </label>

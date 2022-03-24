@@ -1,6 +1,7 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
+import SuccessMessage from "@components/Globals/Alerts/SuccessMessage";
 import Button from "@components/Globals/Button/Button";
 import DataTable from "@components/Globals/DataTable";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import { API_URLS } from "@config";
 import {
@@ -13,6 +14,8 @@ import { useSWRAuth } from "@hooks/useSWRAuth";
 import { makeUrl } from "@utils/makeUrl";
 import { Field, Form, Formik } from "formik";
 import type { NextPage } from "next";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 enum AccountType {
@@ -32,6 +35,9 @@ const HEADERS = {
 };
 
 const Transaction: NextPage = () => {
+  const router = useRouter();
+  const page = parseInt((router?.query?.page as string) ?? 1, 10);
+
   interface RequestForm {
     type: AccountType;
     balance: number;
@@ -47,15 +53,18 @@ const Transaction: NextPage = () => {
   const pushData = useFetchCallback(postUserAccont);
 
   const pushDataCard = useFetchCallback(postUserCreditCard);
-  const [messageError, setMessageError] = useState<any>();
+  const [messageError, setMessageError] = useState<any>(null);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const handleSubmit = async (data: RequestForm) => {
     try {
+      setMessageError(null);
+      setSuccess(false);
       await pushData({
         type: data.type,
         balance: data.balance,
       });
-      // setSucess(true);
+      setSuccess(true);
     } catch (e) {
       setMessageError(e);
     } finally {
@@ -64,7 +73,7 @@ const Transaction: NextPage = () => {
   };
 
   const { data } = useSWRAuth(
-    makeUrl(URL_USER_REQUESTS, paramsURL),
+    makeUrl(URL_USER_REQUESTS, { ...paramsURL, offset: (page - 1) * 10 }),
     getRequestWithURL
   );
 
@@ -85,7 +94,6 @@ const Transaction: NextPage = () => {
               >
                 Solicitar Apertura de Cuenta
               </label>
-
               <div className="my-4">
                 <p className="block text-sm xl:text-lg font-bold mb-2 text-dark flex items-center">
                   Tipo de cuenta
@@ -151,20 +159,51 @@ const Transaction: NextPage = () => {
             <Button
               type="submit"
               className=" w-full md:w-60 bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-              onClick={() => pushDataCard({ credit: 5000 })}
+              onClick={() => {
+                pushDataCard({ credit: 5000 });
+                setSuccess(true);
+              }}
             >
               <p>Mandar la solicitud</p>
             </Button>
           </div>
         </div>
       </div>
+      <div className="my-4">
+        {success && (
+          <SuccessMessage>
+            Su solicitud ha sido procesada con éxito. Pronto recibirá una
+            confirmación por parte de nuestro equipo sobre la aprobación o la
+            negación de la misma.
+          </SuccessMessage>
+        )}
+      </div>
 
       <div className="mt-8">
         <h3 className="my-4 text-darkprimary font-bold uppercase">
           Información de peticiones.
         </h3>
+
         {data?.results && data.results.length > 0 ? (
-          <DataTable headers={HEADERS} items={data.results} />
+          <div className="w-full">
+            <DataTable headers={HEADERS} items={data.results} classText="" />
+            <div className="mt-3 w-full flex justify-end gap-2">
+              {page > 1 && (
+                <div className="justify-self-start">
+                  <Link passHref href={`?page=${page - 1}`}>
+                    <Button>Anterior</Button>
+                  </Link>
+                </div>
+              )}
+              {page < data.count / 10 && (
+                <div className="justify-self-end">
+                  <Link passHref href={`?page=${page + 1}`}>
+                    <Button>Siguiente</Button>
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
         ) : (
           <p> No posee peticiones con nosotros.</p>
         )}

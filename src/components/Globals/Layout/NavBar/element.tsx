@@ -13,10 +13,14 @@ const ElementNavBar = ({ icon, link, text, activate }: elementProps) => {
   return (
     <Link href={link}>
       <a
-        className={`h-full md:w-32 flex items-center justify-center transition rounded ${className}`}
+        className={`h-full md:min-w-[8rem] flex items-center justify-center transition rounded ${className} px-3`}
       >
         <div className="flex flex-col justify-center items-center">
-          <FontAwesomeIcon icon={icon} color="white" size="2x" />
+          <FontAwesomeIcon
+            icon={icon}
+            color="white"
+            className="text-2xl md:text-4xl"
+          />
           <p className="hidden md:block text-light">{text}</p>
         </div>
       </a>

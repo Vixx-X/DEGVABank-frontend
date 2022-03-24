@@ -1,5 +1,5 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import Logotype from "@components/Globals/Logotype";
 import { API_URLS } from "@config";
 import { getAccountDataWithURL, postPaywayAccount } from "@fetches/users";
@@ -121,10 +121,19 @@ const Account = ({ order, amount, reason, publicKey }: AccountProp) => {
                       )
                     )}
                 </Field>
-                <p className="text-darkprimary mt-2">
-                  Saldo disponible en:{" "}
-                  <span className="text-gray-500">{currentAccount?.id}</span>
-                </p>
+                {currentAccount ? (
+                  <>
+                    <p className="text-darkprimary mt-2">
+                      Saldo disponible en:{" "}
+                      <span className="text-gray-500">{currentAccount.id}</span>
+                    </p>
+                    <p className="text-xl my-2 mb-4">{`$${currentAccount.balance}`}</p>
+                  </>
+                ) : (
+                  <p className="text-gray-400 my-4 italic">
+                    Por favor seleccionar una cuenta de donde debitar
+                  </p>
+                )}
                 <ErrorMessage name="account.number" error={messageError} />
                 <p className="text-xl my-2 mb-4">{`$${currentAccount?.balance}`}</p>
                 {sucessTransaction && (

@@ -1,5 +1,5 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import { API_URLS, SERVER_URLS } from "@config";
 import { postPayway, putPayway } from "@fetches/users";
 import { getAccountDataWithURL } from "@fetches/users";
@@ -74,7 +74,7 @@ const PayWayForm = ({
           app_name: "",
           backend: "",
           success: "",
-          fail: "",
+          fail: window.location.href,
           account: "",
         }
       }

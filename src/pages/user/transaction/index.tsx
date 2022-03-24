@@ -73,18 +73,12 @@ const Transaction: NextPage = () => {
     }
   }, [calendarButton1, calendarButton2]);
 
-  useEffect(() => {}, [data]);
-
   return (
     <MainLayout activate="movements">
-      <div className="flex justify-between">
-        <div className="flex">
-          <div className="mx-2">
-            <CalendarButton onchange={handleCalendarButton1} />
-          </div>
-          <div className="mx-2">
-            <CalendarButton onchange={handleCalendarButton2} />
-          </div>
+      <div className="flex justify-between mb-4 flex-col md:flex-row">
+        <div className="flex w-full md:w-fit gap-x-4 mb-4 md:mb-0">
+          <CalendarButton onchange={handleCalendarButton1} id={1} />
+          <CalendarButton onchange={handleCalendarButton2} id={2} />
         </div>
         <SearchBar onsubmit={handleSubmitSearchBar} />
       </div>

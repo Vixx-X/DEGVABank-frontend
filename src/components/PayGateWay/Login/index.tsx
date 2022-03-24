@@ -1,5 +1,5 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import Logotype from "@components/Globals/Logotype";
 import { AuthContext } from "@contexts/AuthContext";
 import { Formik, Form, Field } from "formik";

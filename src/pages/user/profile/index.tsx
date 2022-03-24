@@ -38,7 +38,6 @@ const Profile: NextPage = () => {
           initialValues={user}
           onSubmit={(values: User, { setSubmitting }: FormikHelpers<User>) => {
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
               setSubmitting(false);
             }, 500);
           }}

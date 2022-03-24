@@ -1,5 +1,5 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import { UserContext } from "@contexts/UserContext";
 import { postTransferUser } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
@@ -48,7 +48,6 @@ const PayCreditCardForm = ({
       setSucess(true);
     } catch (e) {
       setMessageError(e);
-      console.log("errores", messageError);
     } finally {
       setLoading(false);
     }
@@ -68,7 +67,6 @@ const PayCreditCardForm = ({
       initialValues={{ account: accounts[0].id }}
       onSubmit={(values: AccountForm) => {
         handleSubmit(values);
-        alert(JSON.stringify(values, null, 2));
       }}
     >
       {({ handleChange }) => (
@@ -106,10 +104,19 @@ const PayCreditCardForm = ({
                   )
                 )}
             </Field>
-            <p className="text-darkprimary mt-2">
-              Saldo disponible en:{" "}
-              <span className="text-gray-500">{currentAccount?.id}</span>
-            </p>
+            {currentAccount ? (
+              <>
+                <p className="text-darkprimary mt-2">
+                  Saldo disponible en:{" "}
+                  <span className="text-gray-500">{currentAccount.id}</span>
+                </p>
+                <p className="text-xl my-2 mb-4">{`$${currentAccount.balance}`}</p>
+              </>
+            ) : (
+              <p className="text-gray-400 my-4 italic">
+                Por favor seleccionar una cuenta de donde debitar
+              </p>
+            )}
             <ErrorMessage name="source" error={messageError} />
             <p className="text-xl my-2 mb-4">{`$${currentAccount?.balance}`}</p>
             {sucessTransaction && (

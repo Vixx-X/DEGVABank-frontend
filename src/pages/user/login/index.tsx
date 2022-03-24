@@ -1,5 +1,5 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Advanced";
 import { SERVER_URLS } from "@config";
 import { AuthContext } from "@contexts/AuthContext";
@@ -32,7 +32,6 @@ const LogIn: NextPage = () => {
       const next = router.query?.next as string;
       router.push(next ? filterOpenRedirect(next) : URL_HOME);
     } catch (error) {
-      console.log(error);
       setMessageError(error);
     } finally {
       setLoading(false);

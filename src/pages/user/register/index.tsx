@@ -1,5 +1,5 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Advanced";
 import { SERVER_URLS } from "@config";
 import { postRegisterUser } from "@fetches/users";
@@ -74,7 +74,6 @@ const Registro: NextPage = () => {
       router.push(URL_LOGIN);
     } catch (e) {
       // messageError = e;
-      console.log(e, "holaaa");
       setMessageError(e);
     } finally {
       setLoading(false);

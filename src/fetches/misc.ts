@@ -1,5 +1,4 @@
 import { API_URLS, AUTH_URLS, REFRESH_MAX_AGE } from "@config";
-
 import Cookies from "cookies";
 
 const { URL_USER_PROFILE } = API_URLS;
@@ -59,7 +58,6 @@ export async function getUserContext({ access }: any) {
       user,
     };
   } catch (error) {
-    console.log(error);
     return {};
   }
 }

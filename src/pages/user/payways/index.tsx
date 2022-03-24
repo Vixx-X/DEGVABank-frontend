@@ -1,16 +1,18 @@
 import Button from "@components/Globals/Button/Button";
+import DataTable from "@components/Globals/DataTable";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
 import Modal from "@components/Globals/Modal";
 import Actions from "@components/PayGateWay/Actions";
-import DataTable from "@components/Globals/DataTable";
 import PayWayForm from "@components/PayGateWay/Forms/payway";
 import { API_URLS } from "@config";
 import { getListPaywayDataWithURL } from "@fetches/users";
 import { useSWRAuth } from "@hooks/useSWRAuth";
 import useToggle from "@hooks/useToggle";
+import { makeUrl } from "@utils/makeUrl";
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 
 const { URL_USER_PAYWAY_APPS } = API_URLS;
@@ -25,10 +27,16 @@ const HEADERS = {
 };
 
 const PasarelaOptions: NextPage = () => {
+  const router = useRouter();
+  const page = parseInt((router?.query?.page as string) ?? 1, 10);
+
+  const paramsURL: any = {};
+
   const { data, error, mutate } = useSWRAuth(
-    URL_USER_PAYWAY_APPS,
+    makeUrl(URL_USER_PAYWAY_APPS, { ...paramsURL, offset: (page - 1) * 10 }),
     getListPaywayDataWithURL
   );
+
   const [payWays, setPayWays] = useState<any[]>([]);
 
   const loading = useMemo(() => !data && !error, [data, error]);
@@ -58,23 +66,34 @@ const PasarelaOptions: NextPage = () => {
           </Button>
         </div>
         <div className="mt-8">
-          {!loading ? (
-            payWays?.length > 0 ? (
-              <>
-                <p className="text-darkprimary font-bold uppercase my-4">
-                  Lista de pasarela de pago habilitadas
-                </p>
-                <DataTable headers={HEADERS} items={payWays} />
-              </>
-            ) : (
-              <p>
-                {" "}
-                No posee ninguna pasarela con nosotros, creala{" "}
-                <Link href="#create-modal">aquí</Link>.
-              </p>
-            )
-          ) : (
+          {loading ? (
             <Loading />
+          ) : payWays?.length > 0 ? (
+            <div className="w-full">
+              <DataTable headers={HEADERS} items={payWays} />
+              <div className="mt-3 w-full flex justify-end gap-2">
+                {page > 1 && (
+                  <div className="justify-self-start">
+                    <Link passHref href={`?page=${page - 1}`}>
+                      <Button>Anterior</Button>
+                    </Link>
+                  </div>
+                )}
+                {page < data.count / 10 && (
+                  <div className="justify-self-end">
+                    <Link passHref href={`?page=${page + 1}`}>
+                      <Button>Siguiente</Button>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <p>
+              {" "}
+              No posee ninguna pasarela con nosotros, creala{" "}
+              <Link href="#create-modal">aquí</Link>.
+            </p>
           )}
         </div>
         <Modal isOpen={openModal} setIsOpen={toggleModal}>

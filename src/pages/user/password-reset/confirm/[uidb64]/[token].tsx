@@ -1,7 +1,7 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
+import SuccessMessage from "@components/Globals/Alerts/SuccessMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Advanced";
-import SuccessMessage from "@components/Globals/SuccessMessage";
 import { API_URLS, SERVER_URLS } from "@config";
 import { postResetPassWord } from "@fetches/users";
 import { makeUrl } from "@utils/makeUrl";
@@ -181,7 +181,6 @@ export async function getServerSideProps({ params }: any) {
       },
     };
   } catch (error) {
-    console.log(error);
     return {};
   }
 }

@@ -30,8 +30,6 @@ const Transaction: NextPage = () => {
   const router = useRouter();
   const page = parseInt((router?.query?.page as string) ?? 1, 10);
 
-  console.log("Page", page);
-
   const handleCalendarButton1 = (date: string) => {
     setCalendarButton1(date);
   };
@@ -39,15 +37,12 @@ const Transaction: NextPage = () => {
     setCalendarButton2(date);
   };
   const handleSubmitSearchBar = (data: string) => {
-    console.log("Voy a buscar ", data);
     setparamsURL({
       search: data,
     });
   };
 
   const handleOrderClick = (attr: string) => {
-    console.log("Click en:", attr);
-
     setparamsURL({
       ordering: attr,
     });
@@ -71,8 +66,6 @@ const Transaction: NextPage = () => {
 
   useEffect(() => {
     if (calendarButton1 !== "" && calendarButton2 !== "") {
-      console.log("1", calendarButton1);
-      console.log("2", calendarButton2);
       setparamsURL({
         min_date: calendarButton1,
         max_date: calendarButton2,
@@ -80,20 +73,12 @@ const Transaction: NextPage = () => {
     }
   }, [calendarButton1, calendarButton2]);
 
-  useEffect(() => {
-    console.log("return data", data);
-  }, [data]);
-
   return (
     <MainLayout activate="movements">
-      <div className="flex justify-between">
-        <div className="flex">
-          <div className="mx-2">
-            <CalendarButton onchange={handleCalendarButton1} />
-          </div>
-          <div className="mx-2">
-            <CalendarButton onchange={handleCalendarButton2} />
-          </div>
+      <div className="flex justify-between mb-4 flex-col md:flex-row">
+        <div className="flex w-full md:w-fit gap-x-4 mb-4 md:mb-0">
+          <CalendarButton onchange={handleCalendarButton1} id={1} />
+          <CalendarButton onchange={handleCalendarButton2} id={2} />
         </div>
         <SearchBar onsubmit={handleSubmitSearchBar} />
       </div>

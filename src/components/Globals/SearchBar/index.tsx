@@ -7,12 +7,11 @@ interface SearchBarProps {
 const SearchBar = ({ onsubmit }: SearchBarProps) => {
   // const inputSearch = useRef<any>(null);
 
-  const [searchWord,setSearchWord] = useState("")
+  const [searchWord, setSearchWord] = useState("");
 
-  const handleChangeInpurSearch = (event:any) => {
-    setSearchWord(event.target.value)
-    console.log(event.target.value)
-  }
+  const handleChangeInpurSearch = (event: any) => {
+    setSearchWord(event.target.value);
+  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();

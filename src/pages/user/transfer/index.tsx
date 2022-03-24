@@ -69,7 +69,6 @@ const Transfer: NextPage = () => {
   }, [ITEMS_BILLS]);
 
   const handleSubmit = async (data: TransferForm) => {
-    console.log("Data ", data);
     setLoading(true);
     const transfer = {
       source: data.source,
@@ -78,13 +77,11 @@ const Transfer: NextPage = () => {
       amount: data.amount,
       reason: data.reason,
     };
-    console.log("Transfer", transfer);
     try {
       await postTransfer(transfer);
       setSucess(true);
     } catch (e) {
       setMessageError(e);
-      console.log("errores", messageError);
     } finally {
       setLoading(false);
     }
@@ -100,7 +97,6 @@ const Transfer: NextPage = () => {
   };
 
   const handleCancel = () => {
-    console.log("Cancelar !");
     setIsDisplayConfirmTransaction(false);
   };
 
@@ -113,9 +109,7 @@ const Transfer: NextPage = () => {
           <Formik
             initialValues={initialValue}
             onSubmit={(values: TransferForm) => {
-              // console.log("OnSubmit",values)
               setvaluesConfirmTrasaction(values);
-              console.log("Formik", values);
               setIsDisplayConfirmTransaction(true);
               // handleSubmit(values);
             }}

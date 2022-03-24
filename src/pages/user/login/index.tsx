@@ -32,7 +32,6 @@ const LogIn: NextPage = () => {
       const next = router.query?.next as string;
       router.push(next ? filterOpenRedirect(next) : URL_HOME);
     } catch (error) {
-      console.log(error);
       setMessageError(error);
     } finally {
       setLoading(false);

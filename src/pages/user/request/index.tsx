@@ -58,7 +58,6 @@ const Transaction: NextPage = () => {
       // setSucess(true);
     } catch (e) {
       setMessageError(e);
-      console.log("errores", e);
     } finally {
       // setLoading(false);
     }
@@ -75,7 +74,6 @@ const Transaction: NextPage = () => {
         <Formik
           initialValues={initialValue}
           onSubmit={(values: RequestForm) => {
-            alert(values);
             handleSubmit(values);
           }}
         >
@@ -162,9 +160,7 @@ const Transaction: NextPage = () => {
       </div>
 
       <div className="mt-8">
-        <h3
-          className="my-4 text-darkprimary font-bold uppercase"
-        >
+        <h3 className="my-4 text-darkprimary font-bold uppercase">
           Información de peticiones.
         </h3>
         {data?.results && data.results.length > 0 ? (

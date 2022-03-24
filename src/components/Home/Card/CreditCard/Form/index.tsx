@@ -48,7 +48,6 @@ const PayCreditCardForm = ({
       setSucess(true);
     } catch (e) {
       setMessageError(e);
-      console.log("errores", messageError);
     } finally {
       setLoading(false);
     }
@@ -68,7 +67,6 @@ const PayCreditCardForm = ({
       initialValues={{ account: accounts[0].id }}
       onSubmit={(values: AccountForm) => {
         handleSubmit(values);
-        alert(JSON.stringify(values, null, 2));
       }}
     >
       {({ handleChange }) => (

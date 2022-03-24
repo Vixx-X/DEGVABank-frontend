@@ -11,20 +11,20 @@ interface DirectionForm {
   date_of_birth: Date;
   typeIdentification: string;
   identificationValue: number;
-  street:String;
+  street: String;
 }
 
 const Direction: NextPage = () => {
-  const initialValue:DirectionForm = {
+  const initialValue: DirectionForm = {
     direction: "",
     city: "",
     state: "",
     postal_code: 0,
-    date_of_birth: new Date('01-01-1997'),
+    date_of_birth: new Date("01-01-1997"),
     typeIdentification: "",
     identificationValue: 0,
-    street:""
-  }
+    street: "",
+  };
 
   return (
     <MainLayout>
@@ -35,7 +35,6 @@ const Direction: NextPage = () => {
           { setSubmitting }: FormikHelpers<DirectionForm>
         ) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
           }, 500);
         }}
@@ -119,7 +118,7 @@ const Direction: NextPage = () => {
                     Tipo de identificación
                   </label>
                   <Field
-                  as="select"
+                    as="select"
                     id="idType"
                     className="form-select appearance-none block w-full px-3 py-2 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     name="typeIdentification"
@@ -185,10 +184,10 @@ const Direction: NextPage = () => {
               </Button>
             </div>
             {isSubmitting && (
-                <div className="relative w-full bg-gray-200 rounded mt-4">
-                  <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>
-                </div>
-              )}
+              <div className="relative w-full bg-gray-200 rounded mt-4">
+                <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>
+              </div>
+            )}
           </Form>
         )}
       </Formik>

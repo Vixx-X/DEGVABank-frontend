@@ -79,7 +79,6 @@ const PayWayForm = ({
         }
       }
       onSubmit={(values: PasarelaForm) => {
-        alert(JSON.stringify(values, null, 2));
         handleSubmitPayway(values);
       }}
     >

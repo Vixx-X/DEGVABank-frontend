@@ -181,7 +181,6 @@ export async function getServerSideProps({ params }: any) {
       },
     };
   } catch (error) {
-    console.log(error);
     return {};
   }
 }

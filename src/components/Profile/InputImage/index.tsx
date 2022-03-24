@@ -9,7 +9,6 @@ const InputImage = ({ initialImage }: InputImageProps) => {
   const [image, setImage] = useState(initialImage);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      console.log("Imagen!", URL.createObjectURL(event.target.files[0]));
       setImage(URL.createObjectURL(event.target.files[0]));
     }
     return;

@@ -29,7 +29,6 @@ const CountdownTimer = ({ targetDate, mode, fun }: any) => {
     if (mode === "payway") {
       history.back();
     } else {
-      console.log("Me sali sin irme pa atras")
       fun();
     }
   }

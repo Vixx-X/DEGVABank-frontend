@@ -74,7 +74,6 @@ const Registro: NextPage = () => {
       router.push(URL_LOGIN);
     } catch (e) {
       // messageError = e;
-      console.log(e, "holaaa");
       setMessageError(e);
     } finally {
       setLoading(false);

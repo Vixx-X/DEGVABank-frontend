@@ -22,7 +22,8 @@ const {
   URL_PASSWORD_RESET,
   URL_PASSWORD_RESET_CONFIRM,
   URL_CHANGE_PASSWORD,
-  URL_OTP_REQUEST
+  URL_OTP_REQUEST,
+  URL_CHANGE_EMAIL,
 } = API_URLS;
 
 export async function postUserAccont(auth: string, _data: any) {
@@ -336,6 +337,22 @@ export async function GenerateOTP(auth: string, _data: any) {
 export async function ChangePassword(auth: string, _data: any) {
   const resp = await fetch(
     URL_CHANGE_PASSWORD,
+    makeFetchOption(
+      {
+        method: "POST",
+        body: stringify(_data),
+      },
+      auth
+    )
+  );
+  await assertApiError(resp);
+  const data = await resp.json();
+  return data;
+}
+
+export async function ChangeEmail(auth: string, _data: any) {
+  const resp = await fetch(
+    URL_CHANGE_EMAIL,
     makeFetchOption(
       {
         method: "POST",

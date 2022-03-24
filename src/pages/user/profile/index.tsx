@@ -2,13 +2,16 @@ import Button from "@components/Globals/Button/Button";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
 import Modal from "@components/Globals/Modal";
+import FormChangeEmail from "@components/Profile/FormChangeEmail";
 import FormChangePassword from "@components/Profile/FormChangePassword";
 import InputImage from "@components/Profile/InputImage";
 import { UserContext } from "@contexts/UserContext";
+import { GenerateOTP } from "@fetches/users";
+import { useFetchCallback } from "@hooks/useFetchCallback";
 import DEFAULT_USER_IMAGE from "@public/defaul_user.png";
 import { Formik, Form, Field, FormikHelpers } from "formik";
 import type { NextPage } from "next";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { User } from "user";
 
 const Profile: NextPage = () => {
@@ -16,13 +19,46 @@ const Profile: NextPage = () => {
   const [displayInputUserName, setdisplayInputUserName] = useState(false);
   const [displayInputEmail, setdisplayInputEmail] = useState(false);
   const [displayChangePassword, setDisplayChangePassword] = useState(false);
+  const [userFormState, setUserFormState] = useState({
+    username: user?.username,
+    email: user?.email,
+  });
+  const [responseOTP, setResponseOTP] = useState({} as any);
+  const [messageError, setMessageError] = useState<any>();
+
+  const generateOTP = useFetchCallback(GenerateOTP);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setUserFormState({
+        username: user.username,
+        email: user.email,
+      });
+    }
+  }, [isLoading, user]);
+
+  const handleFormChange = (e: any, name: any) => {
+    setUserFormState({
+      ...userFormState,
+      [name]: e.target.value,
+    });
+  };
 
   const handleChangeUserName = () => {
     setdisplayInputUserName(!displayInputUserName);
   };
 
-  const handleChangeEmail = () => {
-    setdisplayInputEmail(true);
+  const handleChangeEmail = async () => {
+    try {
+      const response = await generateOTP({
+        email: userFormState.email,
+      });
+      console.log(response);
+      setResponseOTP(response);
+      setdisplayInputEmail(true);
+    } catch (e: any) {
+      setMessageError(e);
+    }
   };
 
   const handleChangePassword = () => {
@@ -43,7 +79,7 @@ const Profile: NextPage = () => {
             }, 500);
           }}
         >
-          {({ isSubmitting, values }) => (
+          {({ isSubmitting, values, handleChange }) => (
             <Form>
               <div className="flex items-start mt-5 flex-col md:justify-between md:flex-row ">
                 <div className="w-full md:basis-1/2 rounded overflow-hidden md:shadow-lg p-8">
@@ -68,6 +104,10 @@ const Profile: NextPage = () => {
                           id="username"
                           className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           placeholder="Username"
+                          onChange={(e: any) => {
+                            handleChange(e);
+                            handleFormChange(e, "username");
+                          }}
                         />
                       )}
                       <p
@@ -154,18 +194,21 @@ const Profile: NextPage = () => {
                         
                       )} */}
                       <Field
-                          type="text"
-                          label="Email"
-                          name="email"
-                          id="email"
-                          className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                          placeholder="Correo Electronico"
-                        />
-                         <Button type="button" onClick={handleChangeEmail}>
-                      <p>Guardar</p>
-                    </Button>
+                        type="text"
+                        label="Email"
+                        name="email"
+                        id="email"
+                        className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Correo Electronico"
+                        onChange={(e: any) => {
+                          handleChange(e);
+                          handleFormChange(e, "email");
+                        }}
+                      />
+                      <Button type="button" onClick={handleChangeEmail}>
+                        <p>Guardar</p>
+                      </Button>
                     </div>
-                   
                   </div>
                   <div className="w-full rounded overflow-hidden md:shadow-lg p-8">
                     <p className="text-darkprimary font-bold text-lg uppercase my-4">
@@ -199,11 +242,16 @@ const Profile: NextPage = () => {
           isOpenModal={setDisplayChangePassword}
         ></FormChangePassword>
       </Modal>
-      <Modal
-        isOpen={displayInputEmail}
-        setIsOpen={setdisplayInputEmail}
-      >
-        
+      <Modal isOpen={displayInputEmail} setIsOpen={setdisplayInputEmail}>
+        {responseOTP && responseOTP?.device && responseOTP?.expire && ( 
+          <>
+            <FormChangeEmail
+              isOpenModal={setdisplayInputEmail}
+              newEmail={userFormState.email}
+              response={responseOTP}
+            />
+          </>
+        )}
       </Modal>
     </MainLayout>
   );

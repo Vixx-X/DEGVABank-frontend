@@ -24,7 +24,6 @@ const ShowCounter = ({ minutes, seconds, mode }: any) => {
 
 const CountdownTimer = ({ targetDate, mode, fun }: any) => {
   const [days, hours, minutes, seconds] = useCountdown(targetDate);
-
   if (days + hours + minutes + seconds <= 0) {
     if (mode === "payway") {
       history.back();

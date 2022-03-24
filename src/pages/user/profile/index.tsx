@@ -22,7 +22,7 @@ const Profile: NextPage = () => {
   };
 
   const handleChangeEmail = () => {
-    setdisplayInputEmail(!displayInputEmail);
+    setdisplayInputEmail(true);
   };
 
   const handleChangePassword = () => {
@@ -101,7 +101,7 @@ const Profile: NextPage = () => {
                       {/* <option value="english">Ingles</option> */}
                     </Field>
                   </div>
-                  <div className="flex items-center justify-between m-3">
+                  {/* <div className="flex items-center justify-between m-3">
                     <label
                       className="block text-sm xl:text-lg mb-2 text-dark"
                       htmlFor="username"
@@ -120,7 +120,7 @@ const Profile: NextPage = () => {
                       <option value="clmb">Colombia</option>
                       <option value="ecdr">Ecuador</option>
                     </Field>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="w-full md:basis-[45%]">
                   <div className="w-full rounded overflow-hidden md:shadow-lg p-8">
@@ -128,15 +128,15 @@ const Profile: NextPage = () => {
                       <p className="text-darkprimary font-bold text-lg uppercase mt-4">
                         Correo electrónico
                       </p>
-                      <p
+                      {/* <p
                         className="cursor-pointer text-primary"
                         onClick={handleChangeEmail}
                       >
                         Cambiar Correo
-                      </p>
+                      </p> */}
                     </div>
-                    <div className="flex justify-between items-center m-3">
-                      {!displayInputEmail ? (
+                    <div className="flex flex-col gap-3 items-start m-3">
+                      {/* {!displayInputEmail ? (
                         <label
                           className="block text-sm xl:text-lg mb-2 text-dark"
                           htmlFor="username"
@@ -152,11 +152,21 @@ const Profile: NextPage = () => {
                           className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           placeholder="Correo Electronico"
                         />
-                      )}
-                    </div>
-                    <Button type="submit">
+                        
+                      )} */}
+                      <Field
+                          type="text"
+                          label="Email"
+                          name="email"
+                          id="email"
+                          className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                          placeholder="Correo Electronico"
+                        />
+                         <Button type="button" onClick={handleChangeEmail}>
                       <p>Guardar</p>
                     </Button>
+                    </div>
+                   
                   </div>
                   <div className="w-full rounded overflow-hidden md:shadow-lg p-8">
                     <p className="text-darkprimary font-bold text-lg uppercase my-4">
@@ -189,6 +199,12 @@ const Profile: NextPage = () => {
         <FormChangePassword
           isOpenModal={setDisplayChangePassword}
         ></FormChangePassword>
+      </Modal>
+      <Modal
+        isOpen={displayInputEmail}
+        setIsOpen={setdisplayInputEmail}
+      >
+        
       </Modal>
     </MainLayout>
   );

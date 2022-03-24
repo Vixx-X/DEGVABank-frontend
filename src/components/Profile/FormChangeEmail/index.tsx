@@ -1,6 +1,6 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
+import SuccessMessage from "@components/Globals/Alerts/SuccessMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
-import SuccessMessage from "@components/Globals/SuccessMessage";
 import ShowCounter from "@components/PayGateWay/CountDownTimer/index";
 import { GenerateOTP, ChangeEmail } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
@@ -20,7 +20,7 @@ const FormChangeEmail = ({
 }: FormChangePasswordProps) => {
   const [sucessTransaction, setSucess] = useState<boolean>(false);
   const [showResend, setShowResend] = useState<boolean>(false);
-//   const [responseOTP, setResponseOTP] = useState({ response } as any);
+  //   const [responseOTP, setResponseOTP] = useState({ response } as any);
   const [messageError, setMessageError] = useState<any>();
 
   const generateOTP = useFetchCallback(GenerateOTP);

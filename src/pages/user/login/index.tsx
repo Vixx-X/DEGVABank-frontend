@@ -95,20 +95,14 @@ const LogIn: NextPage = () => {
                 <ErrorMessage name="password" error={messageError} />
               </div>
             </div>
-            {/* {messageError && messageError.info && messageError.info.detail && (
-              <div className="bg-red-400 border border-red-700 w-full p-3 my-3 py-2 rounded-lg text-sm font-normal">
-                <strong>Error: </strong>
-                {messageError.info.detail && (
-                  <p>{`User Name: ${messageError.info.detail}`}</p>
-                )}
-                {messageError.info.detail.username && (
-                  <p>{`User Name: ${messageError.info.detail.username[0]}`}</p>
-                )}
-                {messageError.info.detail.password && (
-                  <p>{`Password: ${messageError.info.detail.password[0]}`}</p>
-                )}
-              </div>
-            )} */}
+            {messageError &&
+              messageError.info &&
+              typeof messageError.info.detail === "string" && (
+                <div className="bg-red-400 border border-red-700 w-full p-3 my-3 py-2 rounded-lg text-sm font-normal">
+                  <strong>Error: </strong>
+                  {messageError.info.detail}
+                </div>
+              )}
             <div className="flex justify-center">
               <Button
                 type="submit"
@@ -117,6 +111,7 @@ const LogIn: NextPage = () => {
                 <p>Iniciar Sesion</p>
               </Button>
             </div>
+
             {loading && (
               <div className="relative w-full bg-gray-200 rounded mt-4">
                 <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>

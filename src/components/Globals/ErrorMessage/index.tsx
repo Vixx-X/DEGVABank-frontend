@@ -13,7 +13,7 @@ const ErrorMessage = ({ name, error, embed = false }: ErrorProps) => {
         <div className="bg-red-400 border border-red-700 w-full p-3 my-3 py-2 rounded-lg text-sm font-normal">
           <strong>Error: </strong>
           {!embed
-            ? error.info[obj].map((element: string, index: number) => (
+            ? error.info.detail[obj].map((element: string, index: number) => (
                 <span key={index}>{element}</span>
               ))
             : error.info.detail[obj][obj2].map(

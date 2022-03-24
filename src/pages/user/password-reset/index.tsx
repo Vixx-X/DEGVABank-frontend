@@ -1,11 +1,10 @@
 import Button from "@components/Globals/Button/Button";
+import ErrorMessage from "@components/Globals/ErrorMessage";
 import MainLayout from "@components/Globals/Layout/MainLayout/Advanced";
-import { SERVER_URLS } from "@config";
+import { postsendEmailResetPassWord } from "@fetches/users";
 import { Formik, Form, Field } from "formik";
 import type { NextPage } from "next";
 import { useState } from "react";
-
-const { URL_PASSWORD_RESET } = SERVER_URLS;
 
 interface PasswordResetForm {
   email: string;
@@ -13,32 +12,16 @@ interface PasswordResetForm {
 
 const PasswordReset: NextPage = () => {
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
-  const [messageError, setMessageError] = useState("");
+  const [messageError, setMessageError] = useState<any>("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async ({ email }: PasswordResetForm) => {
+  const handleSubmit = async (email: PasswordResetForm) => {
     setLoading(true);
     try {
-      const data = await fetch(URL_PASSWORD_RESET, {
-        method: "POST",
-        mode: "cors", // no-cors, *cors, same-origin
-        credentials: "include", // include, *same-origin, omit, include
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-      const dataJson = await data.json();
-      if (data.ok) {
-        setSuccess(true);
-      } else {
-        setMessageError(dataJson);
-        setError(true);
-      }
-    } catch (error) {
-      setError(true);
-      setMessageError("Hay un error con la página");
+      await postsendEmailResetPassWord(email);
+      setSuccess(true);
+    } catch (e) {
+      setMessageError(e);
     } finally {
       setLoading(false);
     }
@@ -92,6 +75,7 @@ const PasswordReset: NextPage = () => {
                       placeholder="Email"
                     />
                   </div>
+                  <ErrorMessage name="email" error={messageError} />
                   <p className="text-light mb-4">
                     Por favor ingresar su correo electronico. Recibirás via
                     correo un link para crear una nueva contraseña
@@ -102,6 +86,7 @@ const PasswordReset: NextPage = () => {
                 <Button
                   type="submit"
                   className="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full"
+                  onClick={handleSubmit}
                 >
                   <p>Enviar</p>
                 </Button>
@@ -111,11 +96,6 @@ const PasswordReset: NextPage = () => {
                   <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>
                 </div>
               )}
-              {error ? (
-                <div className="bg-red-400 border border-red-700 w-96 p-3 my-3 py-3 rounded-lg text-sm font-normal">
-                  <strong>Error: </strong> {messageError}
-                </div>
-              ) : null}
             </Form>
           </Formik>
         )}

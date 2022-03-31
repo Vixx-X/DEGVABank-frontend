@@ -17,7 +17,7 @@ const Header = ({ activate = "home" }: headerProps) => {
   const { revokeToken } = useContext(AuthContext);
   return (
     <header
-      className={`bg-[url('../public/backgroundPage2.png')] bg-cover bg-center relative h-[11rem]`}
+      className={`bg-[url('../public/backgroundPage2.png')] bg-cover bg-center relative h-[8rem] md:h-[11rem]`}
     >
       <div className="absolute grow bg-black/60 w-full h-full">
         <div className="xl:w-[70rem] max-w-[90%] mx-auto py-2 flex justify-between items-center">
@@ -45,7 +45,7 @@ const Header = ({ activate = "home" }: headerProps) => {
             </Link>
           </div>
         </div>
-        <div className="absolute bg-black/20 w-full h-20 top-24 flex">
+        <div className="absolute bg-black/20 w-full h-12 bottom-0 md:h-20 flex">
           <NavBar activate={activate} />
         </div>
       </div>

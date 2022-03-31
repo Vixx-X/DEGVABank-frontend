@@ -1,5 +1,5 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import { API_URLS, SERVER_URLS } from "@config";
 import { postPayway, putPayway } from "@fetches/users";
 import { getAccountDataWithURL } from "@fetches/users";
@@ -74,12 +74,11 @@ const PayWayForm = ({
           app_name: "",
           backend: "",
           success: "",
-          fail: "",
+          fail: window.location.href,
           account: "",
         }
       }
       onSubmit={(values: PasarelaForm) => {
-        alert(JSON.stringify(values, null, 2));
         handleSubmitPayway(values);
       }}
     >
@@ -190,24 +189,6 @@ const PayWayForm = ({
                 disabled={!editable}
               />
               <ErrorMessage name="success" error={messageError} />
-            </div>
-            <div>
-              <label
-                className="block text-sm xl:text-md pt-5 font-bold mb-2 text-dark"
-                htmlFor="fail"
-              >
-                URL para redireccionar en caso fallido
-              </label>
-              <Field
-                name="fail"
-                className="appearance-none rounded w-full py-3 
-          border-gray-300 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="fail"
-                type="text"
-                placeholder="Colocar Url"
-                disabled={!editable}
-              />
-              <ErrorMessage name="fail" error={messageError} />
             </div>
           </div>
         </div>

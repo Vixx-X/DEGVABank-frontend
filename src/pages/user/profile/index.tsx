@@ -2,13 +2,16 @@ import Button from "@components/Globals/Button/Button";
 import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
 import Modal from "@components/Globals/Modal";
+import FormChangeEmail from "@components/Profile/FormChangeEmail";
 import FormChangePassword from "@components/Profile/FormChangePassword";
 import InputImage from "@components/Profile/InputImage";
 import { UserContext } from "@contexts/UserContext";
+import { GenerateOTP } from "@fetches/users";
+import { useFetchCallback } from "@hooks/useFetchCallback";
 import DEFAULT_USER_IMAGE from "@public/defaul_user.png";
 import { Formik, Form, Field, FormikHelpers } from "formik";
 import type { NextPage } from "next";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { User } from "user";
 
 const Profile: NextPage = () => {
@@ -16,18 +19,50 @@ const Profile: NextPage = () => {
   const [displayInputUserName, setdisplayInputUserName] = useState(false);
   const [displayInputEmail, setdisplayInputEmail] = useState(false);
   const [displayChangePassword, setDisplayChangePassword] = useState(false);
+  const [userFormState, setUserFormState] = useState({
+    username: user?.username,
+    email: user?.email,
+  });
+  const [responseOTP, setResponseOTP] = useState({} as any);
+  const [messageError, setMessageError] = useState<any>();
+
+  const generateOTP = useFetchCallback(GenerateOTP);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setUserFormState({
+        username: user.username,
+        email: user.email,
+      });
+    }
+  }, [isLoading, user]);
+
+  const handleFormChange = (e: any, name: any) => {
+    setUserFormState({
+      ...userFormState,
+      [name]: e.target.value,
+    });
+  };
 
   const handleChangeUserName = () => {
     setdisplayInputUserName(!displayInputUserName);
   };
 
-  const handleChangeEmail = () => {
-    setdisplayInputEmail(!displayInputEmail);
+  const handleChangeEmail = async () => {
+    try {
+      const response = await generateOTP({
+        email: userFormState.email,
+      });
+      console.log(response);
+      setResponseOTP(response);
+      setdisplayInputEmail(true);
+    } catch (e: any) {
+      setMessageError(e);
+    }
   };
 
   const handleChangePassword = () => {
     setDisplayChangePassword(true);
-    console.log("Cambiar contraseña");
   };
 
   return (
@@ -39,12 +74,11 @@ const Profile: NextPage = () => {
           initialValues={user}
           onSubmit={(values: User, { setSubmitting }: FormikHelpers<User>) => {
             setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
               setSubmitting(false);
             }, 500);
           }}
         >
-          {({ isSubmitting, values }) => (
+          {({ isSubmitting, values, handleChange }) => (
             <Form>
               <div className="flex items-start mt-5 flex-col md:justify-between md:flex-row ">
                 <div className="w-full md:basis-1/2 rounded overflow-hidden md:shadow-lg p-8">
@@ -69,6 +103,10 @@ const Profile: NextPage = () => {
                           id="username"
                           className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           placeholder="Username"
+                          onChange={(e: any) => {
+                            handleChange(e);
+                            handleFormChange(e, "username");
+                          }}
                         />
                       )}
                       <p
@@ -101,7 +139,7 @@ const Profile: NextPage = () => {
                       {/* <option value="english">Ingles</option> */}
                     </Field>
                   </div>
-                  <div className="flex items-center justify-between m-3">
+                  {/* <div className="flex items-center justify-between m-3">
                     <label
                       className="block text-sm xl:text-lg mb-2 text-dark"
                       htmlFor="username"
@@ -120,7 +158,7 @@ const Profile: NextPage = () => {
                       <option value="clmb">Colombia</option>
                       <option value="ecdr">Ecuador</option>
                     </Field>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="w-full md:basis-[45%]">
                   <div className="w-full rounded overflow-hidden md:shadow-lg p-8">
@@ -128,15 +166,15 @@ const Profile: NextPage = () => {
                       <p className="text-darkprimary font-bold text-lg uppercase mt-4">
                         Correo electrónico
                       </p>
-                      <p
+                      {/* <p
                         className="cursor-pointer text-primary"
                         onClick={handleChangeEmail}
                       >
                         Cambiar Correo
-                      </p>
+                      </p> */}
                     </div>
-                    <div className="flex justify-between items-center m-3">
-                      {!displayInputEmail ? (
+                    <div className="flex flex-col gap-3 items-start m-3">
+                      {/* {!displayInputEmail ? (
                         <label
                           className="block text-sm xl:text-lg mb-2 text-dark"
                           htmlFor="username"
@@ -152,11 +190,24 @@ const Profile: NextPage = () => {
                           className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           placeholder="Correo Electronico"
                         />
-                      )}
+                        
+                      )} */}
+                      <Field
+                        type="text"
+                        label="Email"
+                        name="email"
+                        id="email"
+                        className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Correo Electronico"
+                        onChange={(e: any) => {
+                          handleChange(e);
+                          handleFormChange(e, "email");
+                        }}
+                      />
+                      <Button type="button" onClick={handleChangeEmail}>
+                        <p>Guardar</p>
+                      </Button>
                     </div>
-                    <Button type="submit">
-                      <p>Guardar</p>
-                    </Button>
                   </div>
                   <div className="w-full rounded overflow-hidden md:shadow-lg p-8">
                     <p className="text-darkprimary font-bold text-lg uppercase my-4">
@@ -184,10 +235,22 @@ const Profile: NextPage = () => {
       <Modal
         isOpen={displayChangePassword}
         setIsOpen={setDisplayChangePassword}
+        widthModal="max-w-2xl"
       >
         <FormChangePassword
           isOpenModal={setDisplayChangePassword}
         ></FormChangePassword>
+      </Modal>
+      <Modal isOpen={displayInputEmail} setIsOpen={setdisplayInputEmail}>
+        {responseOTP && responseOTP?.device && responseOTP?.expire && ( 
+          <>
+            <FormChangeEmail
+              isOpenModal={setdisplayInputEmail}
+              newEmail={userFormState.email}
+              response={responseOTP}
+            />
+          </>
+        )}
       </Modal>
     </MainLayout>
   );

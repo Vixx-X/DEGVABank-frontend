@@ -3,20 +3,22 @@ import { useMemo } from "react";
 interface DataTableProps {
   headers: any;
   items: any;
-  handleOrderClick?:(atr:string)=>void;
+  handleOrderClick?: (atr: string) => void;
+  classText?: string;
 }
 
 const DataTable = ({
   headers: headerList,
   items: itemList,
-  handleOrderClick
+  handleOrderClick,
+  classText = "md:text-sm",
 }: DataTableProps) => {
   const attrs = useMemo(() => Object.keys(headerList), [headerList]);
   return (
     <>
       <div className="flex flex-col w-full">
         <div className="overflow-x-auto">
-          <div className="min-w-full">
+          <div className="min-w-full w-fit">
             <div className="overflow-hidden shadow-md sm:rounded-lg">
               <table className="min-w-full border shadow-xl p-1">
                 <thead className="border-b border-gray-300">
@@ -25,10 +27,10 @@ const DataTable = ({
                       <th
                         key={key}
                         scope="col"
-                        className="cursor-pointer py-2 px-2 sm:py-4 sm:px-8 text-xs tracking-wider text-left uppercase text-darkprimary font-montserrat"
-                        onClick={()=>{
-                          if(handleOrderClick){
-                            handleOrderClick(key)
+                        className="cursor-pointer py-3 px-2 sm:px-4 text-xs tracking-wider text-left uppercase text-darkprimary font-montserrat"
+                        onClick={() => {
+                          if (handleOrderClick) {
+                            handleOrderClick(key);
                           }
                         }}
                       >
@@ -43,9 +45,14 @@ const DataTable = ({
                       {attrs?.map((key: any, idx: number) => (
                         <td
                           key={`${index}-${idx}`}
-                          className="py-2 px-2 sm:py-4 sm:px-8 text-xs font-montserrat sm:text-sm whitespace-nowrap"
+                          className={`py-3 px-2  text-xs ${classText} font-montserrat whitespace-nowrap`}
                         >
-                          {element[key]}
+                          {
+                            key!=="date" && element[key].toLocaleString()
+                          }
+                          {
+                            key==="date" && element[key].substring(0, 10)
+                          }
                         </td>
                       ))}
                     </tr>

@@ -136,9 +136,6 @@ def decrypt(msg):
               <li className="ml-6">
                 Ingresar un URL para redireccionar al cliente en caso exitoso.
               </li>
-              <li className="ml-6">
-                Ingresar un URL para redireccionar al cliente en caso fallido.
-              </li>
             </ul>
           </li>
 
@@ -176,16 +173,16 @@ def decrypt(msg):
                 Parametros obligatorios generales que debe incluir
                 <ul className="list-disc my-1">
                   <li className="ml-6">
-                    <code className="bg-gray-100">key:</code> deberá suministrar
-                    la clave pública asociada a su pasarela
+                    <code className="bg-gray-100">key (string):</code> deberá
+                    suministrar la clave pública asociada a su pasarela
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">order:</code> deberá
+                    <code className="bg-gray-100">order (string):</code> deberá
                     suministrar la orden asociada a la compra en cuestión
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">reason:</code> deberá
-                    suministrar el motivo de compra.
+                    <code className="bg-gray-100">reason (string) :</code>{" "}
+                    deberá suministrar el motivo de compra.
                   </li>
                 </ul>
               </li>
@@ -193,12 +190,23 @@ def decrypt(msg):
                 Parametros opcionales generales que puede incluir
                 <ul className="list-disc my-1">
                   <li className="ml-6">
-                    <code className="bg-gray-100">tax:</code> si existe un
-                    impuesto general de la compra que se deba incluir
+                    <code className="bg-gray-100">tax (float) :</code> si existe
+                    un impuesto general de la compra que se deba incluir
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">logotype:</code> imagen
-                    asociada al logotipo de su aplicación.
+                    <code className="bg-gray-100">logotype (string): </code>{" "}
+                    imagen asociada al logotipo de su aplicación.
+                  </li>
+                  {/* <li className="ml-6">
+                    <code className="bg-gray-100">windowclose=true (boolean): </code> si se quiere
+                    cerrar la ventana en vez de redirigir a una página aparte setear
+                    el parámetro de esa manera
+                  </li> */}
+                  <li className="ml-6">
+                    <code className="bg-gray-100">timer (float): </code> tiempo
+                    limitante (en minutos) para que su orden se procese (de
+                    vencer ese tiempo se redirigirá a la página anterior). Parte
+                    entera minutos, parte decimal segundos.
                   </li>
                 </ul>
               </li>
@@ -206,19 +214,19 @@ def decrypt(msg):
                 Por producto se tienen los siguientes datos:
                 <ul className="list-disc my-1">
                   <li className="ml-6">
-                    <code className="bg-gray-100">name:</code> nombre de
-                    producto
+                    <code className="bg-gray-100">name: (string)</code> nombre
+                    de producto
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">image:</code> imagen asociada
-                    al producto
+                    <code className="bg-gray-100">image: (string)</code> imagen
+                    asociada al producto
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">amount:</code> precio del
-                    producto por unidad
+                    <code className="bg-gray-100">amount: (float)</code> precio
+                    del producto por unidad
                   </li>
                   <li className="ml-6">
-                    <code className="bg-gray-100">num:</code> cantidad de
+                    <code className="bg-gray-100">num: (int)</code> cantidad de
                     unidades a comprar de ese producto
                   </li>
                 </ul>
@@ -231,6 +239,10 @@ def decrypt(msg):
                   antes señalados, es necesario de todas maneras incluirlo, solo
                   que sin colocarle el valor para no perturbar la asociación de
                   cada producto con sus correspondientes atributos.
+                </p>
+                <p>
+                  Los tipos de datos son meramente intuitos para saber cómo se
+                  manejarán internamente los datos en nuestra pasarela de pagos.
                 </p>
                 <p className="my-4">
                   Los parametros <code>name</code> y <code>amount</code> son
@@ -330,7 +342,7 @@ def decrypt(msg):
                   </Listbox>
                 </div>
               </div>
-              <div className="h-96">
+              <div className="h-[22rem]">
                 <CodeFormatter language={selectedSnippet} style={a11yDark}>
                   {snippets[selectedSnippet]}
                 </CodeFormatter>
@@ -351,9 +363,9 @@ gAAAAABiIGAW1jFK3d2fMZCScoejIlkm1VOqfrBpmzfcB4SDxiOZQi5kHZPA4jsMvdtIMof37W7Trv-v
             que:
             <CodeFormatter language="json" style={a11yDark}>
               {`{
-  "order": "number",
+  "order": "string",
   "reason": "string",
-  "amount": "string",
+  "amount": "float",
   "status": "APPROVED|DENIED",
 }`}
             </CodeFormatter>

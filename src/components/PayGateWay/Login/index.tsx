@@ -1,5 +1,5 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import Logotype from "@components/Globals/Logotype";
 import { AuthContext } from "@contexts/AuthContext";
 import { Formik, Form, Field } from "formik";
@@ -42,7 +42,7 @@ const Login = ({ setComponent }: LoginProp) => {
 
   return (
     <>
-      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full xl:w-7/12">
+      <div className="rounded-2xl h-fit overflow-hidden shadow-lg p-4 md:p-8 w-full xl:w-7/12">
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}

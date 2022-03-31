@@ -1,12 +1,14 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import Logotype from "@components/Globals/Logotype";
 import { postPaywayCard } from "@fetches/users";
 import { Formik, Form, Field } from "formik";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 interface CreditCardProp {
   amount: string;
+  order: string;
   publicKey: string;
   reason: string;
   setComponent: any;
@@ -21,6 +23,7 @@ interface CreditCardForm {
 
 const CreditCard = ({
   amount,
+  order,
   publicKey,
   reason,
   setComponent,
@@ -28,12 +31,14 @@ const CreditCard = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [messageError, setMessageError] = useState<any>();
   const [sucessTransaction, setSucess] = useState<boolean>(false);
+  const router = useRouter();
 
   const handleSubmit = async (data: CreditCardForm) => {
     setLoading(true);
     const pay = {
       key: publicKey,
       amount: amount,
+      order: order,
       reason: reason,
       card: {
         number: data.number,
@@ -42,11 +47,11 @@ const CreditCard = ({
       },
     };
     try {
-      await postPaywayCard(pay);
+      const ret = await postPaywayCard(pay);
       setSucess(true);
+      router.push(ret.next);
     } catch (e) {
       setMessageError(e);
-      console.log("errores", e);
     } finally {
       setLoading(false);
     }
@@ -61,7 +66,7 @@ const CreditCard = ({
 
   return (
     <>
-      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full xl:w-7/12">
+      <div className="rounded-2xl h-fit overflow-hidden shadow-lg p-4 md:p-8 w-full xl:w-9/12">
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}
@@ -106,8 +111,7 @@ const CreditCard = ({
                   name="expiration_date"
                   className="shadow appearance-none border-gray-300 rounded-b py-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
                   id="expiration_date"
-                  type="date"
-                  placeholder="dd/mm"
+                  type="month"
                 />
                 <ErrorMessage
                   name="card.expiration_date"
@@ -152,6 +156,8 @@ const CreditCard = ({
                 <p>Pay ${amount}</p>
               </Button>
             </div>
+            <ErrorMessage name="non_field_errors" error={messageError} />
+            <ErrorMessage name="key" error={messageError} />
             <Button
               onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                 event.preventDefault();

@@ -1,11 +1,12 @@
+import ErrorMessage from "@components/Globals/Alerts/ErrorMessage";
 import Button from "@components/Globals/Button/Button";
-import ErrorMessage from "@components/Globals/ErrorMessage";
 import Logotype from "@components/Globals/Logotype";
 import { API_URLS } from "@config";
 import { getAccountDataWithURL, postPaywayAccount } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
 import { Formik, Form, Field } from "formik";
+import { useRouter } from "next/router";
 import { Key, useEffect, useState } from "react";
 
 const { URL_USER_ACCOUNTS } = API_URLS;
@@ -32,23 +33,8 @@ const Account = ({ order, amount, reason, publicKey }: AccountProp) => {
   const [currentAccount, setcurrentAccount] = useState<any>();
   const [loading, setLoading] = useState(true);
   const [messageError, setMessageError] = useState<any>();
-
+  const router = useRouter();
   const postPayWayAccountOption = useFetchCallback(postPaywayAccount);
-
-  useEffect(() => {
-    if (dataAccounts.data && dataAccounts.data.results) {
-      setAccounts(dataAccounts.data.results);
-      setLoading(false);
-    } else {
-      setLoading(true);
-    }
-  }, [dataAccounts]);
-
-  useEffect(() => {
-    if (accounts) {
-      setcurrentAccount(accounts[0]);
-    }
-  }, [accounts]);
 
   useEffect(() => {
     if (dataAccounts.data && dataAccounts.data.results) {
@@ -77,11 +63,11 @@ const Account = ({ order, amount, reason, publicKey }: AccountProp) => {
       },
     };
     try {
-      await postPayWayAccountOption(pay);
+      const ret = await postPayWayAccountOption(pay);
       setSucess(true);
+      router.push(ret.next);
     } catch (e) {
       setMessageError(e);
-      console.log("errores", e);
     } finally {
       setLoading(false);
     }
@@ -99,7 +85,7 @@ const Account = ({ order, amount, reason, publicKey }: AccountProp) => {
   };
   return (
     <>
-      <div className="rounded-2xl h-fit md:mx-10 overflow-hidden shadow-lg p-4 md:p-8 w-full xl:w-7/12">
+      <div className="rounded-2xl h-fit overflow-hidden shadow-lg p-4 md:p-8 w-full xl:w-7/12">
         <Logotype classnameBox="flex justify-center h-16" />
         <Formik
           initialValues={initialValue}
@@ -135,12 +121,20 @@ const Account = ({ order, amount, reason, publicKey }: AccountProp) => {
                       )
                     )}
                 </Field>
-                <p className="text-darkprimary mt-2">
-                  Saldo disponible en:{" "}
-                  <span className="text-gray-500">{currentAccount?.id}</span>
-                </p>
+                {currentAccount ? (
+                  <>
+                    <p className="text-darkprimary mt-2">
+                      Saldo disponible en:{" "}
+                      <span className="text-gray-500">{currentAccount.id}</span>
+                    </p>
+                    <p className="text-xl my-2 mb-4">{`$${currentAccount.balance}`}</p>
+                  </>
+                ) : (
+                  <p className="text-gray-400 my-4 italic">
+                    Por favor seleccionar una cuenta de donde debitar
+                  </p>
+                )}
                 <ErrorMessage name="account.number" error={messageError} />
-                <p className="text-xl my-2 mb-4">{`$${currentAccount?.balance}`}</p>
                 {sucessTransaction && (
                   <div
                     className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"

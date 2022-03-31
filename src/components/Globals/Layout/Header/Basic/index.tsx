@@ -11,7 +11,7 @@ interface HeaderProps {
 
 const Header = ({ mode = "light", classname }: HeaderProps) => {
   return (
-    <header className={`bg-${mode} w-full ${classname}`}>
+    <header className={`bg-white w-full ${classname}`}>
       <div className="xl:w-[70rem] max-w-[90%] mx-auto py-2 flex justify-between items-center">
         <Link href={URL_LANDING}>
           <a>

@@ -47,7 +47,12 @@ const DataTable = ({
                           key={`${index}-${idx}`}
                           className={`py-3 px-2  text-xs ${classText} font-montserrat whitespace-nowrap`}
                         >
-                          {element[key]}
+                          {
+                            key!=="date" && element[key].toLocaleString()
+                          }
+                          {
+                            key==="date" && element[key].substring(0, 10)
+                          }
                         </td>
                       ))}
                     </tr>

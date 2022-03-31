@@ -36,13 +36,22 @@ const PayCreditCardForm = ({
 
   const handleSubmit = async (data: AccountForm) => {
     setLoading(true);
+
     const transfer = {
-      source: data.account,
-      target: currentCard.number,
-      document_id: user.document_id,
+      acc_src: {
+        number: data.account,
+        document_id: user.document_id
+      },
+      card_dst: {
+        number: currentCard.number,
+        security_code: currentCard.security_code,
+        expiration_date: currentCard.expiration_date,
+        document_id: user.document_id
+      },
       amount: amount,
-      reason: `pago tarjeta ${currentCard.number}`,
-    };
+      reason: `pago tarjeta ${currentCard.number}`
+    }
+    console.log("Data post", transfer);
     try {
       await postTransfer(transfer);
       setSucess(true);
@@ -68,7 +77,7 @@ const PayCreditCardForm = ({
       initialValues={{ account: accounts[0].id }}
       onSubmit={(values: AccountForm) => {
         handleSubmit(values);
-        alert(JSON.stringify(values, null, 2));
+        // alert(JSON.stringify(values, null, 2));
       }}
     >
       {({ handleChange }) => (

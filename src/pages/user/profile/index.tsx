@@ -49,6 +49,8 @@ const Profile: NextPage = () => {
   };
 
   const handleChangeEmail = async () => {
+    // console.log("asdasd", user);
+    // console.log("12312312", userFormState);
     try {
       const response = await generateOTP({
         email: userFormState.email,
@@ -63,6 +65,13 @@ const Profile: NextPage = () => {
 
   const handleChangePassword = () => {
     setDisplayChangePassword(true);
+  };
+
+  const isDisabled = () => {
+    if (userFormState.email === user.email) {
+      return true;
+    }
+    return false;
   };
 
   return (
@@ -139,26 +148,6 @@ const Profile: NextPage = () => {
                       {/* <option value="english">Ingles</option> */}
                     </Field>
                   </div>
-                  {/* <div className="flex items-center justify-between m-3">
-                    <label
-                      className="block text-sm xl:text-lg mb-2 text-dark"
-                      htmlFor="username"
-                    >
-                      Nacionalidad
-                    </label>
-                    <Field
-                      as="select"
-                      label="Nacionalidad"
-                      name="nationality"
-                      id="nationality"
-                      className="shadow appearance-none border rounded w-[55%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      placeholder="Nacionalidad"
-                    >
-                      <option value="vnzl">Venezuela</option>
-                      <option value="clmb">Colombia</option>
-                      <option value="ecdr">Ecuador</option>
-                    </Field>
-                  </div> */}
                 </div>
                 <div className="w-full md:basis-[45%]">
                   <div className="w-full rounded overflow-hidden md:shadow-lg p-8">
@@ -166,32 +155,8 @@ const Profile: NextPage = () => {
                       <p className="text-darkprimary font-bold text-lg uppercase mt-4">
                         Correo electrónico
                       </p>
-                      {/* <p
-                        className="cursor-pointer text-primary"
-                        onClick={handleChangeEmail}
-                      >
-                        Cambiar Correo
-                      </p> */}
                     </div>
                     <div className="flex flex-col gap-3 items-start m-3">
-                      {/* {!displayInputEmail ? (
-                        <label
-                          className="block text-sm xl:text-lg mb-2 text-dark"
-                          htmlFor="username"
-                        >
-                          {values.email}
-                        </label>
-                      ) : (
-                        <Field
-                          type="text"
-                          label="Email"
-                          name="email"
-                          id="email"
-                          className="shadow appearance-none border rounded w-[100%] py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                          placeholder="Correo Electronico"
-                        />
-                        
-                      )} */}
                       <Field
                         type="text"
                         label="Email"
@@ -204,7 +169,16 @@ const Profile: NextPage = () => {
                           handleFormChange(e, "email");
                         }}
                       />
-                      <Button type="button" onClick={handleChangeEmail}>
+                      <Button
+                        type="button"
+                        disabled={isDisabled()}
+                        onClick={handleChangeEmail}
+                        className={
+                          isDisabled()
+                            ? "bg-blue-300 hover:bg-blue-200 hover:cursor-not-allowed text-white font-bold py-2 px-4 rounded"
+                            : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        }
+                      >
                         <p>Guardar</p>
                       </Button>
                     </div>
@@ -242,7 +216,7 @@ const Profile: NextPage = () => {
         ></FormChangePassword>
       </Modal>
       <Modal isOpen={displayInputEmail} setIsOpen={setdisplayInputEmail}>
-        {responseOTP && responseOTP?.device && responseOTP?.expire && ( 
+        {responseOTP && responseOTP?.device && responseOTP?.expire && (
           <>
             <FormChangeEmail
               isOpenModal={setdisplayInputEmail}

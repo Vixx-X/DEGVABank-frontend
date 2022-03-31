@@ -55,8 +55,6 @@ const Transfer: NextPage = () => {
   const [messageError, setMessageError] = useState<any>();
   const { user } = useContext(UserContext);
 
-  console.log("contextooooooo", user);
-
   const postTransfer = useFetchCallback(postTransferUser);
 
   useEffect(() => {
@@ -89,6 +87,8 @@ const Transfer: NextPage = () => {
       await postTransfer(transfer);
       setSucess(true);
     } catch (e) {
+      setIsDisplayConfirmTransaction(false);
+      emptyValuesConfirmTrasaction();
       setMessageError(e);
     } finally {
       setLoading(false);
@@ -104,8 +104,27 @@ const Transfer: NextPage = () => {
     }
   };
 
+  const emptyValuesConfirmTrasaction = () =>{
+    setvaluesConfirmTrasaction(
+      {
+        acc_src: {
+          number: "",
+          document_id: "",
+        },
+        acc_dst: {
+          number: "",
+          typeOfDocumentID: "",
+          document_id: "",
+        },
+        amount: "",
+        reason: "",
+      }
+    )
+  }
+
   const handleCancel = () => {
     setIsDisplayConfirmTransaction(false);
+    // emptyValuesConfirmTrasaction();
   };
 
   return (

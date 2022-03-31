@@ -118,7 +118,6 @@ const PayCreditCardForm = ({
               </p>
             )}
             <ErrorMessage name="source" error={messageError} />
-            <p className="text-xl my-2 mb-4">{`$${currentAccount?.balance}`}</p>
             {sucessTransaction && (
               <div
                 className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"

@@ -4,39 +4,42 @@ import MainLayout from "@components/Globals/Layout/MainLayout/Basic";
 import Loading from "@components/Globals/Loading";
 import ConfirmTrasaction from "@components/Transaction/ConfirmTransaction";
 import { API_URLS } from "@config";
+import { UserContext } from "@contexts/UserContext";
 import { getAccountDataWithURL, postTransferUser } from "@fetches/users";
 import { useFetchCallback } from "@hooks/useFetchCallback";
 import { useSWRAuth } from "@hooks/useSWRAuth";
 import { Field, Form, Formik } from "formik";
 import type { NextPage } from "next";
-import { Key, useEffect, useState } from "react";
+import { Key, useContext, useEffect, useState } from "react";
 
 const { URL_USER_ACCOUNTS } = API_URLS;
 
 interface TransferForm {
-  name: string;
-  lastname: string;
-  email: string;
-  target: string;
-  source: string;
-  number: number;
-  typeOfDocumentID: string;
+  acc_src: {
+    number: string;
+    document_id: string;
+  };
+  acc_dst: {
+    number: string;
+    typeOfDocumentID: string;
+    document_id: string;
+  };
+  amount: string;
   reason: string;
-  alias?: string;
-  amount: number;
 }
 
 const initialValue: TransferForm = {
-  name: "",
-  lastname: "",
-  email: "",
-  target: "",
-  source: "",
-  number: 0,
-  typeOfDocumentID: "v",
+  acc_src: {
+    number: "",
+    document_id: "",
+  },
+  acc_dst: {
+    number: "",
+    typeOfDocumentID: "",
+    document_id: "",
+  },
+  amount: "",
   reason: "",
-  alias: "",
-  amount: 0,
 };
 
 const Transfer: NextPage = () => {
@@ -50,6 +53,9 @@ const Transfer: NextPage = () => {
   const [isDisplayConfirmTransaction, setIsDisplayConfirmTransaction] =
     useState(false);
   const [messageError, setMessageError] = useState<any>();
+  const { user } = useContext(UserContext);
+
+  console.log("contextooooooo", user);
 
   const postTransfer = useFetchCallback(postTransferUser);
 
@@ -65,12 +71,20 @@ const Transfer: NextPage = () => {
   const handleSubmit = async (data: TransferForm) => {
     setLoading(true);
     const transfer = {
-      source: data.source,
-      target: data.target,
-      document_id: data.typeOfDocumentID.toUpperCase() + data.number,
+      acc_src: {
+        number: data.acc_src.number,
+        document_id: user.document_id,
+      },
+      acc_dst: {
+        number: data.acc_dst.number,
+        document_id:
+          data.acc_dst.typeOfDocumentID.toUpperCase() +
+          data.acc_dst.document_id,
+      },
       amount: data.amount,
       reason: data.reason,
     };
+
     try {
       await postTransfer(transfer);
       setSucess(true);
@@ -121,7 +135,7 @@ const Transfer: NextPage = () => {
                       as="select"
                       id="source"
                       className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      name="source"
+                      name="acc_src.number"
                       onChange={(e: any) => {
                         handleChange(e);
                         handleCurrentBill(e);
@@ -156,7 +170,11 @@ const Transfer: NextPage = () => {
                         Por favor seleccionar una cuenta de donde debitar
                       </p>
                     )}
-                    <ErrorMessage name="source" error={messageError} />
+                    <ErrorMessage
+                      name="acc_src.number"
+                      embed={true}
+                      error={messageError}
+                    />
                   </div>
                   <div className="mt-4 pt-4">
                     <div>
@@ -175,12 +193,16 @@ const Transfer: NextPage = () => {
                         <Field
                           type="text"
                           label="Número de cuenta"
-                          name="target"
+                          name="acc_dst.number"
                           id="target"
                           className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           placeholder="Número de cuenta"
                         />
-                        <ErrorMessage name="target" error={messageError} />
+                        <ErrorMessage
+                          name="acc_dst.number"
+                          embed={true}
+                          error={messageError}
+                        />
                       </div>
                       <div className="mb-4">
                         <label
@@ -192,8 +214,8 @@ const Transfer: NextPage = () => {
                         <Field
                           type="text"
                           label="Nombre"
-                          name="name"
                           id="name"
+                          name="name"
                           className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           placeholder="Nombre"
                         />
@@ -209,8 +231,8 @@ const Transfer: NextPage = () => {
                         <Field
                           type="text"
                           label="Apellido"
-                          name="lastname"
                           id="lastname"
+                          name="lastname"
                           className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           placeholder="Apellido"
                         />
@@ -228,7 +250,7 @@ const Transfer: NextPage = () => {
                             as="select"
                             id="typeOfDocumentID"
                             className="form-select appearance-none block w-full px-3 py-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-gray-300 border-solid rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none basis-1/5"
-                            name="typeOfDocumentID"
+                            name="acc_dst.typeOfDocumentID"
                             onClick={handleCurrentBill}
                           >
                             <option disabled>--Seleccionar--</option>
@@ -236,19 +258,19 @@ const Transfer: NextPage = () => {
                             <option value="E">E-</option>
                             <option value="J">J-</option>
                           </Field>
-                          <ErrorMessage
-                            name="typeOfDocumentID"
-                            error={messageError}
-                          />
                           <Field
                             className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline basis-3/4"
                             id="idNumber"
                             type="number"
-                            name="number"
+                            name="acc_dst.document_id"
                             placeholder="Ej: 5555555"
                           />
-                          <ErrorMessage name="number" error={messageError} />
                         </div>
+                        <ErrorMessage
+                          name="acc_dst.document_id"
+                          embed={true}
+                          error={messageError}
+                        />
                       </div>
                       <div className="mb-4">
                         <label
@@ -260,12 +282,11 @@ const Transfer: NextPage = () => {
                         <Field
                           type="email"
                           label="Correo electrónico"
-                          name="email"
                           id="email"
+                          name="email"
                           className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                           placeholder="E-mail"
                         />
-                        <ErrorMessage name="email" error={messageError} />
                       </div>
                       <div className="mb-4">
                         <label
@@ -294,7 +315,7 @@ const Transfer: NextPage = () => {
                         <Field
                           className="shadow appearance-none border-gray-300 rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline basis-3/4"
                           id="amount"
-                          type="amount"
+                          type="number"
                           name="amount"
                         />
                         <ErrorMessage name="amount" error={messageError} />

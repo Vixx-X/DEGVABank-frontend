@@ -111,8 +111,7 @@ const CreditCard = ({
                   name="expiration_date"
                   className="shadow appearance-none border-gray-300 rounded-b py-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
                   id="expiration_date"
-                  type="date"
-                  placeholder="dd/mm"
+                  type="month"
                 />
                 <ErrorMessage
                   name="card.expiration_date"
@@ -157,6 +156,8 @@ const CreditCard = ({
                 <p>Pay ${amount}</p>
               </Button>
             </div>
+            <ErrorMessage name="non_field_errors" error={messageError} />
+            <ErrorMessage name="key" error={messageError} />
             <Button
               onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                 event.preventDefault();

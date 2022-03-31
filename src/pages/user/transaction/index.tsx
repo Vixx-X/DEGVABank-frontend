@@ -64,6 +64,8 @@ const Transaction: NextPage = () => {
     getTransactionWithURL
   );
 
+  console.log(data);
+
   useEffect(() => {
     if (calendarButton1 !== "" && calendarButton2 !== "") {
       setparamsURL({

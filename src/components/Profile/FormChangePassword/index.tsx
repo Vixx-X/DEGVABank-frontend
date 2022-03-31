@@ -229,13 +229,13 @@ const FormChangePassword = ({ isOpenModal }: FormChangePasswordProps) => {
               <div className="flex gap-x-4">
                 {mode === 2 && <Button onClick={backToModeOne}>Volver</Button>}
                 <Button
-                  className={
-                    isDisabled() && mode == 1
-                      ? "bg-blue-300 hover:bg-blue-200 hover:cursor-not-allowed text-white font-bold py-2 px-4 rounded"
-                      : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  }
+                  // className={
+                  //   isDisabled() && mode == 1
+                  //     ? "bg-blue-300 hover:bg-blue-200 hover:cursor-not-allowed text-white font-bold py-2 px-4 rounded"
+                  //     : "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  // }
                   type="submit"
-                  disabled={isDisabled() && mode == 1}
+                  // disabled={isDisabled() && mode == 1}
                 >
                   {mode == 1 ? "Continuar" : "Confirmar"}
                 </Button>

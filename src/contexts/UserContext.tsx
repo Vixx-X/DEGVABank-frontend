@@ -23,7 +23,6 @@ export const UserContextProvider = ({
   user: _user,
 }: UserContextProviderProps) => {
   const [user, setUser] = useState<User>(_user); // user data
-
   const { data, error, mutate } = useSWRAuth(
     URL_USER_PROFILE,
     getProfileDataWithURL

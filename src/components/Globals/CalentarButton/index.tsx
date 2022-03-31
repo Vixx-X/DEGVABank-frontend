@@ -22,7 +22,6 @@ const CalentarButton = ({ onchange, id }: CalentarButtonProps) => {
         name="direction"
         id={`date${id}`}
         type="date"
-        value="dd/mm/aaaa"
         placeholder="Dirección"
         className="border-none focus:border-none activate:border-none pr-5 text-xs sm:text-base"
         onChange={handleChangeCalendar}

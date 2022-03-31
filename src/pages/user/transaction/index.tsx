@@ -16,6 +16,7 @@ const { URL_USER_TRANSACTIONS } = API_URLS;
 
 const HEADERS = {
   id: "id",
+  source: "source",
   target: "target",
   amount: "amount",
   reason: "reason",
@@ -63,6 +64,8 @@ const Transaction: NextPage = () => {
     makeUrl(URL_USER_TRANSACTIONS, { ...paramsURL, offset: (page - 1) * 10 }),
     getTransactionWithURL
   );
+
+  console.log(data);
 
   useEffect(() => {
     if (calendarButton1 !== "" && calendarButton2 !== "") {

@@ -111,8 +111,7 @@ const CreditCard = ({
                   name="expiration_date"
                   className="shadow appearance-none border-gray-300 rounded-b py-3  text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
                   id="expiration_date"
-                  type="date"
-                  placeholder="dd/mm"
+                  type="month"
                 />
                 <ErrorMessage
                   name="card.expiration_date"
@@ -149,6 +148,11 @@ const CreditCard = ({
                 <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>
               </div>
             )}
+            <ErrorMessage name="source" error={messageError} />
+            <ErrorMessage name="order" error={messageError} />
+            <ErrorMessage name="reason" error={messageError} />
+            <ErrorMessage name="non_field_errors" error={messageError} />
+            <ErrorMessage name="key" error={messageError} />
             <div className="flex justify-center pt-10">
               <Button
                 type="submit"

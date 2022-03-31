@@ -1,8 +1,9 @@
 import PayCreditCardForm from "./Form";
 import Button from "@components/Globals/Button/Button";
 import Modal from "@components/Globals/Modal";
-import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@contexts/UserContext";
+import { useContext, useEffect, useState } from "react";
+
 const LIMIT_CARD = 5000;
 
 interface CreditCard {
@@ -19,7 +20,7 @@ interface CreditCardProps {
 }
 
 const CreditCard = ({ cards, accounts }: CreditCardProps) => {
-  const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext);
   const [isOpenPayCard, setIsOpenPayCard] = useState<boolean>(false);
   const [currentCard, setCurrentCard] = useState<any>();
   const handleCurrentcurrentCard = (
@@ -66,7 +67,7 @@ const CreditCard = ({ cards, accounts }: CreditCardProps) => {
             <div className="flex justify-between items-center">
               <div>
                 <p className="text-darkprimary mt-6">
-                  Titular de la cuenta:{" "}
+                  Titular de la Tarjeta:{" "}
                   <span className="text-gray-500">{`${user.first_name} ${user.last_name}`}</span>
                 </p>
                 <p className="text-darkprimary">
@@ -75,7 +76,9 @@ const CreditCard = ({ cards, accounts }: CreditCardProps) => {
                 </p>
                 <p className="text-darkprimary">
                   Codigo de Seguridad (CVC):{" "}
-                  <span className="text-gray-500">{currentCard.security_code}</span>
+                  <span className="text-gray-500">
+                    {currentCard.security_code}
+                  </span>
                 </p>
                 <p className="text-darkprimary">
                   Fecha de Expiracion:{" "}
@@ -86,7 +89,7 @@ const CreditCard = ({ cards, accounts }: CreditCardProps) => {
                 <p className="my-2 text-darkprimary">
                   Saldo a pagar:{" "}
                   <span className="mr-2 text-red-600 font-normal text-lg ">
-                    ${LIMIT_CARD - parseInt(currentCard.credit)}
+                    ${LIMIT_CARD - parseFloat(currentCard.credit)}
                   </span>
                 </p>
                 <Button
@@ -106,7 +109,7 @@ const CreditCard = ({ cards, accounts }: CreditCardProps) => {
       {currentCard && (
         <Modal isOpen={isOpenPayCard} setIsOpen={setIsOpenPayCard}>
           <PayCreditCardForm
-            amount={`${LIMIT_CARD - parseInt(currentCard.credit)}`}
+            amount={`${LIMIT_CARD - parseFloat(currentCard.credit)}`}
             accounts={accounts}
             currentCard={currentCard}
           />

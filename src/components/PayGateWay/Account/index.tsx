@@ -135,7 +135,11 @@ const Account = ({ order, amount, reason, publicKey }: AccountProp) => {
                   </p>
                 )}
                 <ErrorMessage name="account.number" error={messageError} />
-                <p className="text-xl my-2 mb-4">{`$${currentAccount?.balance}`}</p>
+                <ErrorMessage name="source" error={messageError} />
+                <ErrorMessage name="order" error={messageError} />
+                <ErrorMessage name="reason" error={messageError} />
+                <ErrorMessage name="non_field_errors" error={messageError} />
+                <ErrorMessage name="key" error={messageError} />
                 {sucessTransaction && (
                   <div
                     className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"

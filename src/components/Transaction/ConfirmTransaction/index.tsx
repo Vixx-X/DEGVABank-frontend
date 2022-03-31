@@ -9,8 +9,8 @@ interface ConfirmTrasactionProps {
 const HEADERS = [
   { value: "name", name: "Nombre" },
   { value: "lastname", name: "Apellido" },
-  { value: "target", name: "Cuenta Destino" },
-  { value: "source", name: "Cuenta Origen" },
+  { value: "acc_dst.number", name: "Cuenta Destino" },
+  { value: "acc_src.number", name: "Cuenta Origen" },
   { value: "amount", name: "Cantidad" },
   { value: "email", name: "Correo Electronico" },
   { value: "reason", name: "Razon" },
@@ -28,7 +28,7 @@ const ConfirmTrasaction = ({
   return (
     <div className="w-full">
       <p className="text-darkprimary py-3 font-bold text-md uppercase">
-        CONFIRMACION DE PAGO
+        Confirmación de pago
       </p>
       <div className="w-full border">
         {HEADERS.map((item: any, index: number) => {
@@ -38,7 +38,13 @@ const ConfirmTrasaction = ({
                 <p className="px-5 text-left">{item.name}</p>
               </div>
               <div className="py-3 w-1/2 text-dark ">
-                <p className="px-5 text-left">{value[item.value]}</p>
+                {item.value.split(".")[1] === "number" ? (
+                  <p className="px-5 text-left">
+                    {value[item.value.split(".")[0]]["number"]}
+                  </p>
+                ) : (
+                  <p className="px-5 text-left">{value[item.value]}</p>
+                )}
               </div>
             </div>
           );

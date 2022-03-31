@@ -148,6 +148,11 @@ const CreditCard = ({
                 <div className="w-full absolute top-0 h-4 rounded shim-blue"></div>
               </div>
             )}
+            <ErrorMessage name="source" error={messageError} />
+            <ErrorMessage name="order" error={messageError} />
+            <ErrorMessage name="reason" error={messageError} />
+            <ErrorMessage name="non_field_errors" error={messageError} />
+            <ErrorMessage name="key" error={messageError} />
             <div className="flex justify-center pt-10">
               <Button
                 type="submit"
@@ -156,8 +161,6 @@ const CreditCard = ({
                 <p>Pay ${amount}</p>
               </Button>
             </div>
-            <ErrorMessage name="non_field_errors" error={messageError} />
-            <ErrorMessage name="key" error={messageError} />
             <Button
               onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
                 event.preventDefault();

@@ -51,7 +51,6 @@ const PayCreditCardForm = ({
       amount: amount,
       reason: `pago tarjeta ${currentCard.number}`,
     };
-    console.log("Data post", transfer);
     try {
       await postTransfer(transfer);
       setSucess(true);

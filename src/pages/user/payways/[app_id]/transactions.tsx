@@ -12,7 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
-const { URL_USER_TRANSACTIONS } = API_URLS;
+const { URL_USER_PAYWAY_APP_TRANSACTIONS } = API_URLS;
 
 const HEADERS = {
   id: "id",
@@ -31,6 +31,7 @@ const Transaction: NextPage = () => {
 
   const router = useRouter();
   const page = parseInt((router?.query?.page as string) ?? 1, 10);
+  const { app_id } = router.query;
 
   const handleCalendarButton1 = (date: string) => {
     setCalendarButton1(date);
@@ -39,29 +40,36 @@ const Transaction: NextPage = () => {
     setCalendarButton2(date);
   };
   const handleSubmitSearchBar = (data: string) => {
-    console.log(data);
-    setparamsURL((query: any) => {
-      return {
-        ...query,
-        search: data,
-      };
+    setparamsURL({
+      search: data,
     });
   };
 
   const handleOrderClick = (attr: string) => {
-    if (!paramsURL.ordering || "-" === paramsURL.ordering[0]) {
-      setparamsURL({
-        ordering: attr,
-      });
-    } else {
+    setparamsURL({
+      ordering: attr,
+    });
+
+    if (attr === paramsURL.ordering) {
       setparamsURL({
         ordering: "-" + attr,
+      });
+    }
+    if ("-" + attr === paramsURL.ordering) {
+      setparamsURL({
+        ordering: attr,
       });
     }
   };
 
   const { data } = useSWRAuth(
-    makeUrl(URL_USER_TRANSACTIONS, { ...paramsURL, offset: (page - 1) * 10 }),
+    app_id
+      ? makeUrl(URL_USER_PAYWAY_APP_TRANSACTIONS, {
+          app_id: app_id as string,
+          ...paramsURL,
+          offset: (page - 1) * 10,
+        })
+      : null,
     getTransactionWithURL
   );
 

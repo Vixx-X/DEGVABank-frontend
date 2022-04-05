@@ -75,9 +75,10 @@ const Transfer: NextPage = () => {
       },
       acc_dst: {
         number: data.acc_dst.number,
-        document_id:
-          data.acc_dst.typeOfDocumentID.toUpperCase() +
-          data.acc_dst.document_id,
+        document_id: !data.acc_dst.typeOfDocumentID
+          ? ""
+          : data.acc_dst.typeOfDocumentID.toUpperCase() +
+            data.acc_dst.document_id,
       },
       amount: data.amount,
       reason: data.reason,
@@ -269,8 +270,9 @@ const Transfer: NextPage = () => {
                             className="form-select appearance-none block w-full px-3 py-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-gray-300 border-solid rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none basis-1/5"
                             name="acc_dst.typeOfDocumentID"
                             onClick={handleCurrentBill}
+                            required
                           >
-                            <option disabled>--Seleccionar--</option>
+                            <option>--Seleccionar--</option>
                             <option value="V">V-</option>
                             <option value="E">E-</option>
                             <option value="J">J-</option>

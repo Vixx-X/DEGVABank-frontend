@@ -44,7 +44,7 @@ const CreditCard = ({
       card: {
         number: data.number,
         security_code: data.security_code,
-        expiration_date: `${obj[0]}/${obj[1]}`,
+        expiration_date: `${obj[1]}/${obj[0]}`,
       },
     };
     try {

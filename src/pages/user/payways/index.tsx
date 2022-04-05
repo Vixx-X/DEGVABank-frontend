@@ -49,6 +49,7 @@ const PasarelaOptions: NextPage = () => {
           ...item,
           public: item?.api_keys?.public ?? "Never created",
           private: item?.api_keys?.private ?? "Never created",
+          date_created: new Date(item.date_created).toLocaleString(),
           action: <Actions appId={item.app_id} onDelete={() => mutate()} />,
         };
       })

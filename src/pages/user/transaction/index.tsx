@@ -26,6 +26,7 @@ const HEADERS = {
 const Transaction: NextPage = () => {
   const [calendarButton1, setCalendarButton1] = useState("");
   const [calendarButton2, setCalendarButton2] = useState("");
+  const [transactions, setTransactions] = useState([]);
   const [paramsURL, setparamsURL] = useState({} as any);
 
   const router = useRouter();
@@ -65,7 +66,17 @@ const Transaction: NextPage = () => {
     getTransactionWithURL
   );
 
-  console.log(data);
+  useEffect(() => {
+    if (!data) return;
+    setTransactions(
+      data.results.map((el: any) => {
+        return {
+          ...el,
+          date: new Date(el.date).toLocaleString(),
+        };
+      })
+    );
+  }, [data]);
 
   useEffect(() => {
     if (calendarButton1 !== "" && calendarButton2 !== "") {
@@ -90,7 +101,7 @@ const Transaction: NextPage = () => {
           <div className="w-full">
             <DataTable
               headers={HEADERS}
-              items={data.results}
+              items={transactions}
               handleOrderClick={handleOrderClick}
             />
             <div className="mt-3 w-full flex justify-end gap-2">

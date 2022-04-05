@@ -52,6 +52,7 @@ const CreditCard = ({
       setSucess(true);
       router.push(ret.next);
     } catch (e) {
+      console.log(e);
       setMessageError(e);
     } finally {
       setLoading(false);

@@ -52,7 +52,6 @@ const CreditCard = ({
       setSucess(true);
       router.push(ret.next);
     } catch (e) {
-      console.log(e);
       setMessageError(e);
     } finally {
       setLoading(false);
@@ -153,7 +152,7 @@ const CreditCard = ({
             <ErrorMessage name="source" error={messageError} />
             <ErrorMessage name="order" error={messageError} />
             <ErrorMessage name="reason" error={messageError} />
-            <ErrorMessage name="non_field_errors" error={messageError} />
+            <ErrorMessage name="non_field_error" error={messageError} />
             <ErrorMessage name="key" error={messageError} />
             <div className="flex justify-center pt-10">
               <Button

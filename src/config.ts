@@ -33,6 +33,7 @@ export const API_URLS = {
   URL_USER_PAYWAY_KEYS: `${API_URL}/user/payway-meta/[app_id]/keys/`,
   URL_USER_PAYWAY_APPS: `${API_URL}/user/payway-meta/`,
   URL_USER_PAYWAY_APP: `${API_URL}/user/payway-meta/[app_id]/`,
+  URL_USER_PAYWAY_APP_TRANSACTIONS: `${API_URL}/user/payway-meta/[app_id]/transactions/`,
   URL_USER_REQUESTS: `${API_URL}/user/petitions/`,
   URL_PAYWAY_ACCOUNT: `${API_URL}/paygateway/account/`,
   URL_PAYWAY_CARD: `${API_URL}/paygateway/card/`,
@@ -53,8 +54,9 @@ export const SERVER_URLS = {
   URL_USER_REQUEST: "/user/request",
   URL_USER_PAYWAY_APPS: "/user/payways",
   URL_USER_PAYWAY_APP: "/user/payways/[app_id]",
+  URL_USER_PAYWAY_APP_TRANSACTIONS: "/user/payways/[app_id]/transactions",
   URL_DOCUMENTATION: "/payways/docs",
-  
+
   // dashboard
   URL_HOME: "/home",
   URL_PAYWAYS_DOCS: "/payways/docs",

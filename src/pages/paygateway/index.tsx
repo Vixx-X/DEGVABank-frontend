@@ -137,7 +137,7 @@ const PayGateway: NextPage = () => {
         <div className="flex justify-center items-center p-10">
           {component === 0 && (
             <CreditCard
-              amount={`${tot + tax}`}
+              amount={`${(tot + tax).toFixed(2)}`}
               order={order}
               publicKey={publicKey}
               reason={reason}
@@ -148,7 +148,7 @@ const PayGateway: NextPage = () => {
           {component === 2 && (
             <Account
               order={order}
-              amount={`${tot + tax}`}
+              amount={`${(tot + tax).toFixed(2)}`}
               publicKey={publicKey}
               reason={reason}
             />

@@ -4,7 +4,7 @@ import useToggle from "@hooks/useToggle";
 import { makeUrl } from "@utils/makeUrl";
 import Link from "next/link";
 
-const { URL_USER_PAYWAY_APP } = SERVER_URLS;
+const { URL_USER_PAYWAY_APP, URL_USER_PAYWAY_APP_TRANSACTIONS } = SERVER_URLS;
 interface ActionProp {
   appId: string;
   onDelete?: Function;
@@ -40,7 +40,9 @@ const Actions = ({ appId, onDelete }: ActionProp) => {
         </Link>
       </td>
       <td className="text-sm font-medium leading-5 text-center whitespace-no-wrap">
-        <Link href={makeUrl(URL_USER_PAYWAY_APP, { app_id: appId })}>
+        <Link
+          href={makeUrl(URL_USER_PAYWAY_APP_TRANSACTIONS, { app_id: appId })}
+        >
           <a className="text-gray-600 hover:text-gray-900">
             <svg
               xmlns="http://www.w3.org/2000/svg"

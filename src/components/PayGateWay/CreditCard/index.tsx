@@ -35,6 +35,7 @@ const CreditCard = ({
 
   const handleSubmit = async (data: CreditCardForm) => {
     setLoading(true);
+    const obj = data.expiration_date.split("-");
     const pay = {
       key: publicKey,
       amount: amount,
@@ -43,7 +44,7 @@ const CreditCard = ({
       card: {
         number: data.number,
         security_code: data.security_code,
-        expiration_date: data.expiration_date,
+        expiration_date: `${obj[0]}/${obj[1]}`,
       },
     };
     try {

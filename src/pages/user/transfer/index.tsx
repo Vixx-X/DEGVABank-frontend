@@ -104,23 +104,21 @@ const Transfer: NextPage = () => {
     }
   };
 
-  const emptyValuesConfirmTrasaction = () =>{
-    setvaluesConfirmTrasaction(
-      {
-        acc_src: {
-          number: "",
-          document_id: "",
-        },
-        acc_dst: {
-          number: "",
-          typeOfDocumentID: "",
-          document_id: "",
-        },
-        amount: "",
-        reason: "",
-      }
-    )
-  }
+  const emptyValuesConfirmTrasaction = () => {
+    setvaluesConfirmTrasaction({
+      acc_src: {
+        number: "",
+        document_id: "",
+      },
+      acc_dst: {
+        number: "",
+        typeOfDocumentID: "",
+        document_id: "",
+      },
+      amount: "",
+      reason: "",
+    });
+  };
 
   const handleCancel = () => {
     setIsDisplayConfirmTransaction(false);

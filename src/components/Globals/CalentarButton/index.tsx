@@ -8,7 +8,9 @@ interface CalentarButtonProps {
 
 const CalentarButton = ({ onchange, id }: CalentarButtonProps) => {
   const handleChangeCalendar = (e: any) => {
-    const date = new Date(e.target.value);
+    const data = e.target.value;
+    if (!data) return "";
+    const date = new Date(data);
     date.setDate(date.getDate() + 1);
     const month = date.getUTCMonth() + 1;
     const day = date.getUTCDate();

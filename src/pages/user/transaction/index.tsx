@@ -39,24 +39,23 @@ const Transaction: NextPage = () => {
     setCalendarButton2(date);
   };
   const handleSubmitSearchBar = (data: string) => {
-    setparamsURL({
-      search: data,
+    console.log(data);
+    setparamsURL((query: any) => {
+      return {
+        ...query,
+        search: data,
+      };
     });
   };
 
   const handleOrderClick = (attr: string) => {
-    setparamsURL({
-      ordering: attr,
-    });
-
-    if (attr === paramsURL.ordering) {
-      setparamsURL({
-        ordering: "-" + attr,
-      });
-    }
-    if ("-" + attr === paramsURL.ordering) {
+    if (!paramsURL.ordering || "-" === paramsURL.ordering[0]) {
       setparamsURL({
         ordering: attr,
+      });
+    } else {
+      setparamsURL({
+        ordering: "-" + attr,
       });
     }
   };
@@ -107,14 +106,26 @@ const Transaction: NextPage = () => {
             <div className="mt-3 w-full flex justify-end gap-2">
               {page > 1 && (
                 <div className="justify-self-start">
-                  <Link passHref href={`?page=${page - 1}`}>
+                  <Link
+                    passHref
+                    href={{
+                      pathname: router.pathname,
+                      query: { ...router.query, page: page - 1 },
+                    }}
+                  >
                     <Button>Anterior</Button>
                   </Link>
                 </div>
               )}
               {page < data.count / 10 && (
                 <div className="justify-self-end">
-                  <Link passHref href={`?page=${page + 1}`}>
+                  <Link
+                    passHref
+                    href={{
+                      pathname: router.pathname,
+                      query: { ...router.query, page: page + 1 },
+                    }}
+                  >
                     <Button>Siguiente</Button>
                   </Link>
                 </div>

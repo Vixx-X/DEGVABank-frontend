@@ -7,6 +7,7 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DEFAULT_USER_IMAGE from "@public/defaul_user.png";
 import type { NextPage } from "next";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -53,7 +54,7 @@ const PayGateway: NextPage = () => {
               <FontAwesomeIcon icon={faArrowLeft} size="2x" color="grey" />
             </button>
             <div className="relative w-40 h-10 my-8">
-              <img
+              <Image
                 src={
                   typeof product.logotype === "string"
                     ? product.logotype

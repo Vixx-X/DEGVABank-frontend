@@ -89,8 +89,10 @@ const CreditCard = ({ cards, accounts }: CreditCardProps) => {
                   Saldo a pagar:{" "}
                   <span className="mr-2 text-red-600 font-normal text-lg ">
                     $
-                    {parseFloat(currentCard.credit_limit) -
-                      parseFloat(currentCard.credit)}
+                    {(
+                      parseFloat(currentCard.credit_limit) -
+                      parseFloat(currentCard.credit)
+                    ).toFixed(2)}
                   </span>
                 </p>
                 <Button
@@ -110,10 +112,10 @@ const CreditCard = ({ cards, accounts }: CreditCardProps) => {
       {currentCard && (
         <Modal isOpen={isOpenPayCard} setIsOpen={setIsOpenPayCard}>
           <PayCreditCardForm
-            amount={`${
+            amount={`${(
               parseFloat(currentCard.credit_limit) -
               parseFloat(currentCard.credit)
-            }`}
+            ).toFixed(2)}`}
             accounts={accounts}
             currentCard={currentCard}
           />

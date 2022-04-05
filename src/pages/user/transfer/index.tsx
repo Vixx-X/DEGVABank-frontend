@@ -104,23 +104,21 @@ const Transfer: NextPage = () => {
     }
   };
 
-  const emptyValuesConfirmTrasaction = () =>{
-    setvaluesConfirmTrasaction(
-      {
-        acc_src: {
-          number: "",
-          document_id: "",
-        },
-        acc_dst: {
-          number: "",
-          typeOfDocumentID: "",
-          document_id: "",
-        },
-        amount: "",
-        reason: "",
-      }
-    )
-  }
+  const emptyValuesConfirmTrasaction = () => {
+    setvaluesConfirmTrasaction({
+      acc_src: {
+        number: "",
+        document_id: "",
+      },
+      acc_dst: {
+        number: "",
+        typeOfDocumentID: "V",
+        document_id: "",
+      },
+      amount: "",
+      reason: "",
+    });
+  };
 
   const handleCancel = () => {
     setIsDisplayConfirmTransaction(false);
@@ -266,6 +264,7 @@ const Transfer: NextPage = () => {
                         </label>
                         <div className="flex justify-between">
                           <Field
+                            requer
                             as="select"
                             id="typeOfDocumentID"
                             className="form-select appearance-none block w-full px-3 py-3 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border-gray-300 border-solid rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none basis-1/5"

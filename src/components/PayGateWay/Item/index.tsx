@@ -29,7 +29,7 @@ const Item = ({ name, image, num, amount }: ItemProp) => {
         <p className="text-sm font-montserrat capitalize ml-2">{name}</p>
       </div>
       <p className="text-xl font-montserrat  tracking-wider">
-        ${num ? amount * num : amount}
+        ${num ? (amount * num).toFixed(2) : amount.toFixed(2)}
       </p>
     </div>
   );

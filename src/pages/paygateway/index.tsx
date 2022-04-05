@@ -105,7 +105,7 @@ const PayGateway: NextPage = () => {
                     Subtotal
                   </p>
                   <p className="text-lg text-gray-500  font-montserrat">
-                    ${tot}
+                    ${tot.toFixed(2)}
                   </p>
                 </div>
                 <div className="flex justify-between items-center">
@@ -113,13 +113,15 @@ const PayGateway: NextPage = () => {
                     Cargos adicionales
                   </p>
                   <p className="text-lg text-gray-500  font-montserrat">
-                    ${tax}
+                    ${tax.toFixed(2)}
                   </p>
                 </div>
               </div>
               <div className="mx-6 pt-6 flex justify-between items-center">
                 <p className="text-xl font-montserrat">Total</p>
-                <p className="text-xl font-montserrat">${tot + tax}</p>
+                <p className="text-xl font-montserrat">
+                  ${(tot + tax).toFixed(2)}
+                </p>
               </div>
             </section>
             <div className="my-4 flex justify-center">

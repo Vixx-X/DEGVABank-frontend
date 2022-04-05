@@ -49,13 +49,10 @@ const Profile: NextPage = () => {
   };
 
   const handleChangeEmail = async () => {
-    // console.log("asdasd", user);
-    // console.log("12312312", userFormState);
     try {
       const response = await generateOTP({
         email: userFormState.email,
       });
-      console.log(response);
       setResponseOTP(response);
       setdisplayInputEmail(true);
     } catch (e: any) {

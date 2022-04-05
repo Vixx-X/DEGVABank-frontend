@@ -344,6 +344,8 @@ const Transfer: NextPage = () => {
                   </div>
                 </div>
                 <ErrorMessage name="non_field_error" error={messageError} />
+                <ErrorMessage name="source" error={messageError} />
+                <ErrorMessage name="target" error={messageError} />
                 {!isDisplayConfirmTransaction && (
                   <div className="flex justify-center gap-x-6">
                     <Button

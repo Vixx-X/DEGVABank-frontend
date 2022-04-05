@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import CreditCard from "../../components/PayGateWay/CreditCard";
 import Item from "../../components/PayGateWay/Item";
 import Account from "@components/PayGateWay/Account";
@@ -5,9 +6,7 @@ import CountdownTimer from "@components/PayGateWay/CountDownTimer";
 import Login from "@components/PayGateWay/Login";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import DEFAULT_USER_IMAGE from "@public/defaul_user.png";
 import type { NextPage } from "next";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -54,15 +53,14 @@ const PayGateway: NextPage = () => {
               <FontAwesomeIcon icon={faArrowLeft} size="2x" color="grey" />
             </button>
             <div className="relative w-40 h-10 my-8">
-              <Image
+              <img
                 src={
                   typeof product.logotype === "string"
                     ? product.logotype
-                    : DEFAULT_USER_IMAGE
+                    : "Pasarela de pagos"
                 }
-                alt="logotypeimage"
-                layout={"fill"}
-                objectFit={"contain"}
+                className="object-contain w-full h-full"
+                alt="Pasarela de pagos"
               />
             </div>
             <section className="divide-y">
